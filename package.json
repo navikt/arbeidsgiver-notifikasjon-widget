@@ -1,6 +1,6 @@
 {
-  "name": "arbeidsgiver-notifikasjon-widget",
-  "version": "1.0.0",
+  "name": "@navikt/arbeidsgiver-notifikasjon-widget",
+  "version": "0.0.1",
   "description": "React component som viser notifikasjoner for innlogget arbeidsgiver.",
   "author": "navikt",
   "license": "MIT",
