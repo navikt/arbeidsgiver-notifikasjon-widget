@@ -9,7 +9,8 @@
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
   "engines": {
-    "node": ">=10"
+    "node": ">=15",
+    "npm": ">=7"
   },
   "scripts": {
     "build": "microbundle --jsx=React.createElement --no-compress --format modern,cjs",
