@@ -1,9 +1,7 @@
 import { Ref } from 'react'
 // import './NotifikasjonBjelle.less'
 import { Element } from 'nav-frontend-typografi'
-// import Ikon from './NotifikasjonBjelle.svg'
-
-const Ikon = () => <div />
+import Ikon from './NotifikasjonBjelle.svg'
 
 interface Props {
   antallUleste?: number
