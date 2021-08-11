@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Undertittel } from 'nav-frontend-typografi'
 import { Close } from '@navikt/ds-icons'
 import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'

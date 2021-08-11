@@ -5,7 +5,7 @@ import {
   ApolloProvider
 } from '@apollo/client'
 import { Beskjed } from './graphql-types'
-import { FC } from 'react'
+import React, { FC } from 'react'
 
 const baseurl = 'http://localhost:8081'
 const createClient = () =>

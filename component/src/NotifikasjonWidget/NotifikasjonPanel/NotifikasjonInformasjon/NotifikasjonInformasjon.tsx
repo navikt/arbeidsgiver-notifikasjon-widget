@@ -1,5 +1,5 @@
 import { PopoverBase, PopoverOrientering } from 'nav-frontend-popover'
-import {
+import React, {
   KeyboardEvent,
   FunctionComponent,
   useEffect,

@@ -1,3 +1,4 @@
+import React from 'react'
 import { Undertekst, UndertekstBold } from 'nav-frontend-typografi'
 import { datotekst } from '../dato-funksjoner'
 // import { ReactComponent as IkonBeskjed } from './ikon-beskjed.svg'

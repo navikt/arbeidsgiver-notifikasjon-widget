@@ -1,4 +1,4 @@
-import { Ref } from 'react'
+import React, { Ref } from 'react'
 // import './NotifikasjonBjelle.less'
 import { Element } from 'nav-frontend-typografi'
 import Ikon from './NotifikasjonBjelle.svg'

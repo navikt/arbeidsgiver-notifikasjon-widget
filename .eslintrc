@@ -30,6 +30,7 @@
     "react/react-in-jsx-scope": 0,
     "react/jsx-uses-react": 0,
     "react/no-unused-prop-types": 0,
-    "import/export": 0
+    "import/export": 0,
+    "no-use-before-define": "off"
   }
 }

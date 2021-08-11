@@ -1,7 +1,4 @@
 import * as webpack from 'webpack'
-import * as path from 'path'
-// ts-ignore
-const webpackNodeExternals = require('webpack-node-externals')
 
 // TODO: ikke generer d.ts-filer for interne typer i ./dist/ (så
 // de ikke dukker opp i den publiserte npm-pakken.
@@ -11,17 +8,17 @@ const config: webpack.Configuration = {
   entry: './src/index.tsx',
   output: {
     filename: 'index.js',
-    library: {
-      name: ['ExampleComponent'],
-      type: 'umd'
-    }
+    libraryTarget: 'commonjs2'
   },
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
+        test: /\.ts(x?)$/,
+        use: [
+          {
+            loader: 'babel-loader'
+          }
+        ]
       },
       {
         test: /\.module\.css$/,
@@ -43,11 +40,11 @@ const config: webpack.Configuration = {
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules']
+    extensions: ['.ts', '.tsx', '.module.css']
   },
-  externalsPresets: { node: true },
-  externals: [webpackNodeExternals()]
+  externals: {
+    react: 'react'
+  }
 }
 
 export default config
