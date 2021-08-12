@@ -8,7 +8,7 @@
     "build": "SKIP_PREFLIGHT_CHECK=true react-scripts build"
   },
   "dependencies": {
-    "@navikt/arbeidsgiver-notifikasjon-widget": "file:../component",
+    "@navikt/arbeidsgiver-notifikasjon-widget": "0.0.5",
     "@navikt/ds-icons": "^0.3.3",
     "@types/node": "^16.4.13",
     "@types/react": "17.0.17",

@@ -2,21 +2,15 @@ import {
   ApolloClient,
   InMemoryCache,
   gql,
-  ApolloProvider
 } from '@apollo/client'
 import { Beskjed } from './graphql-types'
-import React, { FC } from 'react'
 
 const baseurl = 'http://localhost:8081'
-const createClient = () =>
+export const createClient = () =>
   new ApolloClient({
     uri: `${baseurl}/api/graphql`,
     cache: new InMemoryCache()
   })
-
-export const ConfiguredApolloProvider: FC = ({ children }) => {
-  return <ApolloProvider client={createClient()}>{children}</ApolloProvider>
-}
 
 export interface HentNotifikasjonerData {
   notifikasjoner: Beskjed[]

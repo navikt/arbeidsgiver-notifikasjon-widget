@@ -1,19 +1,20 @@
 import React from 'react'
+import {ApolloProvider} from "@apollo/client";
 import styles from './styles.module.css'
-import NotifikasjonWidget from './NotifikasjonWidget/NotifikasjonWidget'
-import {ConfiguredApolloProvider} from "./api/graphql";
+import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget'
+import {createClient} from "./api/graphql";
 
 interface Props {
   text: string
 }
 
-export const ExampleComponent = ({ text }: Props) => {
+export const NotifikasjonWidget = ({ text }: Props) => {
   return (
     <div className={styles.test}>
       til eksempel: {text}
-      <ConfiguredApolloProvider>
-        <NotifikasjonWidget />
-      </ConfiguredApolloProvider>
+      <ApolloProvider client={createClient()}>
+        <NotifikasjonWidgetComponent />
+      </ApolloProvider>
     </div>
   )
 }

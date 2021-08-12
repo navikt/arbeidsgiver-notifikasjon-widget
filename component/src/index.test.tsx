@@ -1,7 +1,7 @@
-import { ExampleComponent } from './index'
+import { NotifikasjonWidget } from './index'
 
 describe('ExampleComponent', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(NotifikasjonWidget).toBeTruthy()
   })
 })
