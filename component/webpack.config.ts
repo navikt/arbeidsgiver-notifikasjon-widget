@@ -6,7 +6,7 @@ import nodeExternals = require('webpack-node-externals');
 // de ikke dukker opp i den publiserte npm-pakken.
 
 const config: webpack.Configuration = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/index.tsx',
   output: {
     filename: 'index.js',
