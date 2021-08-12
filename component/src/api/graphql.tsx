@@ -14,7 +14,7 @@ const createClient = () =>
     cache: new InMemoryCache()
   })
 
-export const ToggledApolloProvider: FC = ({ children }) => {
+export const ConfiguredApolloProvider: FC = ({ children }) => {
   return <ApolloProvider client={createClient()}>{children}</ApolloProvider>
 }
 
