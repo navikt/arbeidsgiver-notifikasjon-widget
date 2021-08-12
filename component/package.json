@@ -12,6 +12,8 @@
     "npm": ">=7"
   },
   "scripts": {
+    "test": "echo i haz no tests",
+    "build": "webpack",
     "gql:cp_schema": "cp ../../arbeidsgiver-notifikasjon-produsent-api/app/src/main/resources/bruker.graphqls bruker.graphql",
     "gql:generate": "graphql-codegen"
   },
