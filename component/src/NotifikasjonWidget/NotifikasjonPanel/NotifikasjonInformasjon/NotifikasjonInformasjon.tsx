@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState
 } from 'react'
-// import './NotifikasjonInformasjon.less'
+import './NotifikasjonInformasjon.less'
 import { Helptext } from '@navikt/ds-icons'
 
 interface NotifikasjonInformasjonProps {

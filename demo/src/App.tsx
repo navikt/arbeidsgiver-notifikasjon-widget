@@ -2,10 +2,12 @@
 
 // @ts-ignore
 import { NotifikasjonWidget } from '@navikt/arbeidsgiver-notifikasjon-widget'
-//import 'arbeidsgiver-notifikasjon-widget/dist/index.css'
+import './App.less'
 
 const App = () => {
-  return <NotifikasjonWidget text={'yas, mhm'} />
+  return <div className={"typo-normal bakgrunnsside"}>
+    <NotifikasjonWidget text={'yas, mhms'} />
+  </div>
 }
 
 export default App

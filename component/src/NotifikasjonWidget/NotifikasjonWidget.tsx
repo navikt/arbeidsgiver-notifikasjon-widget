@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { NotifikasjonBjelle } from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
-// import './NotifikasjonWidget.less'
+import './NotifikasjonWidget.less'
 import { ServerError, useQuery } from '@apollo/client'
 import { HENT_NOTIFIKASJONER, HentNotifikasjonerData } from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Undertekst, UndertekstBold } from 'nav-frontend-typografi'
 import { datotekst } from '../dato-funksjoner'
-// import './NotifikasjonListeElement.less'
+import './NotifikasjonListeElement.less'
 import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
 import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
@@ -39,6 +39,7 @@ export const NotifikasjonListeElement = (props: Props) => {
       break
     default:
       console.error(
+        // @ts-ignore
         `ukjent notifikasjonstype ${props.notifikasjon.__typename}: ignorerer`
       )
       return null

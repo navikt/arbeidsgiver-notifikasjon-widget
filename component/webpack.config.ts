@@ -36,13 +36,21 @@ const config: webpack.Configuration = {
         ]
       },
       {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'less-loader',
+        ]
+      },
+      {
         test: /\.svg$/,
         use: ['@svgr/webpack']
       }
     ]
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.module.css', '.svg']
+    extensions: ['.ts', '.tsx', '.module.css', '.svg', '.less']
   },
   externals: [nodeExternals()],
 }
