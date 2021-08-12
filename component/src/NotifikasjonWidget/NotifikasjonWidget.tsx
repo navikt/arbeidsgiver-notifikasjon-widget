@@ -3,9 +3,9 @@ import { NotifikasjonBjelle } from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
 // import './NotifikasjonWidget.less'
 import { ServerError, useQuery } from '@apollo/client'
-import { HENT_NOTIFIKASJONER, HentNotifikasjonerData } from 'api/graphql'
-import useLocalStorage from 'hooks/useLocalStorage'
-import { Beskjed } from 'api/graphql-types'
+import { HENT_NOTIFIKASJONER, HentNotifikasjonerData } from '../api/graphql'
+import useLocalStorage from '../hooks/useLocalStorage'
+import { Beskjed } from '../api/graphql-types'
 
 const uleste = (
   sistLest: string | undefined,

@@ -1,11 +1,11 @@
 import React from 'react'
 import { Undertekst, UndertekstBold } from 'nav-frontend-typografi'
 import { datotekst } from '../dato-funksjoner'
-// import { ReactComponent as IkonBeskjed } from './ikon-beskjed.svg'
 // import './NotifikasjonListeElement.less'
-import { Notifikasjon, OppgaveTilstand } from 'api/graphql-types'
-// import { ReactComponent as IkonOppgave } from './ikon-oppgave.svg'
-// import { ReactComponent as IkonOppgaveUtfoert } from './ikon-oppgave-utfoert.svg'
+import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
+import IkonBeskjed from './ikon-beskjed.svg'
+import IkonOppgave from './ikon-oppgave.svg'
+import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
 import { HoyreChevron } from 'nav-frontend-chevron'
 
 interface Props {
@@ -18,10 +18,6 @@ interface Props {
   gåTilNeste: () => void
   erValgt: boolean
 }
-
-const IkonOppgave = () => <div />
-const IkonOppgaveUtfoert = () => <div />
-const IkonBeskjed = () => <div />
 
 export const NotifikasjonListeElement = (props: Props) => {
   const notifikasjon = props.notifikasjon

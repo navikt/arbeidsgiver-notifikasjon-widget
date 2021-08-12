@@ -3,9 +3,9 @@ import { Undertittel } from 'nav-frontend-typografi'
 import { Close } from '@navikt/ds-icons'
 import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'
 // import './NotifikasjonPanel.less'
-import { Notifikasjon } from 'api/graphql-types'
+import { Notifikasjon } from '../../api/graphql-types'
 import { useMutation } from '@apollo/client'
-import { NOTIFIKASJONER_KLIKKET_PAA } from 'api/graphql'
+import { NOTIFIKASJONER_KLIKKET_PAA } from '../../api/graphql'
 import { NotifikasjonInformasjon } from './NotifikasjonInformasjon/NotifikasjonInformasjon'
 
 interface Props {

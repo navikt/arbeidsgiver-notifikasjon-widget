@@ -1,4 +1,6 @@
 import * as webpack from 'webpack'
+// @ts-ignore
+import nodeExternals = require('webpack-node-externals');
 
 // TODO: ikke generer d.ts-filer for interne typer i ./dist/ (så
 // de ikke dukker opp i den publiserte npm-pakken.
@@ -40,11 +42,9 @@ const config: webpack.Configuration = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.module.css']
+    extensions: ['.ts', '.tsx', '.module.css', '.svg']
   },
-  externals: {
-    react: 'react'
-  }
+  externals: [nodeExternals()],
 }
 
 export default config
