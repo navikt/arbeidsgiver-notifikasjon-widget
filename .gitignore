@@ -4,3 +4,4 @@ node_modules/
 *.iml
 .idea
 /react-app-env.d.ts
+/demo/build

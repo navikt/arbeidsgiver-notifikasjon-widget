@@ -9,8 +9,6 @@ import url from "@rollup/plugin-url";
 const svgr = require('@svgr/rollup').default
 const packageJson = require("./package.json");
 
-
-
 export default {
     input: 'src/index.tsx',
     output: [
