@@ -7,7 +7,8 @@
   "types": "./lib/esm/index.d.ts",
   "scripts": {
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
-    "start": "rollup --config rollup.config.ts --configPlugin typescript --watch"
+    "start": "rollup --config rollup.config.ts --configPlugin typescript --watch",
+    "test": "echo tests not implemented"
   },
   "dependencies": {
     "@apollo/client": "3",
