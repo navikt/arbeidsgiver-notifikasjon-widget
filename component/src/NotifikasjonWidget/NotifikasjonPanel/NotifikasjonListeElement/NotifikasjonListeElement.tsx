@@ -1,12 +1,12 @@
 import React from 'react'
-import { Undertekst, UndertekstBold } from 'nav-frontend-typografi'
+import { Undertekst, UndertekstBold } from '../../../typography'
 import { datotekst } from '../dato-funksjoner'
 import './NotifikasjonListeElement.less'
 import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
 import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
 import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
-import { HoyreChevron } from 'nav-frontend-chevron'
+import { Next as HoyreChevron } from '@navikt/ds-icons'
 
 interface Props {
   notifikasjon: Notifikasjon
