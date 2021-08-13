@@ -2,7 +2,7 @@
 
 > React component som viser notifikasjoner for innlogget arbeidsgiver.
 
-[![NPM](https://img.shields.io/npm/v/arbeidsgiver-notifikasjon-widget.svg)](https://www.npmjs.com/package/arbeidsgiver-notifikasjon-widget) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@navikt/arbeidsgiver-notifikasjon-widget.svg)](https://www.npmjs.com/package/@navikt/arbeidsgiver-notifikasjon-widget) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
