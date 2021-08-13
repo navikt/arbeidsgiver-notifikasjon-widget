@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Undertittel } from 'nav-frontend-typografi'
+import { Undertittel } from '../../typography'
 import { Close } from '@navikt/ds-icons'
 import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'
 import './NotifikasjonPanel.less'

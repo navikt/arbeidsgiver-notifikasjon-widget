@@ -1,6 +1,6 @@
 import React, { Ref } from 'react'
 import './NotifikasjonBjelle.less'
-import { Element } from 'nav-frontend-typografi'
+import { Element } from '../../typography'
 import Ikon from './NotifikasjonBjelle.svg'
 
 interface Props {

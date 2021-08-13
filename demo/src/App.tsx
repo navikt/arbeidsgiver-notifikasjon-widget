@@ -2,7 +2,7 @@
 
 // @ts-ignore
 import { NotifikasjonWidget } from '@navikt/arbeidsgiver-notifikasjon-widget'
-import './App.less'
+import './App.css'
 
 const App = () => {
   return <div className={"typo-normal bakgrunnsside"}>
