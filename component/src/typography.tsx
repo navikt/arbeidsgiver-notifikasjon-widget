@@ -1,6 +1,7 @@
 import React from 'react'
 
 import 'nav-frontend-core/dist/main.css'
+import 'nav-frontend-typografi-style/dist/main.css'
 
 interface TypoProp {
   className?: string
