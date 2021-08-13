@@ -1,7 +1,7 @@
 import fs from 'fs'
 import require from "./esm-require.js";
 import casual from 'casual';
-const { ApolloServer, gql} = require("apollo-server");
+const { ApolloServer, gql } = require("apollo-server");
 
 const roundDate = (millis) => {
     const date = new Date();
@@ -54,7 +54,7 @@ const eksempler = {
 
 
 const startApolloMock = () => {
-    const data = fs.readFileSync('./bruker.graphql');
+    const data = fs.readFileSync('../component/bruker.graphql');
     const typeDefs = gql(data.toString());
     const Notifikasjon = (navn) => {
         const merkelapp = casual.random_key(eksempler);
