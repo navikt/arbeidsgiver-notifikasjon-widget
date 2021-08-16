@@ -5,7 +5,7 @@ import {
 } from '@apollo/client'
 import { Beskjed } from './graphql-types'
 
-export const createClient = (uri = "/min-side-arbeidsgiver/notifikasjon/api/graphql") =>
+export const createClient = (uri: string) =>
   new ApolloClient({
     uri,
     cache: new InMemoryCache()
