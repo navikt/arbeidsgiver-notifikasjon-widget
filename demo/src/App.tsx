@@ -1,6 +1,5 @@
 //import React from 'react'
 
-// @ts-ignore
 import { NotifikasjonWidget } from '@navikt/arbeidsgiver-notifikasjon-widget'
 import './App.css'
 

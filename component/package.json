@@ -1,11 +1,13 @@
 {
   "name": "@navikt/arbeidsgiver-notifikasjon-widget",
   "description": "An example component",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/lib/esm/index.d.ts",
   "scripts": {
+    "gql:cp_schema": "cp ../../arbeidsgiver-notifikasjon-produsent-api/app/src/main/resources/bruker.graphqls bruker.graphql",
+    "gql:generate": "graphql-codegen",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "start": "rollup --config rollup.config.ts --configPlugin typescript --watch",
     "test": "echo tests not implemented"
@@ -15,6 +17,7 @@
     "@navikt/ds-icons": "0",
     "@navikt/ds-react": "0",
     "classnames": "2",
+    "graphql": "^15.5.1",
     "nav-frontend-core": "6",
     "nav-frontend-popover": "2",
     "nav-frontend-popover-style": "2",
@@ -23,6 +26,10 @@
     "prop-types": "15"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.3",
+    "@graphql-codegen/typescript": "^1.21.1",
+    "@graphql-codegen/typescript-operations": "^1.17.15",
+    "@graphql-codegen/typescript-react-apollo": "^2.2.3",
     "@rollup/plugin-commonjs": "20",
     "@rollup/plugin-node-resolve": "13",
     "@rollup/plugin-typescript": "8",
