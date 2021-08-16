@@ -1,5 +1,5 @@
 {
-  "name": "@navikt/foo",
+  "name": "@navikt/arbeidsgiver-notifikasjon-widget",
   "description": "An example component",
   "version": "0.0.7",
   "main": "./lib/cjs/index.js",
