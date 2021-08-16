@@ -1,10 +1,10 @@
 {
   "name": "@navikt/arbeidsgiver-notifikasjon-widget",
   "description": "An example component",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "types": "./lib/esm/index.d.ts",
+  "types": "./lib/esm/lib/esm/index.d.ts",
   "scripts": {
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "start": "rollup --config rollup.config.ts --configPlugin typescript --watch",

@@ -5,13 +5,13 @@ import 'nav-frontend-core/dist/main.css'
 import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget'
 import {createClient} from "./api/graphql";
 
-// interface Props {
-//   text: string
-// }
+interface Props {
+  apiUri: string
+}
 
-export const NotifikasjonWidget = () => {
+export const NotifikasjonWidget = (props: Props) => {
   return (
-    <ApolloProvider client={createClient()}>
+    <ApolloProvider client={createClient(props.apiUri)}>
       <NotifikasjonWidgetComponent />
     </ApolloProvider>
   )

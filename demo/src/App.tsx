@@ -6,7 +6,7 @@ import './App.css'
 
 const App = () => {
   return <div className={"typo-normal bakgrunnsside"}>
-    <NotifikasjonWidget text={'yas, mhms'} />
+    <NotifikasjonWidget apiUri="http://localhost:8081/api/graphql" />
   </div>
 }
 

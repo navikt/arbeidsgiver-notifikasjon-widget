@@ -5,10 +5,9 @@ import {
 } from '@apollo/client'
 import { Beskjed } from './graphql-types'
 
-const baseurl = 'http://localhost:8081'
-export const createClient = () =>
+export const createClient = (uri = "/min-side-arbeidsgiver/notifikasjon/api/graphql") =>
   new ApolloClient({
-    uri: `${baseurl}/api/graphql`,
+    uri,
     cache: new InMemoryCache()
   })
 
