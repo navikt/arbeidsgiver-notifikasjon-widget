@@ -57,6 +57,7 @@ export const NotifikasjonInformasjon: FunctionComponent<NotifikasjonInformasjonP
           id='notifikasjon-informasjon-knapp'
           className='notifikasjon-informasjon-knapp'
           onClick={() => setVis(!vis)}
+          aria-pressed={vis}
           onKeyDown={(event) => {
             if (event.key === 'Tab') {
               props.onTabEvent?.(event.shiftKey, event)

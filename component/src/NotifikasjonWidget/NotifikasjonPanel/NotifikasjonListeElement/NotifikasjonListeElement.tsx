@@ -72,15 +72,15 @@ export const NotifikasjonListeElement = (props: Props) => {
       <div className='notifikasjon_liste_element-lenkepanel'>
         <div className='notifikasjon_liste_element-lenkepanel-ikon'>{ikon}</div>
         <div className='notifikasjon_liste_element-lenkepanel-tekst'>
-          <div
-            aria-label={notifikasjon.brukerKlikk?.klikketPaa ? '' : 'ulest.'}
-          />
           {notifikasjon.brukerKlikk?.klikketPaa ? (
             notifikasjon.tekst
           ) : (
             <strong>{notifikasjon.tekst}</strong>
           )}
         </div>
+        <div
+          aria-label={notifikasjon.brukerKlikk?.klikketPaa ? '' : 'ikke besøkt'}
+        />
         <div className='notifikasjon_liste_element-lenkepanel-chevron'>
           <HoyreChevron />
         </div>
