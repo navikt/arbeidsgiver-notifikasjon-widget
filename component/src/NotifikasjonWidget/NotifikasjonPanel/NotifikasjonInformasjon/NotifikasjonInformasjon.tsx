@@ -53,6 +53,16 @@ export const NotifikasjonInformasjon: FunctionComponent<NotifikasjonInformasjonP
 
     return (
       <div className='notifikasjon-informasjon'>
+        <PopoverBase
+          className={`notifikasjon-informasjon-popover ${
+            vis ? 'notifikasjon-informasjon-popover__vis' : ''
+          }`}
+          orientering={PopoverOrientering.Over}
+          innerRef={popoverRef}
+        >
+          Tjenesten er under utvikling og alle notifikasjoner vises ikke her
+          ennå. Gamle notifikasjoner slettes etter hvert.
+        </PopoverBase>
         <button
           id='notifikasjon-informasjon-knapp'
           className='notifikasjon-informasjon-knapp'
@@ -67,17 +77,6 @@ export const NotifikasjonInformasjon: FunctionComponent<NotifikasjonInformasjonP
           <Helptext />
           <span className='typo-normal'>Hva vises her?</span>
         </button>
-
-        <PopoverBase
-          className={`notifikasjon-informasjon-popover ${
-            vis ? 'notifikasjon-informasjon-popover__vis' : ''
-          }`}
-          orientering={PopoverOrientering.UnderHoyre}
-          innerRef={popoverRef}
-        >
-          Tjenesten er under utvikling og alle notifikasjoner vises ikke her
-          ennå. Gamle notifikasjoner slettes etter hvert.
-        </PopoverBase>
       </div>
     )
   }

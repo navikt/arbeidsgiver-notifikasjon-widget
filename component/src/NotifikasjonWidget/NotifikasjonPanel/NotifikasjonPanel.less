@@ -6,7 +6,7 @@
   position: absolute;
   margin: 0;
   padding: 0;
-  width: 100%;
+  width: 100vw;
   max-width: 30rem;
   background-color: white;
   outline: none;
@@ -104,6 +104,26 @@
     &::-webkit-scrollbar-thumb {
       border-radius: 6px;
       background-color: @navGra20;
+    }
+  }
+
+  @media (max-width: @screen-sm-min) {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+
+    // ¯\_(ツ)_/¯
+    // vi får litt ekstra høyde fra et sted når vi er på mobil.
+    &-header {
+      height: 5vh;
+    }
+
+    &-liste {
+      height: 80vh;
+    }
+
+    &-footer {
+      height: 5vh;
     }
   }
 }

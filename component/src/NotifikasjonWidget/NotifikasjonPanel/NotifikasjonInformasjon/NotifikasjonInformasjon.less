@@ -30,8 +30,8 @@
 
   &-popover {
     position: absolute;
-    top: calc(@knapp-hoyde + .8rem);
-    visibility: hidden;
+    bottom: calc(@knapp-hoyde + .8rem);
+    display: none;
     z-index: 300;
     padding: 1rem;
     border: @navLysBla 2px solid;
@@ -39,13 +39,15 @@
     background-color: @navLysBlaLighten80;
 
     .popover__pil {
-      border-top: @navLysBla 2px solid;
-      border-left: @navLysBla 2px solid;
+      border-top-color: transparent;
+      border-left-color: transparent;
+      border-bottom: @navLysBla 2px solid;
+      border-right: @navLysBla 2px solid;
       background-color: @navLysBlaLighten80;
     }
 
     &__vis {
-      visibility: visible;
+      display: block;
     }
   }
 }
