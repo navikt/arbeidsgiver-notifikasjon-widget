@@ -44,6 +44,13 @@ export type Notifikasjon = Beskjed | Oppgave;
 
 export type NotifikasjonKlikketPaaResultat = BrukerKlikk | UgyldigId;
 
+export type NotifikasjonerResultat = {
+  __typename?: 'NotifikasjonerResultat';
+  notifikasjoner: Array<Notifikasjon>;
+  feilAltinn: Scalars['Boolean'];
+  feilDigiSyfo: Scalars['Boolean'];
+};
+
 export type Oppgave = {
   __typename?: 'Oppgave';
   brukerKlikk: BrukerKlikk;
@@ -63,7 +70,7 @@ export enum OppgaveTilstand {
 
 export type Query = {
   __typename?: 'Query';
-  notifikasjoner: Array<Notifikasjon>;
+  notifikasjoner: NotifikasjonerResultat;
   whoami?: Maybe<Scalars['String']>;
 };
 

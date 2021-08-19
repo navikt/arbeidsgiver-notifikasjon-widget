@@ -3,14 +3,14 @@ import { NotifikasjonBjelle } from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
 import './NotifikasjonWidget.less'
 import { ServerError, useQuery } from '@apollo/client'
-import { HENT_NOTIFIKASJONER, HentNotifikasjonerData } from '../api/graphql'
+import { HENT_NOTIFIKASJONER } from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
-import { Beskjed } from '../api/graphql-types'
+import {Notifikasjon, NotifikasjonerResultat} from '../api/graphql-types'
 
 const uleste = (
   sistLest: string | undefined,
-  notifikasjoner: Beskjed[]
-): Beskjed[] => {
+  notifikasjoner: Notifikasjon[]
+): Notifikasjon[] => {
   if (sistLest === undefined) {
     return notifikasjoner
   } else {
@@ -26,7 +26,7 @@ const NotifikasjonWidget = () => {
     'sist_lest',
     undefined
   )
-  const { data, stopPolling } = useQuery<HentNotifikasjonerData, undefined>(
+  const { data, stopPolling } = useQuery(
     HENT_NOTIFIKASJONER,
     {
       pollInterval: 60_000,
