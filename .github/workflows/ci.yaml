@@ -4,7 +4,7 @@ on:
 - workflow_dispatch
 
 jobs:
-  ci:
+  component:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -46,3 +46,37 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
+  mockserver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: install dependencies
+        run: |
+          cd server
+          npm ci
+
+      - if: github.ref == 'refs/heads/main'
+        name: publish
+        run: |
+          cd server
+          if jq --null-input --exit-status \
+              --argjson local "$(jq .version package.json)" \
+              --argjson published "$(npm view --json @navikt/arbeidsgiver-notifikasjoner-brukerapi-mock versions)" \
+              '$published | map(. == $local) | any'
+          then
+              echo "Version already published. Nothing to do."
+          else
+              npm publish --access public
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+

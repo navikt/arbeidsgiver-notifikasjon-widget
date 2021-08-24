@@ -8,10 +8,6 @@
   "files": [
     "dist/**/*"
   ],
-  "engines": {
-    "node": ">=15",
-    "npm": ">=7"
-  },
   "devDependencies": {
     "apollo-server": "^2.21.2",
     "casual": "^1.6.2",
