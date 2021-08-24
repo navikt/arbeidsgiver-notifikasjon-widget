@@ -1,9 +1,9 @@
 import {
   ApolloClient,
   InMemoryCache,
-  gql,
+  gql, TypedDocumentNode,
 } from '@apollo/client'
-import { Beskjed } from './graphql-types'
+import {Query} from "./graphql-types";
 
 export const createClient = (uri: string) =>
   new ApolloClient({
@@ -11,45 +11,45 @@ export const createClient = (uri: string) =>
     cache: new InMemoryCache()
   })
 
-export interface HentNotifikasjonerData {
-  notifikasjoner: Beskjed[]
-}
-
-export const HENT_NOTIFIKASJONER = gql`
+export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner">> = gql`
   query hentNotifikasjoner {
     notifikasjoner {
-      __typename
-      ... on Beskjed {
-        brukerKlikk {
-          id
-          klikketPaa
+        feilAltinn
+        feilDigiSyfo
+        notifikasjoner {
+            __typename
+            ... on Beskjed {
+                brukerKlikk {
+                    id
+                    klikketPaa
+                }
+                virksomhet {
+                    navn
+                    virksomhetsnummer
+                }
+                lenke
+                tekst
+                merkelapp
+                opprettetTidspunkt
+                id
+            }
+            ... on Oppgave {
+                brukerKlikk {
+                    id
+                    klikketPaa
+                }
+                virksomhet {
+                    navn
+                    virksomhetsnummer
+                }
+                lenke
+                tekst
+                merkelapp
+                opprettetTidspunkt
+                tilstand
+                id
+            }
         }
-        virksomhet {
-          navn
-          virksomhetsnummer
-        }
-        lenke
-        tekst
-        merkelapp
-        opprettetTidspunkt
-        id
-      }
-      ... on Oppgave {
-        brukerKlikk {
-          id
-          klikketPaa
-        }
-        virksomhet {
-          navn
-          virksomhetsnummer
-        }
-        lenke
-        tekst
-        merkelapp
-        opprettetTidspunkt
-        tilstand
-        id
-      }
     }
   }
 `

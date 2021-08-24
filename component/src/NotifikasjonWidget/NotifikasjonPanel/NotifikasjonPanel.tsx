@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Undertittel } from '../../typography'
 import { Close } from '@navikt/ds-icons'
+import { Alert } from '@navikt/ds-react'
 import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'
 import './NotifikasjonPanel.less'
-import { Notifikasjon } from '../../api/graphql-types'
+import { Notifikasjon, NotifikasjonerResultat } from '../../api/graphql-types'
 import { useMutation } from '@apollo/client'
 import { NOTIFIKASJONER_KLIKKET_PAA } from '../../api/graphql'
 import { NotifikasjonInformasjon } from './NotifikasjonInformasjon/NotifikasjonInformasjon'
@@ -11,10 +12,14 @@ import { NotifikasjonInformasjon } from './NotifikasjonInformasjon/NotifikasjonI
 interface Props {
   erApen: boolean
   onLukkPanel: () => void
-  notifikasjoner: Notifikasjon[] | undefined
+  notifikasjoner: NotifikasjonerResultat
 }
 
-const NotifikasjonPanel = ({ notifikasjoner, erApen, onLukkPanel }: Props) => {
+const NotifikasjonPanel = (
+  { notifikasjoner: {notifikasjoner, feilAltinn, feilDigiSyfo},
+    erApen,
+    onLukkPanel
+  }: Props) => {
   const [valgtNotifikasjon, setValgtNotifikasjon] = useState(0)
 
   const lukkPanel = () => {
@@ -94,6 +99,28 @@ const NotifikasjonPanel = ({ notifikasjoner, erApen, onLukkPanel }: Props) => {
             <Close />
           </button>
         </div>
+
+        { (feilAltinn || feilDigiSyfo) ?
+          <div className="notifikasjon_panel-feilmelding">
+            { feilAltinn ?
+              <Alert variant="error">
+                Vi opplever ustabilitet med Altinn, så du
+                ser kanskje ikke alle notifikasjoner.
+                Prøv igjen senere.
+              </Alert>
+              : null }
+
+            { feilDigiSyfo ?
+              <Alert variant="error">
+                Vi opplever feil og kan ikke hente
+                eventuelle notifikasjoner for sykemeldte
+                som du skal følge opp.
+                Prøv igjen senere.
+              </Alert>
+              : null }
+          </div>
+          : null
+        }
 
         <ul
           role='feed'

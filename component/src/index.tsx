@@ -4,6 +4,7 @@ import 'nav-frontend-core/dist/main.css'
 // import styles from './styles.module.css'
 import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget'
 import {createClient} from "./api/graphql";
+import '@navikt/ds-css'
 
 interface Props {
   apiUri: string

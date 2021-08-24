@@ -3,14 +3,14 @@ import { NotifikasjonBjelle } from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
 import './NotifikasjonWidget.less'
 import { ServerError, useQuery } from '@apollo/client'
-import { HENT_NOTIFIKASJONER, HentNotifikasjonerData } from '../api/graphql'
+import { HENT_NOTIFIKASJONER } from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
-import { Beskjed } from '../api/graphql-types'
+import { Notifikasjon, Query } from '../api/graphql-types'
 
 const uleste = (
   sistLest: string | undefined,
-  notifikasjoner: Beskjed[]
-): Beskjed[] => {
+  notifikasjoner: Notifikasjon[]
+): Notifikasjon[] => {
   if (sistLest === undefined) {
     return notifikasjoner
   } else {
@@ -21,12 +21,20 @@ const uleste = (
   }
 }
 
+const DEFAULT: Pick<Query, "notifikasjoner"> = {
+  notifikasjoner: {
+    notifikasjoner: [],
+    feilAltinn: false,
+    feilDigiSyfo: false
+  }
+}
+
 const NotifikasjonWidget = () => {
   const [sistLest, _setSistLest] = useLocalStorage<string | undefined>(
     'sist_lest',
     undefined
   )
-  const { data, stopPolling } = useQuery<HentNotifikasjonerData, undefined>(
+  const { data: { notifikasjoner: notifikasjonerResultat } = DEFAULT, stopPolling } = useQuery(
     HENT_NOTIFIKASJONER,
     {
       pollInterval: 60_000,
@@ -39,14 +47,15 @@ const NotifikasjonWidget = () => {
     }
   )
 
-  const setSistLest = useCallback(() => {
-    if (data?.notifikasjoner !== undefined && data?.notifikasjoner.length > 0) {
-      // naiv impl forutsetter sortering
-      _setSistLest(data.notifikasjoner[0].opprettetTidspunkt)
-    }
-  }, [data])
+  const { notifikasjoner } = notifikasjonerResultat;
 
-  const notifikasjoner = data?.notifikasjoner ?? []
+  const setSistLest = useCallback(() => {
+    if (notifikasjoner.length > 0) {
+      // naiv impl forutsetter sortering
+      _setSistLest(notifikasjoner[0].opprettetTidspunkt)
+    }
+  }, [notifikasjoner])
+
   const antallUleste = uleste(sistLest, notifikasjoner).length
 
   const widgetRef = useRef<HTMLDivElement>(null)
@@ -96,7 +105,7 @@ const NotifikasjonWidget = () => {
         }}
       />
       <NotifikasjonPanel
-        notifikasjoner={notifikasjoner}
+        notifikasjoner={notifikasjonerResultat}
         erApen={erApen}
         onLukkPanel={() => {
           setErApen(false)
