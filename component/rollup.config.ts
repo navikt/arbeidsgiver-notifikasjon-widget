@@ -33,7 +33,13 @@ export default {
       plugins: [
         postcssPrefixSelector({
           prefix: '.notifikasjoner_widget',
-          exclude: ['.notifikasjoner_widget']
+          exclude: ['.notifikasjoner_widget'],
+          transform(prefix, selector, prefixedSelector) {
+            if (selector.match(/^(html|body|:root)/)) {
+              return selector.replace(/^([^\s]*)/, `$1 ${prefix}`);
+            }
+            return prefixedSelector;
+          },
         })
       ],
       use: {
