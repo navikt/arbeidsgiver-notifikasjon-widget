@@ -3,7 +3,7 @@ import postcss from "rollup-plugin-postcss";
 import resolve from "@rollup/plugin-node-resolve";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import commonjs from "@rollup/plugin-commonjs"
-import npmImport from "less-plugin-npm-import";
+import NpmImport from "less-plugin-npm-import";
 import url from "@rollup/plugin-url";
 import postcssPrefixSelector from "postcss-prefix-selector"
 
@@ -35,7 +35,8 @@ export default {
           prefix: '.notifikasjoner_widget',
           exclude: ['.notifikasjoner_widget'],
           transform(prefix, selector, prefixedSelector) {
-            if (selector.match(/^(html|body|:root)/)) {
+            // tvinger css fra nav biblioteker til å være scopet til widget
+            if (selector.match(/^(html|body|:root|:export)/)) {
               return selector.replace(/^([^\s]*)/, `$1 ${prefix}`);
             }
             return prefixedSelector;
@@ -45,7 +46,7 @@ export default {
       use: {
         less: {
           plugins: [
-            new npmImport({prefix: "~"})
+            new NpmImport({prefix: "~"})
           ],
         },
         sass: {},
