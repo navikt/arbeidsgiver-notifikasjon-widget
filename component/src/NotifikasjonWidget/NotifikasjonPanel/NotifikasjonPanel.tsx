@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { Undertittel } from '../../typography'
-import { Close } from '@navikt/ds-icons'
-import { Alert } from '@navikt/ds-react'
-import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'
+import React, {useEffect, useRef, useState} from 'react'
+import {Undertittel} from '../../typography'
+import {Close} from '@navikt/ds-icons'
+import {Alert} from '@navikt/ds-react'
+import {NotifikasjonListeElement} from './NotifikasjonListeElement/NotifikasjonListeElement'
 import './NotifikasjonPanel.less'
-import { Notifikasjon, NotifikasjonerResultat } from '../../api/graphql-types'
-import { useMutation } from '@apollo/client'
-import { NOTIFIKASJONER_KLIKKET_PAA } from '../../api/graphql'
-import { NotifikasjonInformasjon } from './NotifikasjonInformasjon/NotifikasjonInformasjon'
+import {Notifikasjon, NotifikasjonerResultat} from '../../api/graphql-types'
+import {useMutation} from '@apollo/client'
+import {NOTIFIKASJONER_KLIKKET_PAA} from '../../api/graphql'
+import {NotifikasjonInformasjon} from './NotifikasjonInformasjon/NotifikasjonInformasjon'
 
 interface Props {
   erApen: boolean
@@ -16,11 +16,32 @@ interface Props {
 }
 
 const NotifikasjonPanel = (
-  { notifikasjoner: {notifikasjoner, feilAltinn, feilDigiSyfo},
+  {
+    notifikasjoner: {notifikasjoner, feilAltinn, feilDigiSyfo},
     erApen,
     onLukkPanel
   }: Props) => {
   const [valgtNotifikasjon, setValgtNotifikasjon] = useState(0)
+
+  const prevNotifikasjoner = usePrevious(notifikasjoner);
+
+  function usePrevious<T>(value: T): T | undefined {
+    const ref = useRef<T>();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+
+  useEffect(() => {
+    if (prevNotifikasjoner && prevNotifikasjoner.length) {
+      const differanseAntallNotifikasjoner = notifikasjoner.length - prevNotifikasjoner.length
+      setValgtNotifikasjon(
+        Math.min(valgtNotifikasjon + differanseAntallNotifikasjoner, notifikasjoner?.length - 1)
+      )
+    }
+  }, [notifikasjoner])
 
   const lukkPanel = () => {
     setValgtNotifikasjon(0)
@@ -60,7 +81,7 @@ const NotifikasjonPanel = (
   return (
     <div
       role='presentation'
-      onKeyDown={({ key }) => {
+      onKeyDown={({key}) => {
         if (key === 'Escape' || key === 'Esc') {
           lukkPanel()
         }
@@ -96,28 +117,28 @@ const NotifikasjonPanel = (
               lukkPanel()
             }}
           >
-            <Close />
+            <Close/>
           </button>
         </div>
 
-        { (feilAltinn || feilDigiSyfo) ?
+        {(feilAltinn || feilDigiSyfo) ?
           <div className="notifikasjon_panel-feilmelding">
-            { feilAltinn ?
+            {feilAltinn ?
               <Alert variant="error">
                 Vi opplever ustabilitet med Altinn, så du
                 ser kanskje ikke alle notifikasjoner.
                 Prøv igjen senere.
               </Alert>
-              : null }
+              : null}
 
-            { feilDigiSyfo ?
+            {feilDigiSyfo ?
               <Alert variant="error">
                 Vi opplever feil og kan ikke hente
                 eventuelle notifikasjoner for sykemeldte
                 som du skal følge opp.
                 Prøv igjen senere.
               </Alert>
-              : null }
+              : null}
           </div>
           : null
         }
@@ -143,7 +164,7 @@ const NotifikasjonPanel = (
                 }
                 onKlikketPaaLenke={(notifikasjon) => {
                   // noinspection JSIgnoredPromiseFromCall sentry håndterer unhandled promise rejections
-                  notifikasjonKlikketPaa({ variables: { id: notifikasjon.id } })
+                  notifikasjonKlikketPaa({variables: {id: notifikasjon.id}})
                   setValgtNotifikasjon(index)
                 }}
                 notifikasjon={varsel}
