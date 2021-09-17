@@ -142,10 +142,10 @@ const NotifikasjonPanel = (
                   const nesteIndex = Math.min(notifikasjoner.indexOf(notifikasjon) + 1, notifikasjoner?.length - 1);
                   setValgtNotifikasjon(notifikasjoner[nesteIndex])
                 }}
-                onKlikketPaaLenke={(notifikasjon) => {
+                onKlikketPaaLenke={(klikketPaaNotifikasjon) => {
                   // noinspection JSIgnoredPromiseFromCall sentry håndterer unhandled promise rejections
-                  notifikasjonKlikketPaa({variables: {id: notifikasjon.id}})
-                  setValgtNotifikasjon(notifikasjon)
+                  notifikasjonKlikketPaa({variables: {id: klikketPaaNotifikasjon.id}})
+                  setValgtNotifikasjon(klikketPaaNotifikasjon)
                 }}
                 notifikasjon={notifikasjon}
               />
