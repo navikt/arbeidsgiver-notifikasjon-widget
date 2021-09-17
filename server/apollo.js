@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-const fs = require('fs')
+const fs = require('fs');
+const crypto = require('crypto');
 const casual = require('casual');
 const path = require("path");
 const { ApolloServer, gql } = require("apollo-server");
@@ -63,7 +64,7 @@ const startApolloMock = () => {
 
     return {
       __typename: navn, //casual.boolean ? 'Beskjed' : 'Oppgave',
-      id: Math.random().toString(36),
+      id: crypto.randomUUID(),
       merkelapp,
       tekst,
       lenke: `#${casual.word}`,
