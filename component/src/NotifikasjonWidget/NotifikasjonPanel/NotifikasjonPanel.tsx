@@ -134,11 +134,11 @@ const NotifikasjonPanel = (
                 indeks={index}
                 erValgt={index === valgtNotifikasjon}
                 gåTilForrige={() =>
-                  setValgtNotifikasjon(Math.max(0, index - 1))
+                  setValgtNotifikasjon(Math.max(0, (notifikasjoner.indexOf(varsel)) - 1))
                 }
                 gåTilNeste={() =>
                   setValgtNotifikasjon(
-                    Math.min(index + 1, notifikasjoner?.length - 1)
+                    Math.min(notifikasjoner.indexOf(varsel) + 1, notifikasjoner?.length - 1)
                   )
                 }
                 onKlikketPaaLenke={(notifikasjon) => {

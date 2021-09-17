@@ -78,14 +78,20 @@ const startApolloMock = () => {
       }
     };
   };
+  const notifikasjoner = [...new Array(200)]
+    .map(_ => Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])))
+    .sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt))
+  const leggTilOgReturnerNotifikasjoner = () => {
+    notifikasjoner.splice(0, 0, Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])));
+    notifikasjoner.sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt));
+    return notifikasjoner
+  }
   new ApolloServer({
     typeDefs,
     mocks: {
       Query: () =>({
         notifikasjoner: () => ({
-          notifikasjoner: [...new Array(200)]
-            .map(_ => Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])))
-            .sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt))
+          notifikasjoner: leggTilOgReturnerNotifikasjoner()
         })
 
       }),
