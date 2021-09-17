@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { Undertittel } from '../../typography'
-import { Close } from '@navikt/ds-icons'
-import { Alert } from '@navikt/ds-react'
-import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'
+import React, {useEffect, useState} from 'react'
+import {Undertittel} from '../../typography'
+import {Close} from '@navikt/ds-icons'
+import {Alert} from '@navikt/ds-react'
+import {NotifikasjonListeElement} from './NotifikasjonListeElement/NotifikasjonListeElement'
 import './NotifikasjonPanel.less'
-import { Notifikasjon, NotifikasjonerResultat } from '../../api/graphql-types'
-import { useMutation } from '@apollo/client'
-import { NOTIFIKASJONER_KLIKKET_PAA } from '../../api/graphql'
-import { NotifikasjonInformasjon } from './NotifikasjonInformasjon/NotifikasjonInformasjon'
+import {Notifikasjon, NotifikasjonerResultat} from '../../api/graphql-types'
+import {useMutation} from '@apollo/client'
+import {NOTIFIKASJONER_KLIKKET_PAA} from '../../api/graphql'
+import {NotifikasjonInformasjon} from './NotifikasjonInformasjon/NotifikasjonInformasjon'
 
 interface Props {
   erApen: boolean
@@ -16,14 +16,15 @@ interface Props {
 }
 
 const NotifikasjonPanel = (
-  { notifikasjoner: {notifikasjoner, feilAltinn, feilDigiSyfo},
+  {
+    notifikasjoner: {notifikasjoner, feilAltinn, feilDigiSyfo},
     erApen,
     onLukkPanel
   }: Props) => {
-  const [valgtNotifikasjon, setValgtNotifikasjon] = useState(0)
+  const [valgtNotifikasjon, setValgtNotifikasjon] = useState(notifikasjoner[0])
 
   const lukkPanel = () => {
-    setValgtNotifikasjon(0)
+    setValgtNotifikasjon(notifikasjoner[0])
     onLukkPanel()
   }
 
@@ -32,7 +33,7 @@ const NotifikasjonPanel = (
   }
   const focusNotifikasjon = () => {
     document
-      .getElementById('notifikasjon_liste_element-indeks-' + valgtNotifikasjon)
+      .getElementById('notifikasjon_liste_element-id-' + valgtNotifikasjon.id)
       ?.focus()
   }
   const focusMoreInfo = () => {
@@ -45,6 +46,7 @@ const NotifikasjonPanel = (
         'notifikasjon_panel-liste'
       )
       containerElement?.scrollTo(0, 0)
+      setValgtNotifikasjon(notifikasjoner[0])
       focusNotifikasjon()
     }
   }, [erApen])
@@ -53,14 +55,14 @@ const NotifikasjonPanel = (
     if (erApen) {
       focusNotifikasjon()
     }
-  }, [erApen, valgtNotifikasjon])
+  }, [erApen, valgtNotifikasjon, notifikasjoner])
 
   const [notifikasjonKlikketPaa] = useMutation(NOTIFIKASJONER_KLIKKET_PAA)
 
   return (
     <div
       role='presentation'
-      onKeyDown={({ key }) => {
+      onKeyDown={({key}) => {
         if (key === 'Escape' || key === 'Esc') {
           lukkPanel()
         }
@@ -96,28 +98,28 @@ const NotifikasjonPanel = (
               lukkPanel()
             }}
           >
-            <Close />
+            <Close/>
           </button>
         </div>
 
-        { (feilAltinn || feilDigiSyfo) ?
+        {(feilAltinn || feilDigiSyfo) ?
           <div className="notifikasjon_panel-feilmelding">
-            { feilAltinn ?
+            {feilAltinn ?
               <Alert variant="error">
                 Vi opplever ustabilitet med Altinn, så du
                 ser kanskje ikke alle notifikasjoner.
                 Prøv igjen senere.
               </Alert>
-              : null }
+              : null}
 
-            { feilDigiSyfo ?
+            {feilDigiSyfo ?
               <Alert variant="error">
                 Vi opplever feil og kan ikke hente
                 eventuelle notifikasjoner for sykemeldte
                 som du skal følge opp.
                 Prøv igjen senere.
               </Alert>
-              : null }
+              : null}
           </div>
           : null
         }
@@ -127,26 +129,25 @@ const NotifikasjonPanel = (
           id='notifikasjon_panel-liste'
           className='notifikasjon_panel-liste'
         >
-          {notifikasjoner?.map((varsel: Notifikasjon, index: number) => (
+          {notifikasjoner?.map((notifikasjon: Notifikasjon, index: number) => (
             <li key={index} role='article'>
               <NotifikasjonListeElement
                 antall={notifikasjoner?.length}
-                indeks={index}
-                erValgt={index === valgtNotifikasjon}
-                gåTilForrige={() =>
-                  setValgtNotifikasjon(Math.max(0, (notifikasjoner.indexOf(varsel)) - 1))
-                }
-                gåTilNeste={() =>
-                  setValgtNotifikasjon(
-                    Math.min(notifikasjoner.indexOf(varsel) + 1, notifikasjoner?.length - 1)
-                  )
-                }
+                erValgt={notifikasjon === valgtNotifikasjon}
+                gåTilForrige={() => {
+                  const forrigeIndex = Math.max(0, (notifikasjoner.indexOf(notifikasjon)) - 1);
+                  setValgtNotifikasjon(notifikasjoner[forrigeIndex]);
+                }}
+                gåTilNeste={() => {
+                  const nesteIndex = Math.min(notifikasjoner.indexOf(notifikasjon) + 1, notifikasjoner?.length - 1);
+                  setValgtNotifikasjon(notifikasjoner[nesteIndex])
+                }}
                 onKlikketPaaLenke={(notifikasjon) => {
                   // noinspection JSIgnoredPromiseFromCall sentry håndterer unhandled promise rejections
-                  notifikasjonKlikketPaa({ variables: { id: notifikasjon.id } })
-                  setValgtNotifikasjon(index)
+                  notifikasjonKlikketPaa({variables: {id: notifikasjon.id}})
+                  setValgtNotifikasjon(notifikasjon)
                 }}
-                notifikasjon={varsel}
+                notifikasjon={notifikasjon}
               />
             </li>
           ))}

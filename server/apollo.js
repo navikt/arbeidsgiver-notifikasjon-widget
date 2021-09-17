@@ -63,6 +63,7 @@ const startApolloMock = () => {
 
     return {
       __typename: navn, //casual.boolean ? 'Beskjed' : 'Oppgave',
+      id: Math.random().toString(36),
       merkelapp,
       tekst,
       lenke: `#${casual.word}`,
@@ -78,7 +79,7 @@ const startApolloMock = () => {
       }
     };
   };
-  const notifikasjoner = [...new Array(200)]
+  const notifikasjoner = [...new Array(10)]
     .map(_ => Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])))
     .sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt))
   const leggTilOgReturnerNotifikasjoner = () => {
