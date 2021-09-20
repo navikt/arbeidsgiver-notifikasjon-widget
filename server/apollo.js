@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 const fs = require('fs');
-const crypto = require('crypto');
 const casual = require('casual');
 const path = require("path");
-const { ApolloServer, gql } = require("apollo-server");
+const {ApolloServer, gql} = require("apollo-server");
 
 const roundDate = (millis) => {
   const date = new Date();
@@ -64,7 +63,7 @@ const startApolloMock = () => {
 
     return {
       __typename: navn, //casual.boolean ? 'Beskjed' : 'Oppgave',
-      id: crypto.randomUUID(),
+      id: Math.random().toString(36),
       merkelapp,
       tekst,
       lenke: `#${casual.word}`,
@@ -85,13 +84,16 @@ const startApolloMock = () => {
     .sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt))
   const leggTilOgReturnerNotifikasjoner = () => {
     notifikasjoner.splice(0, 0, Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])));
+    if (notifikasjoner.length > 200) {
+      notifikasjoner.splice(0, notifikasjoner.length - 200)
+    }
     notifikasjoner.sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt));
     return notifikasjoner
   }
   new ApolloServer({
     typeDefs,
     mocks: {
-      Query: () =>({
+      Query: () => ({
         notifikasjoner: () => ({
           notifikasjoner: leggTilOgReturnerNotifikasjoner()
         })
@@ -107,7 +109,7 @@ const startApolloMock = () => {
   }).listen({
     port: 8081,
     path: '/api/graphql',
-  }).then(({ url }) => {
+  }).then(({url}) => {
     console.log(`🚀 gql server ready at ${url}`)
   });
 }
