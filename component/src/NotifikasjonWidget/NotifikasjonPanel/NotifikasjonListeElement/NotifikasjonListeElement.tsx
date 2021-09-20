@@ -10,7 +10,6 @@ import { Next as HoyreChevron } from '@navikt/ds-icons'
 
 interface Props {
   notifikasjon: Notifikasjon
-  indeks: number
   antall: number
   onKlikketPaaLenke: (notifikasjon: Notifikasjon) => void
   onTabEvent?: (shiftKey: boolean) => void
@@ -53,7 +52,7 @@ export const NotifikasjonListeElement = (props: Props) => {
       tabIndex={props.erValgt ? 0 : -1}
       href={props.notifikasjon.lenke}
       className='notifikasjon_liste_element'
-      id={'notifikasjon_liste_element-indeks-' + props.indeks}
+      id={'notifikasjon_liste_element-id-' + props.notifikasjon.id}
       onKeyDown={(event) => {
         if (event.key === 'Tab') {
           props.onTabEvent?.(event.shiftKey)

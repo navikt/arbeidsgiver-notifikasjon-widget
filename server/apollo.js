@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-const fs = require('fs')
+const fs = require('fs');
+const crypto = require('crypto');
 const casual = require('casual');
 const path = require("path");
 const { ApolloServer, gql } = require("apollo-server");
@@ -63,6 +64,7 @@ const startApolloMock = () => {
 
     return {
       __typename: navn, //casual.boolean ? 'Beskjed' : 'Oppgave',
+      id: crypto.randomUUID(),
       merkelapp,
       tekst,
       lenke: `#${casual.word}`,
@@ -78,14 +80,20 @@ const startApolloMock = () => {
       }
     };
   };
+  const notifikasjoner = [...new Array(10)]
+    .map(_ => Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])))
+    .sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt))
+  const leggTilOgReturnerNotifikasjoner = () => {
+    notifikasjoner.splice(0, 0, Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])));
+    notifikasjoner.sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt));
+    return notifikasjoner
+  }
   new ApolloServer({
     typeDefs,
     mocks: {
       Query: () =>({
         notifikasjoner: () => ({
-          notifikasjoner: [...new Array(200)]
-            .map(_ => Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])))
-            .sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt))
+          notifikasjoner: leggTilOgReturnerNotifikasjoner()
         })
 
       }),
