@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react'
 import { NotifikasjonBjelle } from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
 import './NotifikasjonWidget.less'
@@ -6,6 +6,7 @@ import { ServerError, useQuery } from '@apollo/client'
 import { HENT_NOTIFIKASJONER } from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { Notifikasjon, Query } from '../api/graphql-types'
+import {AmplitudeLoggerContext} from "./AmplitudeProvider";
 
 const uleste = (
   sistLest: string | undefined,
@@ -34,6 +35,9 @@ const NotifikasjonWidget = () => {
     'sist_lest',
     undefined
   )
+
+  const {loggLukking, loggÅpning} = useContext(AmplitudeLoggerContext);
+
   const { data: { notifikasjoner: notifikasjonerResultat } = DEFAULT, stopPolling } = useQuery(
     HENT_NOTIFIKASJONER,
     {
@@ -48,7 +52,6 @@ const NotifikasjonWidget = () => {
   )
 
   const { notifikasjoner } = notifikasjonerResultat;
-
   const setSistLest = useCallback(() => {
     if (notifikasjoner.length > 0) {
       // naiv impl forutsetter sortering
@@ -62,6 +65,15 @@ const NotifikasjonWidget = () => {
   const bjelleRef = useRef<HTMLButtonElement>(null)
   const [erApen, setErApen] = useState(false)
 
+  const lukkPanelMedLogging = () =>{
+    loggLukking()
+    setErApen(false)
+  }
+  const åpnePanelMedLogging = (antallNotifikasjoner:number, antallUlesteNotifikasjoner:number) =>{
+    loggÅpning(antallNotifikasjoner,antallUlesteNotifikasjoner)
+    setErApen(true)
+  }
+
   const handleFocusOutside: { (event: MouseEvent | KeyboardEvent): void } = (
     e: MouseEvent | KeyboardEvent
   ) => {
@@ -70,7 +82,7 @@ const NotifikasjonWidget = () => {
     if (node && node !== e.target && node.contains(e.target as HTMLElement)) {
       return
     }
-    setErApen(false)
+    lukkPanelMedLogging()
   }
 
   useEffect(() => {
@@ -97,10 +109,10 @@ const NotifikasjonWidget = () => {
         focusableRef={bjelleRef}
         onClick={() => {
           if (erApen) {
-            setErApen(false)
+            lukkPanelMedLogging()
           } else {
             setSistLest()
-            setErApen(true)
+            åpnePanelMedLogging(notifikasjoner.length,antallUleste)
           }
         }}
       />
@@ -108,7 +120,7 @@ const NotifikasjonWidget = () => {
         notifikasjoner={notifikasjonerResultat}
         erApen={erApen}
         onLukkPanel={() => {
-          setErApen(false)
+          lukkPanelMedLogging()
           bjelleRef.current?.focus()
         }}
       />

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Undertekst, UndertekstBold } from '../../../typography'
 import { datotekst } from '../dato-funksjoner'
 import './NotifikasjonListeElement.less'
@@ -7,6 +7,7 @@ import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
 import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
 import { Next as HoyreChevron } from '@navikt/ds-icons'
+import {AmplitudeLoggerContext} from "../../AmplitudeProvider";
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -20,6 +21,8 @@ interface Props {
 
 export const NotifikasjonListeElement = (props: Props) => {
   const notifikasjon = props.notifikasjon
+
+  const {loggPilTastNavigasjon} = useContext(AmplitudeLoggerContext);
 
   const date = new Date(notifikasjon.opprettetTidspunkt)
 
@@ -54,6 +57,7 @@ export const NotifikasjonListeElement = (props: Props) => {
       className='notifikasjon_liste_element'
       id={'notifikasjon_liste_element-id-' + props.notifikasjon.id}
       onKeyDown={(event) => {
+        loggPilTastNavigasjon()
         if (event.key === 'Tab') {
           props.onTabEvent?.(event.shiftKey)
         }
