@@ -5,20 +5,17 @@ import 'nav-frontend-core/dist/main.css'
 import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget'
 import {createClient} from "./api/graphql";
 import '@navikt/ds-css'
-import {AmplitudeProvider} from "./NotifikasjonWidget/AmplitudeProvider";
 
 
-interface Props {
+export type Props  = {
   apiUri: string,
-  lokal: boolean
+  miljo: "local" | "dev-gcp" | "prod-gcp";
 }
 
-export const NotifikasjonWidget = (props: Props) => {
+export const NotifikasjonWidget = (props:Props) => {
   return (
     <ApolloProvider client={createClient(props.apiUri)}>
-      <AmplitudeProvider lokal={props.lokal}>
       <NotifikasjonWidgetComponent />
-      </AmplitudeProvider>
     </ApolloProvider>
   )
 }

@@ -1,4 +1,5 @@
 import amplitude from 'amplitude-js';
+import {gittMiljo} from "./environment";
 
 const getApiKey = () => {
   return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -18,15 +19,18 @@ const createAmpltiudeInstance = () => {
   return instance;
 }
 
-export default (lokal: boolean): amplitude.AmplitudeClient => {
-  return !lokal ? createAmpltiudeInstance() : {
+export default gittMiljo({
+  prod: () => createAmpltiudeInstance(),
+  dev: () => createAmpltiudeInstance(),
+  other: () => ({
     logEvent: (event: string, data?: any) => {
       console.log(`${event}: ${JSON.stringify(data)}`, {event, data})
     },
-    setUserProperties: (userProps: object) => {
+    setUserProperties:(userProps:object) => {
       console.log(`set userprops: ${JSON.stringify(userProps)}`)
     }
-  } as amplitude.AmplitudeClient
-};
+  } as amplitude.AmplitudeClient )
+})();
+
 
 

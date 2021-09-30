@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, { useEffect, useState} from 'react'
 import {Undertittel} from '../../typography'
 import {Close} from '@navikt/ds-icons'
 import {Alert} from '@navikt/ds-react'
@@ -8,7 +8,7 @@ import {Notifikasjon, NotifikasjonerResultat} from '../../api/graphql-types'
 import {useMutation} from '@apollo/client'
 import {NOTIFIKASJONER_KLIKKET_PAA} from '../../api/graphql'
 import {NotifikasjonInformasjon} from './NotifikasjonInformasjon/NotifikasjonInformasjon'
-import {AmplitudeLoggerContext} from "../AmplitudeProvider";
+import {loggNotifikasjonKlikk} from "../../utils/funksjonerForAmplitudeLogging";
 
 interface Props {
   erApen: boolean
@@ -23,8 +23,6 @@ const NotifikasjonPanel = (
     onLukkPanel
   }: Props) => {
   const [valgtNotifikasjon, setValgtNotifikasjon] = useState(notifikasjoner[0])
-
-  const {loggNotifikasjonKlikk} = useContext(AmplitudeLoggerContext);
 
   const lukkPanel = () => {
     setValgtNotifikasjon(notifikasjoner[0])
@@ -147,7 +145,7 @@ const NotifikasjonPanel = (
                 }}
                 onKlikketPaaLenke={(klikketPaaNotifikasjon) => {
                   // noinspection JSIgnoredPromiseFromCall sentry håndterer unhandled promise rejections
-                  loggNotifikasjonKlikk(klikketPaaNotifikasjon.brukerKlikk.klikketPaa,notifikasjoner.indexOf(notifikasjon))
+                  loggNotifikasjonKlikk(klikketPaaNotifikasjon.brukerKlikk.klikketPaa, notifikasjoner.indexOf(notifikasjon))
                   notifikasjonKlikketPaa({variables: {id: klikketPaaNotifikasjon.id}})
                   setValgtNotifikasjon(klikketPaaNotifikasjon)
                 }}

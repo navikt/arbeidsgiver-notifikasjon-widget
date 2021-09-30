@@ -1,12 +1,12 @@
-import React, {useCallback, useContext, useEffect, useRef, useState} from 'react'
-import { NotifikasjonBjelle } from './NotifikasjonBjelle/NotifikasjonBjelle'
+import React, {useCallback, useEffect, useRef, useState} from 'react'
+import {NotifikasjonBjelle} from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
 import './NotifikasjonWidget.less'
-import { ServerError, useQuery } from '@apollo/client'
-import { HENT_NOTIFIKASJONER } from '../api/graphql'
+import {ServerError, useQuery} from '@apollo/client'
+import {HENT_NOTIFIKASJONER} from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
-import { Notifikasjon, Query } from '../api/graphql-types'
-import {AmplitudeLoggerContext} from "./AmplitudeProvider";
+import {Notifikasjon, Query} from '../api/graphql-types'
+import {loggLukking, loggÅpning} from "../utils/funksjonerForAmplitudeLogging";
 
 const uleste = (
   sistLest: string | undefined,
@@ -16,7 +16,7 @@ const uleste = (
     return notifikasjoner
   } else {
     return notifikasjoner.filter(
-      ({ opprettetTidspunkt }) =>
+      ({opprettetTidspunkt}) =>
         new Date(opprettetTidspunkt).getTime() > new Date(sistLest).getTime()
     )
   }
@@ -36,9 +36,7 @@ const NotifikasjonWidget = () => {
     undefined
   )
 
-  const {loggLukking, loggÅpning} = useContext(AmplitudeLoggerContext);
-
-  const { data: { notifikasjoner: notifikasjonerResultat } = DEFAULT, stopPolling } = useQuery(
+  const {data: {notifikasjoner: notifikasjonerResultat} = DEFAULT, stopPolling} = useQuery(
     HENT_NOTIFIKASJONER,
     {
       pollInterval: 60_000,
@@ -51,7 +49,7 @@ const NotifikasjonWidget = () => {
     }
   )
 
-  const { notifikasjoner } = notifikasjonerResultat;
+  const {notifikasjoner} = notifikasjonerResultat;
   const setSistLest = useCallback(() => {
     if (notifikasjoner.length > 0) {
       // naiv impl forutsetter sortering
@@ -65,12 +63,13 @@ const NotifikasjonWidget = () => {
   const bjelleRef = useRef<HTMLButtonElement>(null)
   const [erApen, setErApen] = useState(false)
 
-  const lukkPanelMedLogging = () =>{
-    loggLukking()
-    setErApen(false)
-  }
-  const åpnePanelMedLogging = (antallNotifikasjoner:number, antallUlesteNotifikasjoner:number) =>{
-    loggÅpning(antallNotifikasjoner,antallUlesteNotifikasjoner)
+ const lukkPanelMedLogging = () =>{
+     loggLukking()
+     setErApen(false)
+ }
+
+  const åpnePanelMedLogging = (antallNotifikasjoner: number, antallUlesteNotifikasjoner: number) => {
+    loggÅpning(antallNotifikasjoner, antallUlesteNotifikasjoner)
     setErApen(true)
   }
 
@@ -82,7 +81,9 @@ const NotifikasjonWidget = () => {
     if (node && node !== e.target && node.contains(e.target as HTMLElement)) {
       return
     }
-    lukkPanelMedLogging()
+    if(erApen) {
+      lukkPanelMedLogging()
+    }
   }
 
   useEffect(() => {
@@ -90,7 +91,8 @@ const NotifikasjonWidget = () => {
     return () => {
       document.removeEventListener('click', handleFocusOutside)
     }
-  }, [])
+  }, [handleFocusOutside])
+
   useEffect(() => {
     if (erApen) {
       bjelleRef.current?.scrollIntoView({
@@ -112,7 +114,7 @@ const NotifikasjonWidget = () => {
             lukkPanelMedLogging()
           } else {
             setSistLest()
-            åpnePanelMedLogging(notifikasjoner.length,antallUleste)
+            åpnePanelMedLogging(notifikasjoner.length, antallUleste)
           }
         }}
       />
