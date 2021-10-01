@@ -15,7 +15,7 @@ const App = () => {
         organisasjoner={MOCK_ORGANISASJONER}
         onOrganisasjonChange={() => null}
         history={history}>
-        <NotifikasjonWidget apiUri="http://localhost:8081/api/graphql" lokal={true} />
+        <NotifikasjonWidget apiUri="http://localhost:8081/api/graphql" miljo={"local"} />
       </Bedriftsmeny>
     </Router>
   </div>

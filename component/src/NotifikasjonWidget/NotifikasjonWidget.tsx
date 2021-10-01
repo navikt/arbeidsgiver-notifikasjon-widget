@@ -63,14 +63,16 @@ const NotifikasjonWidget = () => {
   const bjelleRef = useRef<HTMLButtonElement>(null)
   const [erApen, setErApen] = useState(false)
 
- const lukkPanelMedLogging = () =>{
-     loggLukking()
-     setErApen(false)
+ const lukkÅpentPanelMedLogging = (erApen:boolean) =>{
+    if(erApen){
+      loggLukking()
+      setErApen(false)
+    }
  }
-
   const åpnePanelMedLogging = (antallNotifikasjoner: number, antallUlesteNotifikasjoner: number) => {
     loggÅpning(antallNotifikasjoner, antallUlesteNotifikasjoner)
     setErApen(true)
+    setSistLest()
   }
 
   const handleFocusOutside: { (event: MouseEvent | KeyboardEvent): void } = (
@@ -81,9 +83,7 @@ const NotifikasjonWidget = () => {
     if (node && node !== e.target && node.contains(e.target as HTMLElement)) {
       return
     }
-    if(erApen) {
-      lukkPanelMedLogging()
-    }
+      lukkÅpentPanelMedLogging(erApen)
   }
 
   useEffect(() => {
@@ -110,19 +110,15 @@ const NotifikasjonWidget = () => {
         erApen={erApen}
         focusableRef={bjelleRef}
         onClick={() => {
-          if (erApen) {
-            lukkPanelMedLogging()
-          } else {
-            setSistLest()
-            åpnePanelMedLogging(notifikasjoner.length, antallUleste)
-          }
-        }}
+          erApen ? lukkÅpentPanelMedLogging(erApen) : åpnePanelMedLogging(notifikasjoner.length, antallUleste)
+        }
+        }
       />
       <NotifikasjonPanel
         notifikasjoner={notifikasjonerResultat}
         erApen={erApen}
         onLukkPanel={() => {
-          lukkPanelMedLogging()
+          lukkÅpentPanelMedLogging(erApen)
           bjelleRef.current?.focus()
         }}
       />
