@@ -1,13 +1,13 @@
 import React from 'react'
-import {Undertekst, UndertekstBold} from '../../../typography'
-import {datotekst} from '../dato-funksjoner'
+import { Undertekst, UndertekstBold } from '../../../typography'
+import { datotekst } from '../dato-funksjoner'
 import './NotifikasjonListeElement.less'
-import {Notifikasjon, OppgaveTilstand} from '../../../api/graphql-types'
+import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
 import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
 import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
-import {Next as HoyreChevron} from '@navikt/ds-icons'
-import {loggPilTastNavigasjon} from "../../../utils/funksjonerForAmplitudeLogging";
+import { Next as HoyreChevron } from '@navikt/ds-icons'
+import { loggPilTastNavigasjon } from '../../../utils/funksjonerForAmplitudeLogging'
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -27,14 +27,14 @@ export const NotifikasjonListeElement = (props: Props) => {
   let ikon
   switch (props.notifikasjon.__typename) {
     case 'Beskjed':
-      ikon = <IkonBeskjed/>
+      ikon = <IkonBeskjed />
       break
     case 'Oppgave':
       ikon =
         props.notifikasjon.tilstand === OppgaveTilstand.Utfoert ? (
-          <IkonOppgaveUtfoert/>
+          <IkonOppgaveUtfoert />
         ) : (
-          <IkonOppgave/>
+          <IkonOppgave />
         )
       break
     default:
@@ -83,7 +83,7 @@ export const NotifikasjonListeElement = (props: Props) => {
           aria-label={notifikasjon.brukerKlikk?.klikketPaa ? '' : 'ikke besøkt'}
         />
         <div className='notifikasjon_liste_element-lenkepanel-chevron'>
-          <HoyreChevron/>
+          <HoyreChevron />
         </div>
       </div>
 

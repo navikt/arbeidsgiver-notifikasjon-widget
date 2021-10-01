@@ -1,12 +1,12 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react'
-import {NotifikasjonBjelle} from './NotifikasjonBjelle/NotifikasjonBjelle'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { NotifikasjonBjelle } from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
 import './NotifikasjonWidget.less'
-import {ServerError, useQuery} from '@apollo/client'
-import {HENT_NOTIFIKASJONER} from '../api/graphql'
+import { ServerError, useQuery } from '@apollo/client'
+import { HENT_NOTIFIKASJONER } from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
-import {Notifikasjon, Query} from '../api/graphql-types'
-import {loggLukking, loggÅpning} from "../utils/funksjonerForAmplitudeLogging";
+import { Notifikasjon, Query } from '../api/graphql-types'
+import { loggLukking, loggÅpning } from '../utils/funksjonerForAmplitudeLogging'
 
 const uleste = (
   sistLest: string | undefined,
@@ -16,13 +16,13 @@ const uleste = (
     return notifikasjoner
   } else {
     return notifikasjoner.filter(
-      ({opprettetTidspunkt}) =>
+      ({ opprettetTidspunkt }) =>
         new Date(opprettetTidspunkt).getTime() > new Date(sistLest).getTime()
     )
   }
 }
 
-const DEFAULT: Pick<Query, "notifikasjoner"> = {
+const DEFAULT: Pick<Query, 'notifikasjoner'> = {
   notifikasjoner: {
     notifikasjoner: [],
     feilAltinn: false,
@@ -36,7 +36,7 @@ const NotifikasjonWidget = () => {
     undefined
   )
 
-  const {data: {notifikasjoner: notifikasjonerResultat} = DEFAULT, stopPolling} = useQuery(
+  const { data: { notifikasjoner: notifikasjonerResultat } = DEFAULT, stopPolling } = useQuery(
     HENT_NOTIFIKASJONER,
     {
       pollInterval: 60_000,
@@ -49,7 +49,7 @@ const NotifikasjonWidget = () => {
     }
   )
 
-  const {notifikasjoner} = notifikasjonerResultat;
+  const { notifikasjoner } = notifikasjonerResultat
   const setSistLest = useCallback(() => {
     if (notifikasjoner.length > 0) {
       // naiv impl forutsetter sortering
@@ -63,12 +63,12 @@ const NotifikasjonWidget = () => {
   const bjelleRef = useRef<HTMLButtonElement>(null)
   const [erApen, setErApen] = useState(false)
 
- const lukkÅpentPanelMedLogging = () =>{
-    if(erApen){
+  const lukkÅpentPanelMedLogging = () => {
+    if (erApen) {
       loggLukking()
       setErApen(false)
     }
- }
+  }
   const åpnePanelMedLogging = (antallNotifikasjoner: number, antallUlesteNotifikasjoner: number) => {
     loggÅpning(antallNotifikasjoner, antallUlesteNotifikasjoner)
     setErApen(true)
@@ -83,7 +83,7 @@ const NotifikasjonWidget = () => {
     if (node && node !== e.target && node.contains(e.target as HTMLElement)) {
       return
     }
-      lukkÅpentPanelMedLogging()
+    lukkÅpentPanelMedLogging()
   }
 
   useEffect(() => {

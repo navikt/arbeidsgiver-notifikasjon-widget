@@ -1,5 +1,5 @@
 export interface Environment {
-    MILJO: "local" | "dev-gcp" | "prod-gcp"
+    MILJO: 'local' | 'dev-gcp' | 'prod-gcp'
 }
 
 const environment: Environment = {
