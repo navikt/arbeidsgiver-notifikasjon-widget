@@ -63,7 +63,7 @@ const NotifikasjonWidget = () => {
   const bjelleRef = useRef<HTMLButtonElement>(null)
   const [erApen, setErApen] = useState(false)
 
- const lukkÅpentPanelMedLogging = (erApen:boolean) =>{
+ const lukkÅpentPanelMedLogging = () =>{
     if(erApen){
       loggLukking()
       setErApen(false)
@@ -83,7 +83,7 @@ const NotifikasjonWidget = () => {
     if (node && node !== e.target && node.contains(e.target as HTMLElement)) {
       return
     }
-      lukkÅpentPanelMedLogging(erApen)
+      lukkÅpentPanelMedLogging()
   }
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const NotifikasjonWidget = () => {
         erApen={erApen}
         focusableRef={bjelleRef}
         onClick={() => {
-          erApen ? lukkÅpentPanelMedLogging(erApen) : åpnePanelMedLogging(notifikasjoner.length, antallUleste)
+          erApen ? lukkÅpentPanelMedLogging() : åpnePanelMedLogging(notifikasjoner.length, antallUleste)
         }
         }
       />
@@ -118,7 +118,7 @@ const NotifikasjonWidget = () => {
         notifikasjoner={notifikasjonerResultat}
         erApen={erApen}
         onLukkPanel={() => {
-          lukkÅpentPanelMedLogging(erApen)
+          lukkÅpentPanelMedLogging()
           bjelleRef.current?.focus()
         }}
       />
