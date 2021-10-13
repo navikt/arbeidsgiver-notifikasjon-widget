@@ -6,6 +6,7 @@ import { ServerError, useQuery } from '@apollo/client'
 import { HENT_NOTIFIKASJONER } from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { Notifikasjon, Query } from '../api/graphql-types'
+import { loggLukking, loggÅpning } from '../utils/funksjonerForAmplitudeLogging'
 
 const uleste = (
   sistLest: string | undefined,
@@ -21,7 +22,7 @@ const uleste = (
   }
 }
 
-const DEFAULT: Pick<Query, "notifikasjoner"> = {
+const DEFAULT: Pick<Query, 'notifikasjoner'> = {
   notifikasjoner: {
     notifikasjoner: [],
     feilAltinn: false,
@@ -34,6 +35,7 @@ const NotifikasjonWidget = () => {
     'sist_lest',
     undefined
   )
+
   const { data: { notifikasjoner: notifikasjonerResultat } = DEFAULT, stopPolling } = useQuery(
     HENT_NOTIFIKASJONER,
     {
@@ -47,8 +49,7 @@ const NotifikasjonWidget = () => {
     }
   )
 
-  const { notifikasjoner } = notifikasjonerResultat;
-
+  const { notifikasjoner } = notifikasjonerResultat
   const setSistLest = useCallback(() => {
     if (notifikasjoner.length > 0) {
       // naiv impl forutsetter sortering
@@ -62,6 +63,18 @@ const NotifikasjonWidget = () => {
   const bjelleRef = useRef<HTMLButtonElement>(null)
   const [erApen, setErApen] = useState(false)
 
+  const lukkÅpentPanelMedLogging = () => {
+    if (erApen) {
+      loggLukking()
+      setErApen(false)
+    }
+  }
+  const åpnePanelMedLogging = (antallNotifikasjoner: number, antallUlesteNotifikasjoner: number) => {
+    loggÅpning(antallNotifikasjoner, antallUlesteNotifikasjoner)
+    setErApen(true)
+    setSistLest()
+  }
+
   const handleFocusOutside: { (event: MouseEvent | KeyboardEvent): void } = (
     e: MouseEvent | KeyboardEvent
   ) => {
@@ -70,7 +83,7 @@ const NotifikasjonWidget = () => {
     if (node && node !== e.target && node.contains(e.target as HTMLElement)) {
       return
     }
-    setErApen(false)
+    lukkÅpentPanelMedLogging()
   }
 
   useEffect(() => {
@@ -78,7 +91,8 @@ const NotifikasjonWidget = () => {
     return () => {
       document.removeEventListener('click', handleFocusOutside)
     }
-  }, [])
+  }, [handleFocusOutside])
+
   useEffect(() => {
     if (erApen) {
       bjelleRef.current?.scrollIntoView({
@@ -96,19 +110,15 @@ const NotifikasjonWidget = () => {
         erApen={erApen}
         focusableRef={bjelleRef}
         onClick={() => {
-          if (erApen) {
-            setErApen(false)
-          } else {
-            setSistLest()
-            setErApen(true)
-          }
-        }}
+          erApen ? lukkÅpentPanelMedLogging() : åpnePanelMedLogging(notifikasjoner.length, antallUleste)
+        }
+        }
       />
       <NotifikasjonPanel
         notifikasjoner={notifikasjonerResultat}
         erApen={erApen}
         onLukkPanel={() => {
-          setErApen(false)
+          lukkÅpentPanelMedLogging()
           bjelleRef.current?.focus()
         }}
       />

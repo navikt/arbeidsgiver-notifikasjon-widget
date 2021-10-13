@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from 'react'
-import {Undertittel} from '../../typography'
-import {Close} from '@navikt/ds-icons'
-import {Alert} from '@navikt/ds-react'
-import {NotifikasjonListeElement} from './NotifikasjonListeElement/NotifikasjonListeElement'
+import React, { useEffect, useState } from 'react'
+import { Undertittel } from '../../typography'
+import { Close } from '@navikt/ds-icons'
+import { Alert } from '@navikt/ds-react'
+import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'
 import './NotifikasjonPanel.less'
-import {Notifikasjon, NotifikasjonerResultat} from '../../api/graphql-types'
-import {useMutation} from '@apollo/client'
-import {NOTIFIKASJONER_KLIKKET_PAA} from '../../api/graphql'
-import {NotifikasjonInformasjon} from './NotifikasjonInformasjon/NotifikasjonInformasjon'
+import { Notifikasjon, NotifikasjonerResultat } from '../../api/graphql-types'
+import { useMutation } from '@apollo/client'
+import { NOTIFIKASJONER_KLIKKET_PAA } from '../../api/graphql'
+import { NotifikasjonInformasjon } from './NotifikasjonInformasjon/NotifikasjonInformasjon'
+import { loggNotifikasjonKlikk } from '../../utils/funksjonerForAmplitudeLogging'
 
 interface Props {
   erApen: boolean
@@ -17,7 +18,7 @@ interface Props {
 
 const NotifikasjonPanel = (
   {
-    notifikasjoner: {notifikasjoner, feilAltinn, feilDigiSyfo},
+    notifikasjoner: { notifikasjoner, feilAltinn, feilDigiSyfo },
     erApen,
     onLukkPanel
   }: Props) => {
@@ -62,7 +63,7 @@ const NotifikasjonPanel = (
   return (
     <div
       role='presentation'
-      onKeyDown={({key}) => {
+      onKeyDown={({ key }) => {
         if (key === 'Escape' || key === 'Esc') {
           lukkPanel()
         }
@@ -98,14 +99,14 @@ const NotifikasjonPanel = (
               lukkPanel()
             }}
           >
-            <Close/>
+            <Close />
           </button>
         </div>
 
         {(feilAltinn || feilDigiSyfo) ?
-          <div className="notifikasjon_panel-feilmelding">
+          <div className='notifikasjon_panel-feilmelding'>
             {feilAltinn ?
-              <Alert variant="error">
+              <Alert variant='error'>
                 Vi opplever ustabilitet med Altinn, så du
                 ser kanskje ikke alle notifikasjoner.
                 Prøv igjen senere.
@@ -113,7 +114,7 @@ const NotifikasjonPanel = (
               : null}
 
             {feilDigiSyfo ?
-              <Alert variant="error">
+              <Alert variant='error'>
                 Vi opplever feil og kan ikke hente
                 eventuelle notifikasjoner for sykemeldte
                 som du skal følge opp.
@@ -135,16 +136,17 @@ const NotifikasjonPanel = (
                 antall={notifikasjoner?.length}
                 erValgt={notifikasjon === valgtNotifikasjon}
                 gåTilForrige={() => {
-                  const forrigeIndex = Math.max(0, (notifikasjoner.indexOf(notifikasjon)) - 1);
-                  setValgtNotifikasjon(notifikasjoner[forrigeIndex]);
+                  const forrigeIndex = Math.max(0, (notifikasjoner.indexOf(notifikasjon)) - 1)
+                  setValgtNotifikasjon(notifikasjoner[forrigeIndex])
                 }}
                 gåTilNeste={() => {
-                  const nesteIndex = Math.min(notifikasjoner.indexOf(notifikasjon) + 1, notifikasjoner?.length - 1);
+                  const nesteIndex = Math.min(notifikasjoner.indexOf(notifikasjon) + 1, notifikasjoner?.length - 1)
                   setValgtNotifikasjon(notifikasjoner[nesteIndex])
                 }}
                 onKlikketPaaLenke={(klikketPaaNotifikasjon) => {
                   // noinspection JSIgnoredPromiseFromCall sentry håndterer unhandled promise rejections
-                  notifikasjonKlikketPaa({variables: {id: klikketPaaNotifikasjon.id}})
+                  loggNotifikasjonKlikk(klikketPaaNotifikasjon.brukerKlikk.klikketPaa, notifikasjoner.indexOf(notifikasjon))
+                  notifikasjonKlikketPaa({ variables: { id: klikketPaaNotifikasjon.id } })
                   setValgtNotifikasjon(klikketPaaNotifikasjon)
                 }}
                 notifikasjon={notifikasjon}

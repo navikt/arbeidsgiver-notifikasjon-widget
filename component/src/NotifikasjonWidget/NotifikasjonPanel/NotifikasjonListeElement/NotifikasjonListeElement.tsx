@@ -7,6 +7,7 @@ import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
 import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
 import { Next as HoyreChevron } from '@navikt/ds-icons'
+import { loggPilTastNavigasjon } from '../../../utils/funksjonerForAmplitudeLogging'
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -54,6 +55,7 @@ export const NotifikasjonListeElement = (props: Props) => {
       className='notifikasjon_liste_element'
       id={'notifikasjon_liste_element-id-' + props.notifikasjon.id}
       onKeyDown={(event) => {
+        loggPilTastNavigasjon()
         if (event.key === 'Tab') {
           props.onTabEvent?.(event.shiftKey)
         }

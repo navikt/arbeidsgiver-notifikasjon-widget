@@ -6,11 +6,13 @@ import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget
 import {createClient} from "./api/graphql";
 import '@navikt/ds-css'
 
-interface Props {
-  apiUri: string
+
+export type Props  = {
+  apiUri: string,
+  miljo: "local" | "dev-gcp" | "prod-gcp";
 }
 
-export const NotifikasjonWidget = (props: Props) => {
+export const NotifikasjonWidget = (props:Props) => {
   return (
     <ApolloProvider client={createClient(props.apiUri)}>
       <NotifikasjonWidgetComponent />
