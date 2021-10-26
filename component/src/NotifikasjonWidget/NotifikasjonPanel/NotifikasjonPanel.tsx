@@ -145,7 +145,7 @@ const NotifikasjonPanel = (
                 }}
                 onKlikketPaaLenke={(klikketPaaNotifikasjon) => {
                   // noinspection JSIgnoredPromiseFromCall sentry håndterer unhandled promise rejections
-                  loggNotifikasjonKlikk(klikketPaaNotifikasjon.brukerKlikk.klikketPaa, notifikasjoner.indexOf(notifikasjon))
+                  loggNotifikasjonKlikk(klikketPaaNotifikasjon, notifikasjoner.indexOf(notifikasjon))
                   notifikasjonKlikketPaa({ variables: { id: klikketPaaNotifikasjon.id } })
                   setValgtNotifikasjon(klikketPaaNotifikasjon)
                 }}
