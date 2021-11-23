@@ -6,7 +6,7 @@ import { ServerError, useQuery } from '@apollo/client'
 import { HENT_NOTIFIKASJONER } from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { Notifikasjon, Query } from '../api/graphql-types'
-import { loggLukking, loggÅpning } from '../utils/funksjonerForAmplitudeLogging'
+import { loggLukking, loggLasting, loggÅpning } from '../utils/funksjonerForAmplitudeLogging'
 
 const uleste = (
   sistLest: string | undefined,
@@ -102,6 +102,10 @@ const NotifikasjonWidget = () => {
       })
     }
   }, [erApen, bjelleRef])
+
+  useEffect(() => {
+    loggLasting(notifikasjoner.length, antallUleste)
+  }, [])
 
   return notifikasjoner.length > 0 ? (
     <div ref={widgetRef} className='notifikasjoner_widget'>

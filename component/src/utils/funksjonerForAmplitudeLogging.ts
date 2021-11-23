@@ -1,6 +1,16 @@
 import amplitude from '../utils/amplitude'
 import {Notifikasjon} from "../api/graphql-types";
 
+export const loggLasting = (antallNotifikasjoner: number, ulesteNotifikasjoner: number) => {
+  amplitude.logEvent('last-komponent', {
+    tittel: 'notifikasjons-widget',
+    url: window.location.toString(),
+    'antall-notifikasjoner': antallNotifikasjoner,
+    'antall-ulestenotifikasjoner': ulesteNotifikasjoner,
+    'antall-lestenotifikasjoner': antallNotifikasjoner - ulesteNotifikasjoner
+  })
+}
+
 export const loggÅpning = (antallNotifikasjoner: number, ulesteNotifikasjoner: number) => {
   amplitude.logEvent('panel-ekspander', {
     tittel: 'arbeidsgiver notifikasjon panel',
