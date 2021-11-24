@@ -45,6 +45,12 @@ const NotifikasjonWidget = () => {
           console.log('stopper poll pga 401 unauthorized')
           stopPolling()
         }
+      },
+      onCompleted() {
+        if (erLastetFørsteGang === false) {
+          loggLasting(notifikasjoner.length, antallUleste)
+          setErLastetFørsteGang(true)
+        }
       }
     }
   )
@@ -62,6 +68,7 @@ const NotifikasjonWidget = () => {
   const widgetRef = useRef<HTMLDivElement>(null)
   const bjelleRef = useRef<HTMLButtonElement>(null)
   const [erApen, setErApen] = useState(false)
+  const [erLastetFørsteGang, setErLastetFørsteGang] = useState(false)
 
   const lukkÅpentPanelMedLogging = () => {
     if (erApen) {
@@ -102,10 +109,6 @@ const NotifikasjonWidget = () => {
       })
     }
   }, [erApen, bjelleRef])
-
-  useEffect(() => {
-    loggLasting(notifikasjoner.length, antallUleste)
-  }, [])
 
   return notifikasjoner.length > 0 ? (
     <div ref={widgetRef} className='notifikasjoner_widget'>
