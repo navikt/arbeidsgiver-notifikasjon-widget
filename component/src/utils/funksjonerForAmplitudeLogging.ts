@@ -1,5 +1,5 @@
 import amplitude from '../utils/amplitude'
-import {Notifikasjon} from "../api/graphql-types";
+import { Notifikasjon } from '../api/graphql-types'
 
 export const loggLasting = (antallNotifikasjoner: number, ulesteNotifikasjoner: number) => {
   amplitude.logEvent('last-komponent', {
