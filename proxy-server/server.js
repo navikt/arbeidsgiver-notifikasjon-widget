@@ -29,7 +29,6 @@ app.use(
   '/api/graphql',
   createProxyMiddleware({
     target: BRUKER_API_URL,
-    changeOrigin: true,
     secure: true,
     xfwd: true,
     logLevel: PROXY_LOG_LEVEL,
