@@ -1,7 +1,7 @@
 FROM navikt/node-express:12.2.0-alpine
 
 WORKDIR /usr/src/app
-COPY proxy-server/ .
+COPY . .
 
 RUN npm ci
 
