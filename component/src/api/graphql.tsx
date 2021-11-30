@@ -5,11 +5,11 @@ import {
 } from '@apollo/client'
 import {Query} from "./graphql-types";
 
-export const createClient = (uri: string) =>
+export const createClient = (uri: string, credentials?:string) =>
   new ApolloClient({
     uri,
     cache: new InMemoryCache(),
-    credentials:'include'
+    credentials
   })
 
 export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner">> = gql`
