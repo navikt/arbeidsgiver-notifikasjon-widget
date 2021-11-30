@@ -39,6 +39,9 @@ app.use(
         onProxyReq: (proxyReq, req, _res) => {
             proxyReq.setHeader('Authorization', `Bearer ${req.cookies['selvbetjening-idtoken']}`);
         },
+        onProxyRes(proxyRes, req, res) {
+            proxyRes.headers['Access-Control-Allow-Credentials'] = 'true';
+        }
     }),
 );
 
