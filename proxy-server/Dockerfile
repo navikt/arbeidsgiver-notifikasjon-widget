@@ -6,4 +6,4 @@ COPY . .
 RUN npm ci
 
 EXPOSE 3000
-ENTRYPOINT ["/bin/sh", "node --experimental-modules server.js"]
+ENTRYPOINT ["/bin/sh", "start.sh"]
