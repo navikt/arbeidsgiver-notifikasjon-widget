@@ -32,7 +32,6 @@ app.use(
         changeOrigin: true,
         secure: true,
         xfwd: true,
-
         logLevel: PROXY_LOG_LEVEL,
         logProvider: _ => log,
         onError: (err, req, res) => {
