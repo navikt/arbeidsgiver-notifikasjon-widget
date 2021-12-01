@@ -1,15 +1,13 @@
-name: Deploy proxy server
+name: Build and deploy proxy
 
 on:
   push:
-    branches:
-      - 'main'
     paths:
       - 'proxy-server/**/*'
 
 jobs:
-  deploy-dev-gcp:
-    name: Deploy til dev-gcp
+  build:
+    name: Build and publish docker image
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
@@ -32,6 +30,13 @@ jobs:
             ghcr.io/${{ github.repository }}/arbeidsgiver-notifikasjon-proxy:latest
           cache-from: type=registry,ref=${{ github.repository }}/arbeidsgiver-notifikasjon-proxy:latest
           cache-to: type=inline
+
+  deploy:
+    name: Deploy til GCP
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
       - name: Deploy til dev-gcp
         uses: nais/deploy/actions/deploy@v1
