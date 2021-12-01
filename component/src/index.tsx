@@ -15,7 +15,7 @@ export type Props = {
 export const NotifikasjonWidget = (props: Props) => {
 
   const apiurl = props.apiUri ?? gittMiljo({
-    prod: '',
+    prod: 'https://ag-notifikasjon-bruker-api.nav.no/',
     dev: 'https://ag-notifikasjon-proxy.dev.nav.no/api/graphql',
     other: 'http://localhost:8081/api/graphql'
   }, props.miljo)
