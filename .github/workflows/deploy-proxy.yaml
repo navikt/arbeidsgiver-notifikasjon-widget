@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'main'
-      - 'proxy-server'
     paths:
       - 'proxy-server/**/*'
 
@@ -41,3 +40,11 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-gcp.yaml
+
+      - name: Deploy til prod-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          IMAGE: ghcr.io/${{ github.repository }}/arbeidsgiver-notifikasjon-proxy:${{ github.sha }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: nais/prod-gcp.yaml
