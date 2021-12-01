@@ -1,5 +1,7 @@
+export type Miljø = 'local' | 'dev-gcp' | 'prod-gcp'
+
 export interface Environment {
-    MILJO: 'local' | 'dev-gcp' | 'prod-gcp'
+    MILJO: Miljø
 }
 
 const environment: Environment = {
@@ -13,8 +15,8 @@ interface Miljo<T> {
     other: T;
 }
 
-export const gittMiljo = <T>(e: Miljo<T>): T=> {
-    switch (environment.MILJO) {
+export const gittMiljo = <T>(e: Miljo<T>, miljø:Miljø=environment.MILJO): T=> {
+    switch (miljø) {
         case 'prod-gcp':
             return e.prod
         case 'dev-gcp':
