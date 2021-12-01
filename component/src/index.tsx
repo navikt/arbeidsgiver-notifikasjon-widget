@@ -20,7 +20,7 @@ export const NotifikasjonWidget = (props: Props) => {
     other: 'http://localhost:8081/api/graphql'
   }, props.miljo)
 
-  const credentials = props.apiUri ?? gittMiljo({
+  const credentials = gittMiljo({
     prod: 'include',
     dev: 'include',
     other: undefined
