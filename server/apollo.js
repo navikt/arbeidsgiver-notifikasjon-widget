@@ -92,6 +92,10 @@ const startApolloMock = () => {
   }
   new ApolloServer({
     typeDefs,
+    cors: {
+      origin: true,
+      credentials: true,
+    },
     mocks: {
       Query: () => ({
         notifikasjoner: () => ({
