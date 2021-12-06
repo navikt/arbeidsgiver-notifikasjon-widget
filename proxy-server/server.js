@@ -3,14 +3,15 @@ import httpProxyMiddleware from 'http-proxy-middleware'
 import require from './esm-require.js'
 import cookieParser from 'cookie-parser'
 
-const { createLogger, transports, format } = require('winston')
+const {createLogger, transports, format} = require('winston')
 const apiMetricsMiddleware = require('prometheus-api-metrics')
-const { createProxyMiddleware } = httpProxyMiddleware
+const {createProxyMiddleware} = httpProxyMiddleware
 
 const {
   PORT = 3000,
   BRUKER_API_URL = 'http://localhost:8081',
-  PROXY_LOG_LEVEL = 'info'
+  PROXY_LOG_LEVEL = 'info',
+  NAIS_CLUSTER_NAME = 'local',
 } = process.env
 const log = createLogger({
   transports: [
@@ -39,7 +40,7 @@ app.use(
     onProxyReq: (proxyReq, req, _res) => {
       proxyReq.setHeader('Authorization', `Bearer ${req.cookies['selvbetjening-idtoken']}`)
     },
-    onProxyRes(proxyRes, req, res) {
+    onProxyRes(proxyRes, _req, _res) {
       proxyRes.headers['Access-Control-Allow-Credentials'] = 'true'
     }
   })
@@ -60,4 +61,8 @@ try {
 } catch (error) {
   log.error(`Server failed to start ${error}`)
   process.exit(1)
+}
+
+if (NAIS_CLUSTER_NAME === 'labs-gcp') {
+  require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
 }
