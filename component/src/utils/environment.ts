@@ -3,7 +3,7 @@
  * slik det er nå så lener amplitude seg på at miljø er definert på window.environment
  * vi trenger å propagere dette ned fra prop kanskje via en environment provider elns
  */
-export type Miljø = 'local' | 'labs-gcp' | 'dev-gcp' | 'prod-gcp'
+export type Miljø = 'local' | 'labs-gcp' | 'dev-gcp' | 'prod-gcp' | 'labs' | 'dev' | 'prod'
 
 export interface Environment {
     MILJO: Miljø
@@ -23,10 +23,13 @@ interface Miljo<T> {
 
 export const gittMiljo = <T>(e: Miljo<T>, miljø:Miljø=environment.MILJO): T=> {
     switch (miljø) {
+        case 'prod':
         case 'prod-gcp':
             return e.prod
+        case 'dev':
         case 'dev-gcp':
             return e.hasOwnProperty('dev') ? e.dev! : e.other;
+        case 'labs':
         case 'labs-gcp':
             return e.hasOwnProperty('labs') ? e.labs! : e.other;
         default:
