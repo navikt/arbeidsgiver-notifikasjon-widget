@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save arbeidsgiver-notifikasjon-widget
+npm install --save @navikt/arbeidsgiver-notifikasjon-widget
 ```
 
 ## Usage
@@ -15,14 +15,21 @@ npm install --save arbeidsgiver-notifikasjon-widget
 ```tsx
 import React, { Component } from 'react'
 
-import MyComponent from 'arbeidsgiver-notifikasjon-widget'
-import 'arbeidsgiver-notifikasjon-widget/dist/index.css'
+import {NotifikasjonWidget} from "@navikt/arbeidsgiver-notifikasjon-widget";
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
-}
+const miljø = gittMiljo<"local" | "dev-gcp" | "prod-gcp">({
+    prod: 'prod-gcp',
+    dev: 'dev-gcp',
+    other: 'local',
+});
+
+const Banner: FunctionComponent<RouteComponentProps & OwnProps> = ({history, sidetittel}) => {
+    return (
+        <Bedriftsmeny>
+           <NotifikasjonWidget miljo={miljø}/>
+        </Bedriftsmeny>
+    );
+};
 ```
 
 ## License
