@@ -5,8 +5,9 @@ import 'nav-frontend-core/dist/main.css'
 import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget'
 import { createClient } from './api/graphql'
 import '@navikt/ds-css'
-import {gittMiljo, Miljø} from './utils/environment'
+import { gittMiljo } from './utils/environment'
 
+export type Miljø = 'local' | 'labs' | 'dev' | 'prod'
 export type Props = {
   apiUri?: string,
   miljo: Miljø;
