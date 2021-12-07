@@ -1,9 +1,10 @@
-/**
- * TODO: ta bort gcp suffix når vi har riktig håndtering av miljø parameter
- * slik det er nå så lener amplitude seg på at miljø er definert på window.environment
- * vi trenger å propagere dette ned fra prop kanskje via en environment provider elns
- */
-export type Miljø = 'local' | 'labs-gcp' | 'dev-gcp' | 'prod-gcp' | 'labs' | 'dev' | 'prod'
+export type Miljø = 'local' | 'labs' | 'dev' | 'prod'
+  /**
+   * TODO: ta bort gcp suffix når vi har riktig håndtering av miljø parameter
+   * slik det er nå så lener amplitude seg på at miljø er definert på window.environment
+   * vi trenger å propagere dette ned fra prop kanskje via en environment provider elns
+   */
+  | 'labs-gcp' | 'dev-gcp' | 'prod-gcp';
 
 export interface Environment {
     MILJO: Miljø
@@ -21,6 +22,7 @@ interface Miljo<T> {
     other: T;
 }
 
+// TODO: ta bort defaulting av miljø til environment.MILJO pga tight coupling
 export const gittMiljo = <T>(e: Miljo<T>, miljø:Miljø=environment.MILJO): T=> {
     switch (miljø) {
         case 'prod':
