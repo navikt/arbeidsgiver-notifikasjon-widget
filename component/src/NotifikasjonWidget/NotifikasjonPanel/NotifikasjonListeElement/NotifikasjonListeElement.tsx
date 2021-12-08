@@ -7,7 +7,7 @@ import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
 import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
 import { Next as HoyreChevron } from '@navikt/ds-icons'
-import { loggPilTastNavigasjon } from '../../../utils/funksjonerForAmplitudeLogging'
+import { useAmplitude } from '../../../utils/amplitude'
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -20,6 +20,7 @@ interface Props {
 }
 
 export const NotifikasjonListeElement = (props: Props) => {
+  const { loggPilTastNavigasjon } = useAmplitude()
   const notifikasjon = props.notifikasjon
 
   const date = new Date(notifikasjon.opprettetTidspunkt)

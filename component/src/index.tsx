@@ -5,32 +5,44 @@ import 'nav-frontend-core/dist/main.css'
 import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget'
 import { createClient } from './api/graphql'
 import '@navikt/ds-css'
-import { gittMiljo } from './utils/environment'
+import { EnvironmentProvider, useEnvironment, Miljø } from './utils/EnvironmentProvider'
 
-export type Miljø = 'local' | 'labs' | 'dev' | 'prod'
 export type Props = {
-  apiUri?: string,
-  miljo: Miljø;
+  apiUri?: string
+  miljo: Miljø
 }
+export {Miljø} from './utils/EnvironmentProvider'
 
 export const NotifikasjonWidget = (props: Props) => {
+  return (
+    <EnvironmentProvider miljø={props.miljo}>
+      <DecoratedApolloProvider {...props}>
+        <NotifikasjonWidgetComponent/>
+      </DecoratedApolloProvider>
+    </EnvironmentProvider>
+  )
+}
 
-  const apiurl = props.apiUri ?? gittMiljo({
+const DecoratedApolloProvider = (props: { apiUri?: string }, children: any) => {
+  const {gittMiljø} = useEnvironment()
+
+  const apiurl = props.apiUri ?? gittMiljø({
     prod: 'https://ag-notifikasjon-proxy.nav.no/api/graphql',
     dev: 'https://ag-notifikasjon-proxy.dev.nav.no/api/graphql',
     labs: 'https://ag-notifikasjon-proxy.labs.nais.io/api/graphql',
     other: 'http://localhost:8081/api/graphql'
-  }, props.miljo)
+  })
 
-  const credentials = gittMiljo({
+  const credentials = gittMiljø({
     prod: 'include',
     dev: 'include',
     labs: 'include',
     other: undefined
-  }, props.miljo)
+  })
+
   return (
     <ApolloProvider client={createClient(apiurl, credentials)}>
-      <NotifikasjonWidgetComponent />
+      {children}
     </ApolloProvider>
   )
 }

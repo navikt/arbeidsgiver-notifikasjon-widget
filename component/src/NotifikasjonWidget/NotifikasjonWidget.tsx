@@ -6,7 +6,7 @@ import { ServerError, useQuery } from '@apollo/client'
 import { HENT_NOTIFIKASJONER } from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { Notifikasjon, Query } from '../api/graphql-types'
-import { loggLukking, loggLasting, loggÅpning } from '../utils/funksjonerForAmplitudeLogging'
+import { useAmplitude } from '../utils/amplitude'
 
 const uleste = (
   sistLest: string | undefined,
@@ -31,6 +31,7 @@ const DEFAULT: Pick<Query, 'notifikasjoner'> = {
 }
 
 const NotifikasjonWidget = () => {
+  const {loggLukking, loggLasting, loggÅpning} = useAmplitude()
   const [sistLest, _setSistLest] = useLocalStorage<string | undefined>(
     'sist_lest',
     undefined
@@ -47,7 +48,7 @@ const NotifikasjonWidget = () => {
         }
       },
       onCompleted() {
-        if (erLastetFørsteGang === false) {
+        if (!erLastetFørsteGang) {
           loggLasting(notifikasjoner.length, antallUleste)
           setErLastetFørsteGang(true)
         }
