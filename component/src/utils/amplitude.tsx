@@ -3,15 +3,9 @@ import { Notifikasjon } from '../api/graphql-types'
 import { useEnvironment } from './EnvironmentProvider'
 import React, { createContext, FC, useContext } from "react";
 
-const getApiKey = () => {
-  return window.location.hostname === 'arbeidsgiver.nav.no'
-    ? '3a6fe32c3457e77ce81c356bb14ca886'
-    : '55477baea93c5227d8c0f6b813653615'
-}
-
-const createAmpltiudeInstance = () => {
+const createAmpltiudeInstance = (apiKey: string) => {
   const instance = amplitude.getInstance()
-  instance.init(getApiKey(), '', {
+  instance.init(apiKey, '', {
     apiEndpoint: 'amplitude.nav.no/collect',
     saveEvents: false,
     includeUtm: true,
@@ -21,49 +15,43 @@ const createAmpltiudeInstance = () => {
   return instance
 }
 
-class AmplitudeLogger {
-  amplitudeClient: AmplitudeClient;
-
-  constructor(amplitudeClient: AmplitudeClient) {
-    this.amplitudeClient = amplitudeClient;
-  }
-
-  loggLasting(antallNotifikasjoner: number, ulesteNotifikasjoner: number) {
-    this.amplitudeClient.logEvent('last-komponent', {
+const createAmplitudeLogger = (amplitudeClient: AmplitudeClient) => ({
+  loggLasting: (antallNotifikasjoner: number, ulesteNotifikasjoner: number) => {
+    amplitudeClient.logEvent('last-komponent', {
       tittel: 'notifikasjons-widget',
       url: window.location.toString(),
       'antall-notifikasjoner': antallNotifikasjoner,
       'antall-ulestenotifikasjoner': ulesteNotifikasjoner,
       'antall-lestenotifikasjoner': antallNotifikasjoner - ulesteNotifikasjoner
     })
-  }
+  },
 
-  loggÅpning(antallNotifikasjoner: number, ulesteNotifikasjoner: number) {
-    this.amplitudeClient.logEvent('panel-ekspander', {
+  loggÅpning: (antallNotifikasjoner: number, ulesteNotifikasjoner: number) => {
+    amplitudeClient.logEvent('panel-ekspander', {
       tittel: 'arbeidsgiver notifikasjon panel',
       url: window.location.toString(),
       'antall-notifikasjoner': antallNotifikasjoner,
       'antall-ulestenotifikasjoner': ulesteNotifikasjoner,
       'antall-lestenotifikasjoner': antallNotifikasjoner - ulesteNotifikasjoner
     })
-  }
+  },
 
-  loggLukking() {
-    this.amplitudeClient.logEvent('panel-kollaps', {
+  loggLukking: () => {
+    amplitudeClient.logEvent('panel-kollaps', {
       tittel: 'arbeidsgiver notifikasjon panel',
       url: window.location.toString()
     })
-  }
+  },
 
-  loggPilTastNavigasjon() {
-    this.amplitudeClient.logEvent('piltast-navigasjon', {
+  loggPilTastNavigasjon: () => {
+    amplitudeClient.logEvent('piltast-navigasjon', {
       url: window.location.toString()
     })
-  }
+  },
 
-  loggNotifikasjonKlikk(notifikasjon: Notifikasjon, index: number) {
+  loggNotifikasjonKlikk: (notifikasjon: Notifikasjon, index: number) => {
     const klikketPaaTidligere = notifikasjon.brukerKlikk.klikketPaa
-    this.amplitudeClient.logEvent('notifikasjon-klikk', {
+    amplitudeClient.logEvent('notifikasjon-klikk', {
       url: window.location.toString(),
       index: index,
       'merkelapp': notifikasjon.merkelapp,
@@ -71,7 +59,7 @@ class AmplitudeLogger {
       'destinasjon': notifikasjon.lenke
     })
   }
-}
+})
 
 const stubbedAmplitudeClient = {
   logEvent: (event: string, data?: any) => {
@@ -82,22 +70,22 @@ const stubbedAmplitudeClient = {
   }
 } as amplitude.AmplitudeClient
 
-const AmplitudeContext = createContext<AmplitudeLogger>(new AmplitudeLogger(stubbedAmplitudeClient))
+const AmplitudeContext = createContext(createAmplitudeLogger(stubbedAmplitudeClient))
 
 export const AmplitudeProvider: FC = ({children}) => {
   const { gittMiljø } = useEnvironment();
   const client = gittMiljø({
-    prod: () => createAmpltiudeInstance(),
-    dev: () => createAmpltiudeInstance(),
+    prod: () => createAmpltiudeInstance('3a6fe32c3457e77ce81c356bb14ca886'),
+    dev: () => createAmpltiudeInstance('55477baea93c5227d8c0f6b813653615'),
     other: () => stubbedAmplitudeClient
   })()
-  const logger = new AmplitudeLogger(client)
+  const logger = createAmplitudeLogger(client)
   return <AmplitudeContext.Provider value={logger}>
     {children}
   </AmplitudeContext.Provider>
 }
 
-export function useAmplitude(): AmplitudeLogger {
+export function useAmplitude() {
   return useContext(AmplitudeContext)
 }
 
