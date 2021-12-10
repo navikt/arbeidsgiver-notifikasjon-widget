@@ -8,7 +8,7 @@ import { Notifikasjon, NotifikasjonerResultat } from '../../api/graphql-types'
 import { useMutation } from '@apollo/client'
 import { NOTIFIKASJONER_KLIKKET_PAA } from '../../api/graphql'
 import { NotifikasjonInformasjon } from './NotifikasjonInformasjon/NotifikasjonInformasjon'
-import { loggNotifikasjonKlikk } from '../../utils/funksjonerForAmplitudeLogging'
+import { useAmplitude } from '../../utils/amplitude'
 
 interface Props {
   erApen: boolean
@@ -27,6 +27,7 @@ const NotifikasjonPanel = (
     return null;
   }
 
+  const {loggNotifikasjonKlikk} = useAmplitude()
   const [valgtNotifikasjon, setValgtNotifikasjon] = useState(notifikasjoner[0])
 
   const lukkPanel = () => {
