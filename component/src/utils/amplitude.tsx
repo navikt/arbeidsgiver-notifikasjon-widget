@@ -1,6 +1,7 @@
 import amplitude, { AmplitudeClient } from 'amplitude-js'
 import { Notifikasjon } from '../api/graphql-types'
 import { useEnvironment } from './EnvironmentProvider'
+import React, { createContext, FC, useContext } from "react";
 
 const getApiKey = () => {
   return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -72,23 +73,32 @@ class AmplitudeLogger {
   }
 }
 
-export function useAmplitude(): AmplitudeLogger {
-  const { gittMiljø } = useEnvironment();
+const stubbedAmplitudeClient = {
+  logEvent: (event: string, data?: any) => {
+    console.log(`${event}: ${JSON.stringify(data)}`, {event, data})
+  },
+  setUserProperties: (userProps: object) => {
+    console.log(`set userprops: ${JSON.stringify(userProps)}`)
+  }
+} as amplitude.AmplitudeClient
 
-  const amplitudeClient = gittMiljø({
+const AmplitudeContext = createContext<AmplitudeLogger>(new AmplitudeLogger(stubbedAmplitudeClient))
+
+export const AmplitudeProvider: FC = ({children}) => {
+  const { gittMiljø } = useEnvironment();
+  const client = gittMiljø({
     prod: () => createAmpltiudeInstance(),
     dev: () => createAmpltiudeInstance(),
-    other: () => ({
-      logEvent: (event: string, data?: any) => {
-        console.log(`${event}: ${JSON.stringify(data)}`, {event, data})
-      },
-      setUserProperties: (userProps: object) => {
-        console.log(`set userprops: ${JSON.stringify(userProps)}`)
-      }
-    } as amplitude.AmplitudeClient)
+    other: () => stubbedAmplitudeClient
   })()
+  const logger = new AmplitudeLogger(client)
+  return <AmplitudeContext.Provider value={logger}>
+    {children}
+  </AmplitudeContext.Provider>
+}
 
-  return new AmplitudeLogger(amplitudeClient)
+export function useAmplitude(): AmplitudeLogger {
+  return useContext(AmplitudeContext)
 }
 
 

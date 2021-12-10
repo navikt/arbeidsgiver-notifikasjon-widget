@@ -9,11 +9,11 @@ interface Miljo<T, > {
   other: T
 }
 
-interface Environment {
+interface Context {
   miljø: Miljø,
   gittMiljø: <T, >(e: Miljo<T>) => T,
 }
-const EnvironmentContext = createContext<Environment>({miljø: "local", gittMiljø: (e) => e.other})
+const EnvironmentContext = createContext<Context>({miljø: "local", gittMiljø: (e) => e.other})
 
 interface Props {
   miljø: Miljø
@@ -41,6 +41,6 @@ export const EnvironmentProvider: FC<Props> = ({miljø, children}) => {
   </EnvironmentContext.Provider>
 }
 
-export function useEnvironment(): Environment {
+export function useEnvironment(): Context {
   return useContext(EnvironmentContext)
 }

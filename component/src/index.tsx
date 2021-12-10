@@ -6,6 +6,7 @@ import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget
 import { createClient } from './api/graphql'
 import '@navikt/ds-css'
 import { EnvironmentProvider, useEnvironment, Miljø } from './utils/EnvironmentProvider'
+import {AmplitudeProvider} from "./utils/amplitude";
 
 export type Props = {
   apiUri?: string
@@ -16,9 +17,11 @@ export {Miljø} from './utils/EnvironmentProvider'
 export const NotifikasjonWidget = (props: Props) => {
   return (
     <EnvironmentProvider miljø={props.miljo}>
-      <DecoratedApolloProvider {...props}>
-        <NotifikasjonWidgetComponent/>
-      </DecoratedApolloProvider>
+      <AmplitudeProvider>
+        <DecoratedApolloProvider {...props}>
+          <NotifikasjonWidgetComponent/>
+        </DecoratedApolloProvider>
+      </AmplitudeProvider>
     </EnvironmentProvider>
   )
 }
