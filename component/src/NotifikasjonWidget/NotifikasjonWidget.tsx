@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { CSSProperties, useCallback, useEffect, useRef, useState } from 'react'
 import { NotifikasjonBjelle } from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
 import './NotifikasjonWidget.less'
@@ -110,27 +110,26 @@ const NotifikasjonWidget = () => {
     }
   }, [erApen, bjelleRef])
 
-  return notifikasjoner.length > 0 ? (
-    <div ref={widgetRef} className='notifikasjoner_widget'>
-      <NotifikasjonBjelle
-        antallUleste={antallUleste}
-        erApen={erApen}
-        focusableRef={bjelleRef}
-        onClick={() => {
-          erApen ? lukkÅpentPanelMedLogging() : åpnePanelMedLogging(notifikasjoner.length, antallUleste)
-        }
-        }
-      />
-      <NotifikasjonPanel
-        notifikasjoner={notifikasjonerResultat}
-        erApen={erApen}
-        onLukkPanel={() => {
-          lukkÅpentPanelMedLogging()
-          bjelleRef.current?.focus()
-        }}
-      />
-    </div>
-  ) : null
+  const style: CSSProperties = notifikasjoner.length === 0 ? { visibility: 'hidden' } : {};
+
+  return <div ref={widgetRef} className='notifikasjoner_widget' style={style}>
+    <NotifikasjonBjelle
+      antallUleste={antallUleste}
+      erApen={erApen}
+      focusableRef={bjelleRef}
+      onClick={() => {
+        erApen ? lukkÅpentPanelMedLogging() : åpnePanelMedLogging(notifikasjoner.length, antallUleste)
+      }}
+    />
+    <NotifikasjonPanel
+      notifikasjoner={notifikasjonerResultat}
+      erApen={erApen}
+      onLukkPanel={() => {
+        lukkÅpentPanelMedLogging()
+        bjelleRef.current?.focus()
+      }}
+    />
+  </div>
 }
 
 export default NotifikasjonWidget

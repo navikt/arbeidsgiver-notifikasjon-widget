@@ -21,7 +21,12 @@ const NotifikasjonPanel = (
     notifikasjoner: { notifikasjoner, feilAltinn, feilDigiSyfo },
     erApen,
     onLukkPanel
-  }: Props) => {
+  }: Props
+) => {
+  if (notifikasjoner.length === 0) {
+    return null;
+  }
+
   const [valgtNotifikasjon, setValgtNotifikasjon] = useState(notifikasjoner[0])
 
   const lukkPanel = () => {
