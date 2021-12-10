@@ -26,10 +26,10 @@ export const NotifikasjonWidget = (props: Props) => {
   )
 }
 
-const DecoratedApolloProvider = (props: { apiUri?: string }, children: any) => {
+const DecoratedApolloProvider: React.FC<Props> = ({apiUri, children}) => {
   const {gittMiljø} = useEnvironment()
 
-  const apiurl = props.apiUri ?? gittMiljø({
+  const apiurl = apiUri ?? gittMiljø({
     prod: 'https://ag-notifikasjon-proxy.nav.no/api/graphql',
     dev: 'https://ag-notifikasjon-proxy.dev.nav.no/api/graphql',
     labs: 'https://ag-notifikasjon-proxy.labs.nais.io/api/graphql',
