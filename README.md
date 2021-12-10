@@ -17,9 +17,10 @@ import React, { Component } from 'react'
 
 import {NotifikasjonWidget} from "@navikt/arbeidsgiver-notifikasjon-widget";
 
-const miljø = gittMiljo<"local" | "dev-gcp" | "prod-gcp">({
-    prod: 'prod-gcp',
-    dev: 'dev-gcp',
+const miljø = gittMiljo<"local" | "dev" | "labs" | "prod">({
+    prod: 'prod',
+    labs: 'labs',
+    dev: 'dev',
     other: 'local',
 });
 
