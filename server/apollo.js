@@ -99,9 +99,10 @@ const startApolloMock = () => {
     mocks: {
       Query: () => ({
         notifikasjoner: () => ({
-          notifikasjoner: leggTilOgReturnerNotifikasjoner()
-        })
-
+          notifikasjoner: leggTilOgReturnerNotifikasjoner(),
+          feilAltinn: false,
+          feilDigiSyfo: false,
+        }),
       }),
       Int: () => casual.integer(0, 1000),
       String: () => casual.string,
