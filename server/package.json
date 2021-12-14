@@ -9,7 +9,7 @@
     "dist/**/*"
   ],
   "dependencies": {
-    "apollo-server": "^2.21.2",
+    "apollo-server": "^2.25.3",
     "casual": "^1.6.2",
     "graphql": "^15.7.2"
   },
