@@ -20,7 +20,7 @@
     "@navikt/ds-react": "0.13.1",
     "amplitude-js": "^8.8.0",
     "classnames": "2",
-    "graphql": "^15.5.1",
+    "graphql": "^15.7.2",
     "nav-frontend-core": "6",
     "nav-frontend-popover": "2",
     "nav-frontend-popover-style": "2",
