@@ -22,7 +22,7 @@
     "classnames": "2",
     "graphql": "^15.7.2",
     "nav-frontend-core": "6",
-    "nav-frontend-popover": "2",
+    "nav-frontend-popover": "2.0.3",
     "nav-frontend-popover-style": "2",
     "nav-frontend-typografi": "4",
     "nav-frontend-typografi-style": "2",
