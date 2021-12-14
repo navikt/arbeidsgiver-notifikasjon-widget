@@ -14,10 +14,10 @@
     "test": "echo tests not implemented"
   },
   "dependencies": {
-    "@apollo/client": "3",
+    "@apollo/client": "3.5.4",
     "@navikt/ds-css": "0.11.4",
     "@navikt/ds-icons": "0",
-    "@navikt/ds-react": "0",
+    "@navikt/ds-react": "0.13.1",
     "amplitude-js": "^8.8.0",
     "classnames": "2",
     "graphql": "^15.5.1",
