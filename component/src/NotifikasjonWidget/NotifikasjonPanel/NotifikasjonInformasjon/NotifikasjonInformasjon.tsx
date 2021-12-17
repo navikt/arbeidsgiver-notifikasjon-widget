@@ -60,7 +60,7 @@ export const NotifikasjonInformasjon: FunctionComponent<NotifikasjonInformasjonP
           orientering={PopoverOrientering.Over}
           innerRef={popoverRef}
         >
-          Tjenesten er under utvikling og alle notifikasjoner vises ikke her
+          Notifikasjoner er under utvikling og alle notifikasjoner vises ikke her
           ennå. Gamle notifikasjoner slettes etter hvert.
         </PopoverBase>
         <button
