@@ -37,7 +37,11 @@ const NotifikasjonWidget = () => {
     undefined
   )
 
-  const { data: { notifikasjoner: notifikasjonerResultat } = DEFAULT, stopPolling } = useQuery(
+  const {
+    previousData,
+    data: {notifikasjoner: notifikasjonerResultat} = (previousData ?? DEFAULT),
+    stopPolling
+  } = useQuery(
     HENT_NOTIFIKASJONER,
     {
       pollInterval: 60_000,
