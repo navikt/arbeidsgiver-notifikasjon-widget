@@ -105,16 +105,6 @@ const NotifikasjonWidget = () => {
     }
   }, [handleFocusOutside])
 
-  useEffect(() => {
-    if (erApen) {
-      bjelleRef.current?.scrollIntoView({
-        block: 'start',
-        inline: 'nearest',
-        behavior: 'smooth'
-      })
-    }
-  }, [erApen, bjelleRef])
-
   const style: CSSProperties = notifikasjoner.length === 0 ? { visibility: 'hidden' } : {};
 
   return <div ref={widgetRef} className='notifikasjoner_widget' style={style}>

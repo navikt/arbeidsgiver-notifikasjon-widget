@@ -24,14 +24,6 @@ export const NotifikasjonInformasjon: FunctionComponent<NotifikasjonInformasjonP
     /* ref needed because handler is global (doesn't follow react) */
     const visRef = useRef(vis)
 
-    useEffect(() => {
-      visRef.current = vis
-
-      if (vis) {
-        popoverRef.current?.scrollIntoView(false)
-      }
-    }, [vis])
-
     const onClickAnywhere = (e: MouseEvent) => {
       if (!visRef.current) {
         return
