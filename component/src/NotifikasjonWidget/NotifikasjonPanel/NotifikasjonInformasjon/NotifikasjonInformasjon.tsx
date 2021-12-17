@@ -24,14 +24,6 @@ export const NotifikasjonInformasjon: FunctionComponent<NotifikasjonInformasjonP
     /* ref needed because handler is global (doesn't follow react) */
     const visRef = useRef(vis)
 
-    useEffect(() => {
-      visRef.current = vis
-
-      if (vis) {
-        popoverRef.current?.scrollIntoView(false)
-      }
-    }, [vis])
-
     const onClickAnywhere = (e: MouseEvent) => {
       if (!visRef.current) {
         return
@@ -60,7 +52,7 @@ export const NotifikasjonInformasjon: FunctionComponent<NotifikasjonInformasjonP
           orientering={PopoverOrientering.Over}
           innerRef={popoverRef}
         >
-          Tjenesten er under utvikling og alle notifikasjoner vises ikke her
+          Notifikasjoner er under utvikling og alle notifikasjoner vises ikke her
           ennå. Gamle notifikasjoner slettes etter hvert.
         </PopoverBase>
         <button

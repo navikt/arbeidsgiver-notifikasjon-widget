@@ -37,7 +37,11 @@ const NotifikasjonWidget = () => {
     undefined
   )
 
-  const { data: { notifikasjoner: notifikasjonerResultat } = DEFAULT, stopPolling } = useQuery(
+  const {
+    previousData,
+    data: {notifikasjoner: notifikasjonerResultat} = (previousData ?? DEFAULT),
+    stopPolling
+  } = useQuery(
     HENT_NOTIFIKASJONER,
     {
       pollInterval: 60_000,
@@ -100,16 +104,6 @@ const NotifikasjonWidget = () => {
       document.removeEventListener('click', handleFocusOutside)
     }
   }, [handleFocusOutside])
-
-  useEffect(() => {
-    if (erApen) {
-      bjelleRef.current?.scrollIntoView({
-        block: 'start',
-        inline: 'nearest',
-        behavior: 'smooth'
-      })
-    }
-  }, [erApen, bjelleRef])
 
   const style: CSSProperties = notifikasjoner.length === 0 ? { visibility: 'hidden' } : {};
 
