@@ -1,12 +1,12 @@
-import React, { CSSProperties, useCallback, useEffect, useRef, useState } from 'react'
-import { NotifikasjonBjelle } from './NotifikasjonBjelle/NotifikasjonBjelle'
+import React, {CSSProperties, useCallback, useEffect, useRef, useState} from 'react'
+import {NotifikasjonBjelle} from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
 import './NotifikasjonWidget.less'
-import { ServerError, useQuery } from '@apollo/client'
-import { HENT_NOTIFIKASJONER } from '../api/graphql'
+import {ServerError, useQuery} from '@apollo/client'
+import {HENT_NOTIFIKASJONER} from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
-import { Notifikasjon, Query } from '../api/graphql-types'
-import { useAmplitude } from '../utils/amplitude'
+import {Notifikasjon} from '../api/graphql-types'
+import {useAmplitude} from '../utils/amplitude'
 
 const uleste = (
   sistLest: string | undefined,
@@ -22,14 +22,6 @@ const uleste = (
   }
 }
 
-const DEFAULT: Pick<Query, 'notifikasjoner'> = {
-  notifikasjoner: {
-    notifikasjoner: [],
-    feilAltinn: false,
-    feilDigiSyfo: false
-  }
-}
-
 const NotifikasjonWidget = () => {
   const {loggLukking, loggLasting, loggÅpning} = useAmplitude()
   const [sistLest, _setSistLest] = useLocalStorage<string | undefined>(
@@ -37,7 +29,11 @@ const NotifikasjonWidget = () => {
     undefined
   )
 
-  const { data: { notifikasjoner: notifikasjonerResultat } = DEFAULT, stopPolling } = useQuery(
+  const {
+    previousData,
+    data = previousData,
+    stopPolling
+  } = useQuery(
     HENT_NOTIFIKASJONER,
     {
       pollInterval: 60_000,
@@ -46,31 +42,28 @@ const NotifikasjonWidget = () => {
           console.log('stopper poll pga 401 unauthorized')
           stopPolling()
         }
-      },
-      onCompleted() {
-        if (!erLastetFørsteGang) {
-          loggLasting(notifikasjoner.length, antallUleste)
-          setErLastetFørsteGang(true)
-        }
       }
     }
   )
 
-  const { notifikasjoner } = notifikasjonerResultat
+  const notifikasjonerResultat = data?.notifikasjoner
+  const notifikasjoner = notifikasjonerResultat?.notifikasjoner
   const setSistLest = useCallback(() => {
-    if (notifikasjoner.length > 0) {
+    if (notifikasjoner && notifikasjoner.length > 0) {
       // naiv impl forutsetter sortering
       _setSistLest(notifikasjoner[0].opprettetTidspunkt)
     }
   }, [notifikasjoner])
 
-  const antallUleste = uleste(sistLest, notifikasjoner).length
-
+  const antallUleste = notifikasjoner && uleste(sistLest, notifikasjoner).length
   const widgetRef = useRef<HTMLDivElement>(null)
   const bjelleRef = useRef<HTMLButtonElement>(null)
   const [erApen, setErApen] = useState(false)
-  const [erLastetFørsteGang, setErLastetFørsteGang] = useState(false)
-
+  useEffect(() => {
+    if (notifikasjoner !== undefined && antallUleste !== undefined) {
+      loggLasting(notifikasjoner.length, antallUleste)
+    }
+  }, [notifikasjoner, antallUleste])
   const lukkÅpentPanelMedLogging = () => {
     if (erApen) {
       loggLukking()
@@ -101,17 +94,7 @@ const NotifikasjonWidget = () => {
     }
   }, [handleFocusOutside])
 
-  useEffect(() => {
-    if (erApen) {
-      bjelleRef.current?.scrollIntoView({
-        block: 'start',
-        inline: 'nearest',
-        behavior: 'smooth'
-      })
-    }
-  }, [erApen, bjelleRef])
-
-  const style: CSSProperties = notifikasjoner.length === 0 ? { visibility: 'hidden' } : {};
+  const style: CSSProperties = notifikasjoner === undefined || notifikasjoner.length === 0 ? { visibility: 'hidden' } : {};
 
   return <div ref={widgetRef} className='notifikasjoner_widget' style={style}>
     <NotifikasjonBjelle
@@ -119,11 +102,17 @@ const NotifikasjonWidget = () => {
       erApen={erApen}
       focusableRef={bjelleRef}
       onClick={() => {
-        erApen ? lukkÅpentPanelMedLogging() : åpnePanelMedLogging(notifikasjoner.length, antallUleste)
+        if (notifikasjoner !== undefined && antallUleste !== undefined) { // er invisible hvis dette er false. se style
+          erApen ? lukkÅpentPanelMedLogging() : åpnePanelMedLogging(notifikasjoner.length, antallUleste)
+        }
       }}
     />
     <NotifikasjonPanel
-      notifikasjoner={notifikasjonerResultat}
+      notifikasjoner={notifikasjonerResultat ?? {
+        notifikasjoner: [],
+        feilAltinn: false,
+        feilDigiSyfo: false
+      }}
       erApen={erApen}
       onLukkPanel={() => {
         lukkÅpentPanelMedLogging()
