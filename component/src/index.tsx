@@ -1,35 +1,62 @@
-import React from 'react'
+import React, { createContext, PropsWithChildren, useContext } from 'react'
 import { ApolloProvider } from '@apollo/client'
 import 'nav-frontend-core/dist/main.css'
-// import styles from './styles.module.css'
 import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget'
 import { createClient } from './api/graphql'
 import '@navikt/ds-css'
-import { EnvironmentProvider, useEnvironment, Miljø } from './utils/EnvironmentProvider'
-import {AmplitudeProvider} from "./utils/amplitude";
+import { EnvironmentProvider, Miljø, useEnvironment } from './utils/EnvironmentProvider'
+import { AmplitudeProvider } from './utils/amplitude';
 
 export type Props = {
-  apiUri?: string
-  miljo: Miljø
+  miljo?: Miljø
 }
 export {Miljø} from './utils/EnvironmentProvider'
 
 export const NotifikasjonWidget = (props: Props) => {
-  return (
-    <EnvironmentProvider miljø={props.miljo}>
-      <AmplitudeProvider>
-        <DecoratedApolloProvider {...props}>
+  if (useContext(NotifikasjonWidgetProviderLoadedContext)) {
+    return <NotifikasjonWidgetComponent/>
+  } else {
+    if (props.miljo === undefined) {
+      console.error(`
+        Unable to load Notifikasjonwidget.
+        NotifikasjonWidget is missing property 'miljo'.
+        It must be provided by NotifikasjonWidgetProvider or directly as a property.
+      `)
+      return null
+    } else {
+      return (
+        <NotifikasjonWidgetProvider miljo={props.miljo}>
           <NotifikasjonWidgetComponent/>
-        </DecoratedApolloProvider>
-      </AmplitudeProvider>
-    </EnvironmentProvider>
-  )
+        </NotifikasjonWidgetProvider>
+      )
+    }
+  }
 }
 
-const DecoratedApolloProvider: React.FC<Props> = ({apiUri, children}) => {
+const NotifikasjonWidgetProviderLoadedContext  = createContext<boolean>(false);
+
+export type ProviderProps = PropsWithChildren<{
+  miljo: Miljø;
+}>
+
+export const NotifikasjonWidgetProvider = (props: ProviderProps) => {
+  return (
+    <NotifikasjonWidgetProviderLoadedContext.Provider value={true}>
+      <EnvironmentProvider miljø={props.miljo}>
+        <AmplitudeProvider>
+          <DecoratedApolloProvider>
+            {props.children}
+          </DecoratedApolloProvider>
+        </AmplitudeProvider>
+      </EnvironmentProvider>
+    </NotifikasjonWidgetProviderLoadedContext.Provider>
+  )
+};
+
+const DecoratedApolloProvider: React.FC = ({children}) => {
   const {gittMiljø} = useEnvironment()
 
-  const apiurl = apiUri ?? gittMiljø({
+  const apiurl = gittMiljø({
     prod: 'https://ag-notifikasjon-proxy.nav.no/api/graphql',
     dev: 'https://ag-notifikasjon-proxy.dev.nav.no/api/graphql',
     labs: 'https://ag-notifikasjon-proxy.labs.nais.io/api/graphql',
