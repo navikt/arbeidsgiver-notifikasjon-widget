@@ -35,22 +35,49 @@ const casualDate = () => {
 };
 
 const eksempler = {
-  'Tilskudd': [
-    "Avtale om midlertidig lønnstilskudd godkjent av alle",
-    "Avtale om mentortilskudd mangler din godkjenning"
+  'Lønnstilskudd': [
+    "Ny avtale om arbeidstiltak opprettet. Åpne avtale og fyll ut innholdet.",
+    "Avtale om arbeidstiltak godkjent.",
+    "Du kan nå søke om refusjon.",
+    "Mål i avtale endret av veileder.",
+    "Oppfølging og tilrettelegging i avtale endret av veileder.",
+    "Avtale forkortet.",
+    "Avtale forlenget av veileder.",
+    "Tilskuddsberegning i avtale endret av veileder.",
+    "Avtalen må godkjennes på nytt.",
+    "Kontaktinformasjon i avtale endret av veileder.",
   ],
-  'Rekrutering': [
-    "Fire nye kandidater lagt til på listen \"Frontdesk medarbeidere\"",
-    "To nye kandidater lagt til på listen \"Lagerarbeidere\"",
-    "Fem nye kandidater lagt til på listen \"CTO\"",
+  'Mentor': [
+    "Du kan nå søke om refusjon.",
+    "Mål i avtale endret av veileder.",
+    "Oppfølging og tilrettelegging i avtale endret av veileder.",
+    "Avtale forkortet.",
+    "Avtale forlenget av veileder.",
+    "Avtalen må godkjennes på nytt.",
+    "Kontaktinformasjon i avtale endret av veileder.",
   ],
-  'Refusjon': [
-    "Send inntekstmelding for søknad om foreldrepenger"
+  'Sommerjobb': [
+    "Stillingsbeskrivelse i avtale endret av veileder.",
+    "Mål i avtale endret av veileder.",
+    "Avtale forkortet.",
+    "Avtale forlenget av veileder.",
+    "Tilskuddsberegning i avtale endret av veileder.",
+    "Avtalen må godkjennes på nytt.",
+    "Kontaktinformasjon i avtale endret av veileder.",
   ],
-  'Sykemeldt': [
-    "En ny sykmelding venter",
-    "Svar på om du ønsker dialogmøte eller ikke"
-  ]
+  'Arbeidstrening': [
+    "Ny avtale om arbeidstiltak opprettet. Åpne avtale og fyll ut innholdet.",
+    "Avtale om arbeidstiltak godkjent.",
+    "Du kan nå søke om refusjon.",
+    "Stillingsbeskrivelse i avtale endret av veileder.",
+    "Mål i avtale endret av veileder.",
+    "Oppfølging og tilrettelegging i avtale endret av veileder.",
+    "Avtale forkortet.",
+    "Avtale forlenget av veileder.",
+    "Tilskuddsberegning i avtale endret av veileder.",
+    "Avtalen må godkjennes på nytt.",
+    "Kontaktinformasjon i avtale endret av veileder.",
+  ],
 };
 
 
