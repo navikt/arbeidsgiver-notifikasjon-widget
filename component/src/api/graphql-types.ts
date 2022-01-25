@@ -31,7 +31,7 @@ export type BrukerKlikk = {
 
 export type EgendefinertStatus = {
   __typename?: 'EgendefinertStatus';
-  value: Scalars['String'];
+  egendefinertVerdi: Scalars['String'];
 };
 
 
@@ -81,7 +81,7 @@ export type PageInfo = {
 
 export type PredefinertStatus = {
   __typename?: 'PredefinertStatus';
-  value: StatusEnum;
+  predefinertVerdi: StatusEnum;
 };
 
 export type Query = {
