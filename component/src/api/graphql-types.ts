@@ -29,6 +29,11 @@ export type BrukerKlikk = {
   klikketPaa: Scalars['Boolean'];
 };
 
+export type EgendefinertStatus = {
+  __typename?: 'EgendefinertStatus';
+  value: Scalars['String'];
+};
+
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -68,10 +73,60 @@ export enum OppgaveTilstand {
   Utfoert = 'UTFOERT'
 }
 
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  hasNextPage: Scalars['Boolean'];
+  endCursor: Scalars['String'];
+};
+
+export type PredefinertStatus = {
+  __typename?: 'PredefinertStatus';
+  value: StatusEnum;
+};
+
 export type Query = {
   __typename?: 'Query';
   notifikasjoner: NotifikasjonerResultat;
+  saker: SakConnection;
   whoami?: Maybe<Scalars['String']>;
+};
+
+
+export type QuerySakerArgs = {
+  first?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  virksomhetsnummer: Scalars['String'];
+};
+
+export type Sak = {
+  __typename?: 'Sak';
+  virksomhet: Virksomhet;
+  sisteStatus: Statusoppdatering;
+};
+
+export type SakConnection = {
+  __typename?: 'SakConnection';
+  edges: Array<SakEdge>;
+  pageInfo: PageInfo;
+};
+
+export type SakEdge = {
+  __typename?: 'SakEdge';
+  node: Sak;
+  cursor: Scalars['String'];
+};
+
+export type Status = PredefinertStatus | EgendefinertStatus;
+
+export enum StatusEnum {
+  Mottatt = 'MOTTATT',
+  UnderBehandling = 'UNDER_BEHANDLING'
+}
+
+export type Statusoppdatering = {
+  __typename?: 'Statusoppdatering';
+  status: Status;
+  tidspunkt: Scalars['ISO8601DateTime'];
 };
 
 export type UgyldigId = {

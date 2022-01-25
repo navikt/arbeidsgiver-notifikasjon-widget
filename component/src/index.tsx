@@ -11,6 +11,7 @@ export type Props = {
   miljo?: Miljø
 }
 export {Miljø} from './utils/EnvironmentProvider'
+export * as GQL from './api/graphql-types'
 
 export const NotifikasjonWidget = (props: Props) => {
   if (useContext(NotifikasjonWidgetProviderLoadedContext)) {
