@@ -126,6 +126,8 @@ export enum StatusEnum {
 export type Statusoppdatering = {
   __typename?: 'Statusoppdatering';
   status: Status;
+  tittel: Scalars['String'];
+  lenke: Scalars['String'];
   tidspunkt: Scalars['ISO8601DateTime'];
 };
 
