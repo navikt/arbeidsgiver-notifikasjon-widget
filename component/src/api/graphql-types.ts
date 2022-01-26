@@ -68,10 +68,50 @@ export enum OppgaveTilstand {
   Utfoert = 'UTFOERT'
 }
 
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  hasNextPage: Scalars['Boolean'];
+  endCursor: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   notifikasjoner: NotifikasjonerResultat;
+  saker: SakConnection;
   whoami?: Maybe<Scalars['String']>;
+};
+
+
+export type QuerySakerArgs = {
+  first?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  virksomhetsnummer: Scalars['String'];
+};
+
+export type Sak = {
+  __typename?: 'Sak';
+  virksomhet: Virksomhet;
+  sisteStatus: Statusoppdatering;
+};
+
+export type SakConnection = {
+  __typename?: 'SakConnection';
+  edges: Array<SakEdge>;
+  pageInfo: PageInfo;
+};
+
+export type SakEdge = {
+  __typename?: 'SakEdge';
+  node: Sak;
+  cursor: Scalars['String'];
+};
+
+export type Statusoppdatering = {
+  __typename?: 'Statusoppdatering';
+  status: Scalars['String'];
+  tittel: Scalars['String'];
+  lenke: Scalars['String'];
+  tidspunkt: Scalars['ISO8601DateTime'];
 };
 
 export type UgyldigId = {
