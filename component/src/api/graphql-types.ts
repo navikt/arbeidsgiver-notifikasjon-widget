@@ -29,11 +29,6 @@ export type BrukerKlikk = {
   klikketPaa: Scalars['Boolean'];
 };
 
-export type EgendefinertStatus = {
-  __typename?: 'EgendefinertStatus';
-  egendefinertVerdi: Scalars['String'];
-};
-
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -79,11 +74,6 @@ export type PageInfo = {
   endCursor: Scalars['String'];
 };
 
-export type PredefinertStatus = {
-  __typename?: 'PredefinertStatus';
-  predefinertVerdi: StatusEnum;
-};
-
 export type Query = {
   __typename?: 'Query';
   notifikasjoner: NotifikasjonerResultat;
@@ -116,16 +106,9 @@ export type SakEdge = {
   cursor: Scalars['String'];
 };
 
-export type Status = PredefinertStatus | EgendefinertStatus;
-
-export enum StatusEnum {
-  Mottatt = 'MOTTATT',
-  UnderBehandling = 'UNDER_BEHANDLING'
-}
-
 export type Statusoppdatering = {
   __typename?: 'Statusoppdatering';
-  status: Status;
+  status: Scalars['String'];
   tittel: Scalars['String'];
   lenke: Scalars['String'];
   tidspunkt: Scalars['ISO8601DateTime'];
