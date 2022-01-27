@@ -6,7 +6,7 @@ import React, { createContext, FC, useContext } from "react";
 const createAmpltiudeInstance = (apiKey: string) => {
   const instance = amplitude.getInstance()
   instance.init(apiKey, '', {
-    apiEndpoint: 'amplitude.nav.no/collect-auto',
+    apiEndpoint: 'amplitude.nav.no/collect',
     saveEvents: false,
     includeUtm: true,
     batchEvents: false,
