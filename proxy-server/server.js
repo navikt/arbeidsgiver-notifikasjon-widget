@@ -1,9 +1,9 @@
 import express from 'express'
 import httpProxyMiddleware from 'http-proxy-middleware'
+import {createLogger, transports, format} from 'winston'
 import require from './esm-require.js'
 import cookieParser from 'cookie-parser'
 
-const {createLogger, transports, format} = require('winston')
 const apiMetricsMiddleware = require('prometheus-api-metrics')
 const {createProxyMiddleware} = httpProxyMiddleware
 
