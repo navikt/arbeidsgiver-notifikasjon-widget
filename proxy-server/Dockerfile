@@ -1,9 +1,11 @@
-FROM navikt/node-express:12.2.0-alpine
+FROM navikt/node-express:16
 
 WORKDIR /usr/src/app
 COPY . .
 
+USER root
 RUN npm ci
+USER apprunner
 
 EXPOSE 3000
 ENTRYPOINT ["/bin/sh", "start.sh"]
