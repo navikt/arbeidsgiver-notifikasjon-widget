@@ -18,7 +18,7 @@
     "@navikt/ds-css": "0.12.10",
     "@navikt/ds-react": "0.14.11",
     "@navikt/ds-icons": "0.7.2",
-    "amplitude-js": "^8.14.0",
+    "amplitude-js": "^8.15.1",
     "classnames": "2",
     "graphql": "^15.8.0",
     "nav-frontend-core": "6",
