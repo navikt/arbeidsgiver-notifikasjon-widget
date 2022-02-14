@@ -130,6 +130,23 @@ const startApolloMock = () => {
           feilAltinn: false,
           feilDigiSyfo: false,
         }),
+        saker: () => ({
+          edges: [
+            "Søknad om fritak fra arbeidsgiverperioden – kronisk sykdom Bo Johnstrøm",
+            "Permitteringsmelding 14 ansatte",
+            "Refusjon - fritak fra arbeidsgiverperioden - Lena Ek",
+          ].map((tittel) => (
+            {
+              node: {
+                virksomhet: { navn: "Gamle Fredikstad og Riksdalen regnskap" },
+                sisteStatus: {
+                  status: casual.random_element(["mottatt", "under behandling", "utbetalt"]),
+                  tittel,
+                  lenke: "#",
+                  tidspunkt: casualDate().toISOString()
+                }
+            }}))
+        })
       }),
       Int: () => casual.integer(0, 1000),
       String: () => casual.string,
