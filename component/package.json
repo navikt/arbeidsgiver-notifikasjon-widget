@@ -16,7 +16,7 @@
   "dependencies": {
     "@apollo/client": "3.5.7",
     "@navikt/ds-css": "0.12.13",
-    "@navikt/ds-react": "0.14.14",
+    "@navikt/ds-react": "0.14.15",
     "@navikt/ds-icons": "0.7.3",
     "amplitude-js": "^8.16.0",
     "classnames": "2",
