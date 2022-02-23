@@ -5,13 +5,13 @@
   "type": "module",
   "main": "proxy-server.js",
   "dependencies": {
-    "@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock": "0.0.7",
-    "cookie-parser": "^1.4.5",
-    "express": "^4.17.2",
-    "http-proxy-middleware": "^1.0.6",
-    "prom-client": "^13.2.0",
+    "@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock": "0.0.8",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.3",
+    "http-proxy-middleware": "^2.0.3",
+    "prom-client": "^14.0.1",
     "prometheus-api-metrics": "^3.2.0",
-    "winston": "3.4.0"
+    "winston": "3.6.0"
   },
   "scripts": {
     "start": "node server.js"
