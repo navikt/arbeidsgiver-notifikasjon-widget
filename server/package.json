@@ -9,9 +9,9 @@
     "dist/**/*"
   ],
   "dependencies": {
-    "apollo-server": "^2.25.3",
+    "apollo-server": "^3.6.3",
     "casual": "^1.6.2",
-    "graphql": "^15.8.0"
+    "graphql": "^16.3.0"
   },
   "scripts": {
     "start": "npm run prepack && node dist/apollo.js",
