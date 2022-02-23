@@ -13,7 +13,7 @@ jobs:
         uses: taichi/actions-package-update@master
         env:
           WORKING_DIR: server
-          AUTHOR_EMAIL: actions[bot]@users.noreply.github.com
+          AUTHOR_EMAIL: gh-action@users.noreply.github.com
           AUTHOR_NAME: ${{ github.actor }}
           EXECUTE: "true"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
