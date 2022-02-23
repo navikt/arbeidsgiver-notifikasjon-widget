@@ -8,37 +8,15 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: set remote url
-        run: git remote set-url --push origin https://${github.actor}:${{ secrets.GITHUB_TOKEN }}@github.com/${github.repository}
+        run: git remote set-url --push origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
       - name: package-update server
         uses: taichi/actions-package-update@master
         env:
           WORKING_DIR: server
           AUTHOR_EMAIL: actions[bot]@users.noreply.github.com
-          AUTHOR_NAME: ${github.actor}
+          AUTHOR_NAME: ${{ github.actor }}
           EXECUTE: "true"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LOG_LEVEL: debug
         with:
           args: -u --packageFile package.json --loglevel verbose
-#      - name: package-update proxy-server
-#        uses: taichi/actions-package-update@master
-#        env:
-#          WORKING_DIR: proxy-server
-#          AUTHOR_EMAIL: actions[bot]@users.noreply.github.com
-#          AUTHOR_NAME: ${github.actor}
-#          EXECUTE: "true"
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          LOG_LEVEL: debug
-#        with:
-#          args: -u --packageFile package.json --loglevel verbose
-#      - name: package-update component
-#        uses: taichi/actions-package-update@master
-#        env:
-#          WORKING_DIR: component
-#          AUTHOR_EMAIL: actions[bot]@users.noreply.github.com
-#          AUTHOR_NAME: ${github.actor}
-#          EXECUTE: "true"
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          LOG_LEVEL: debug
-#        with:
-#          args: -u --packageFile package.json --loglevel verbose
