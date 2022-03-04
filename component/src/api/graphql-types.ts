@@ -68,50 +68,45 @@ export enum OppgaveTilstand {
   Utfoert = 'UTFOERT'
 }
 
-export type PageInfo = {
-  __typename?: 'PageInfo';
-  hasNextPage: Scalars['Boolean'];
-  endCursor: Scalars['String'];
-};
-
 export type Query = {
   __typename?: 'Query';
   notifikasjoner: NotifikasjonerResultat;
-  saker: SakConnection;
+  saker: SakerResultat;
   whoami?: Maybe<Scalars['String']>;
 };
 
 
 export type QuerySakerArgs = {
-  first?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
   virksomhetsnummer: Scalars['String'];
 };
 
 export type Sak = {
   __typename?: 'Sak';
+  id: Scalars['ID'];
   virksomhet: Virksomhet;
-  sisteStatus: Statusoppdatering;
-};
-
-export type SakConnection = {
-  __typename?: 'SakConnection';
-  edges: Array<SakEdge>;
-  pageInfo: PageInfo;
-};
-
-export type SakEdge = {
-  __typename?: 'SakEdge';
-  node: Sak;
-  cursor: Scalars['String'];
-};
-
-export type Statusoppdatering = {
-  __typename?: 'Statusoppdatering';
-  status: Scalars['String'];
   tittel: Scalars['String'];
   lenke: Scalars['String'];
+  merkelapp: Scalars['String'];
+  sisteStatus: SakStatus;
+};
+
+export type SakStatus = {
+  __typename?: 'SakStatus';
+  type: SakStatusType;
+  tekst: Scalars['String'];
   tidspunkt: Scalars['ISO8601DateTime'];
+};
+
+export enum SakStatusType {
+  Mottatt = 'MOTTATT',
+  UnderBehandling = 'UNDER_BEHANDLING',
+  Ferdig = 'FERDIG'
+}
+
+export type SakerResultat = {
+  __typename?: 'SakerResultat';
+  saker: Array<Sak>;
+  feilAltinn: Scalars['Boolean'];
 };
 
 export type UgyldigId = {
