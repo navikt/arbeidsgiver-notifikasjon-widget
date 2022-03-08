@@ -106,6 +106,7 @@ export enum SakStatusType {
 export type SakerResultat = {
   __typename?: 'SakerResultat';
   saker: Array<Sak>;
+  totaltAntallSaker: Scalars['Int'];
   feilAltinn: Scalars['Boolean'];
 };
 
