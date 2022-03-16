@@ -31,7 +31,7 @@ jobs:
           cd component
           npm test
 
-      - if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/_oppdater_innsyn_sak_gql'
+      - if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/_se_alle_saker'
         name: publish
         run: |
           cd component
