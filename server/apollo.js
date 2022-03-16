@@ -80,7 +80,17 @@ const eksempler = {
   ],
 };
 
-
+const saker = [
+  "Varsel om permittering 24 ansatte",
+  "Søknad om fritak fra arbeidsgiverperioden – gravid ansatt Lena Nilsson",
+  "Søknad om fritak fra arbeidsgiverperioden – kronisk sykdom Bo Johnstrøm",
+  "Permitteringsmelding 14 ansatte",
+  "Lønnskompensasjon ved permittering",
+  "Varsel om permittering 12 ansatte",
+  "Søknad om fritak fra arbeidsgiverperioden – kronisk sykdom Bo Johnstrøm\n",
+  "Refusjon - fritak fra arbeidsgiverperioden - Lena Ek",
+  "Søknad om fritak fra arbeidsgiverperioden – gravid ansatt Marie Svensson",
+];
 const startApolloMock = () => {
   const data = fs.readFileSync(path.join(__dirname, 'bruker.graphql'));
   const typeDefs = gql(data.toString());
@@ -132,19 +142,20 @@ const startApolloMock = () => {
         }),
         saker: () => ({
           saker: [
-            "Søknad om fritak fra arbeidsgiverperioden – kronisk sykdom Bo Johnstrøm",
-            "Permitteringsmelding 14 ansatte",
-            "Refusjon - fritak fra arbeidsgiverperioden - Lena Ek",
+            casual.random_element(saker),
+            casual.random_element(saker),
+            casual.random_element(saker),
           ].map((tittel) => (
             {
                 tittel,
                 lenke: "#",
                 virksomhet: { navn: "Gamle Fredikstad og Riksdalen regnskap" },
                 sisteStatus: {
-                  tekst: casual.random_element(["mottatt", "under behandling", "utbetalt"]),
+                  tekst: casual.random_element(["Mottatt", "Under behandling", "Utbetalt"]),
                   tidspunkt: casualDate().toISOString()
                 }
-            }))
+            })),
+          totaltAntallSaker: 314
         })
       }),
       Int: () => casual.integer(0, 1000),

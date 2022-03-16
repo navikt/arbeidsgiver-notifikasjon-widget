@@ -78,6 +78,8 @@ export type Query = {
 
 export type QuerySakerArgs = {
   virksomhetsnummer: Scalars['String'];
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
 };
 
 export type Sak = {
