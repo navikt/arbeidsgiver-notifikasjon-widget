@@ -80,6 +80,7 @@ export type QuerySakerArgs = {
   virksomhetsnummer: Scalars['String'];
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
+  tekstsoek?: Maybe<Scalars['String']>;
 };
 
 export type Sak = {
@@ -108,6 +109,7 @@ export enum SakStatusType {
 export type SakerResultat = {
   __typename?: 'SakerResultat';
   saker: Array<Sak>;
+  /** Antall saker for gitt filter, men uavhengig av offset/limit. */
   totaltAntallSaker: Scalars['Int'];
   feilAltinn: Scalars['Boolean'];
 };
