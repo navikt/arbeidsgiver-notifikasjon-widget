@@ -8,17 +8,7 @@ import {Query} from "./graphql-types";
 export const createClient = (uri: string, credentials?: string) =>
   new ApolloClient({
     uri,
-    cache: new InMemoryCache({
-      typePolicies: {
-        Query: {
-          fields: {
-            saker: {
-              keyArgs: false
-            },
-          },
-        },
-      },
-    }),
+    cache: new InMemoryCache(),
     credentials
   })
 
