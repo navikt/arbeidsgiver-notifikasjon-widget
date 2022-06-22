@@ -14,9 +14,6 @@ const App = () => {
   return <div className={'typo-normal bakgrunnsside'}>
     <NotifikasjonWidgetProvider miljo={'local'}>
       <Router history={history}>
-        <div style={{height: "20em"}}>
-          dekorator
-        </div>
         <Bedriftsmeny
           sidetittel={orgname}
           organisasjoner={MOCK_ORGANISASJONER}
@@ -24,9 +21,6 @@ const App = () => {
           history={history}>
           <NotifikasjonWidget miljo={"local"}/>
         </Bedriftsmeny>
-        <div style={{height: "30em"}}>
-          footer
-        </div>
       </Router>
     </NotifikasjonWidgetProvider>
   </div>
