@@ -6,6 +6,7 @@ import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
 import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
 import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
+import IkonOppgaveUtgaatt from './ikon-oppgave-utgaatt.svg'
 import { Next as HoyreChevron } from '@navikt/ds-icons'
 import { useAmplitude } from '../../../utils/amplitude'
 
@@ -23,7 +24,7 @@ export const NotifikasjonListeElement = (props: Props) => {
   const { loggPilTastNavigasjon } = useAmplitude()
   const notifikasjon = props.notifikasjon
 
-  const date = new Date(notifikasjon.opprettetTidspunkt)
+  let date = new Date(notifikasjon.opprettetTidspunkt)
 
   let ikon
   switch (props.notifikasjon.__typename) {
@@ -35,7 +36,11 @@ export const NotifikasjonListeElement = (props: Props) => {
         props.notifikasjon.tilstand === OppgaveTilstand.Utfoert ? (
           <IkonOppgaveUtfoert />
         ) : (
-          <IkonOppgave />
+          props.notifikasjon.tilstand === OppgaveTilstand.Utgaatt ? (
+            <IkonOppgaveUtgaatt />
+          ) : (
+            <IkonOppgave />
+          )
         )
       break
     default:
@@ -48,7 +53,13 @@ export const NotifikasjonListeElement = (props: Props) => {
 
   const erUtfoert =
     notifikasjon.__typename === 'Oppgave' &&
-    notifikasjon.tilstand === OppgaveTilstand.Utfoert
+    notifikasjon.tilstand === OppgaveTilstand.Utfoert;
+  const erUtgaatt =
+    notifikasjon.__typename === 'Oppgave' &&
+    notifikasjon.tilstand === OppgaveTilstand.Utgaatt;
+  if (notifikasjon.__typename === 'Oppgave' && notifikasjon.tilstand === OppgaveTilstand.Utgaatt) {
+    date = new Date(notifikasjon.utgaattTidspunkt)
+  }
   return (
     <a
       tabIndex={props.erValgt ? 0 : -1}
@@ -94,8 +105,7 @@ export const NotifikasjonListeElement = (props: Props) => {
 
       <div className='notifikasjon_liste_element-metadata'>
         <Undertekst className='notifikasjon_liste_element-metadata-dato'>
-          {notifikasjon.__typename} {erUtfoert ? 'utført' : 'sendt'}{' '}
-          {datotekst(date)}
+          {erUtgaatt ? ('Frist utgått ' + datotekst(date)) : (notifikasjon.__typename + (erUtfoert ? ' utført ' : ' sendt ') + datotekst(date))}
         </Undertekst>
 
         <UndertekstBold

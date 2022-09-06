@@ -59,13 +59,15 @@ export type Oppgave = {
   tekst: Scalars['String'];
   lenke: Scalars['String'];
   opprettetTidspunkt: Scalars['ISO8601DateTime'];
+  utgaattTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
   id: Scalars['ID'];
   virksomhet: Virksomhet;
 };
 
 export enum OppgaveTilstand {
   Ny = 'NY',
-  Utfoert = 'UTFOERT'
+  Utfoert = 'UTFOERT',
+  Utgaatt = 'UTGAATT'
 }
 
 export type Query = {

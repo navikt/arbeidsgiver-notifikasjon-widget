@@ -47,6 +47,7 @@ export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner"
                 tekst
                 merkelapp
                 opprettetTidspunkt
+                utgaattTidspunkt
                 tilstand
                 id
             }
