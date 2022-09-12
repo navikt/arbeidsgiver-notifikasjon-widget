@@ -1,5 +1,4 @@
 import React from 'react'
-import { Undertekst, UndertekstBold } from '../../../typography'
 import { datotekst } from '../dato-funksjoner'
 import './NotifikasjonListeElement.less'
 import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
@@ -7,8 +6,9 @@ import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
 import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
 import IkonOppgaveUtgaatt from './ikon-oppgave-utgaatt.svg'
-import { Next as HoyreChevron } from '@navikt/ds-icons'
+import { Next as HoyreChevron, StopWatch } from '@navikt/ds-icons'
 import { useAmplitude } from '../../../utils/amplitude'
+import {BodyShort, Detail} from "@navikt/ds-react";
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -24,7 +24,8 @@ export const NotifikasjonListeElement = (props: Props) => {
   const { loggPilTastNavigasjon } = useAmplitude()
   const notifikasjon = props.notifikasjon
 
-  let date = new Date(notifikasjon.opprettetTidspunkt)
+  const date = new Date(notifikasjon.opprettetTidspunkt)
+  let utgaattDate = null;
 
   let ikon
   switch (props.notifikasjon.__typename) {
@@ -58,7 +59,7 @@ export const NotifikasjonListeElement = (props: Props) => {
     notifikasjon.__typename === 'Oppgave' &&
     notifikasjon.tilstand === OppgaveTilstand.Utgaatt;
   if (notifikasjon.__typename === 'Oppgave' && notifikasjon.tilstand === OppgaveTilstand.Utgaatt) {
-    date = new Date(notifikasjon.utgaattTidspunkt)
+    utgaattDate = new Date(notifikasjon.utgaattTidspunkt)
   }
   return (
     <a
@@ -97,23 +98,29 @@ export const NotifikasjonListeElement = (props: Props) => {
         <div className='notifikasjon_liste_element-lenkepanel-chevron'>
           <HoyreChevron />
         </div>
+        {erUtgaatt && utgaattDate && (
+          <BodyShort className='notifikasjon_liste_element-metadata-utgaattdato' size='small'>
+            <StopWatch/> Fristen gikk ut {datotekst(utgaattDate)}
+          </BodyShort>
+        )}
       </div>
 
-      <Undertekst className='notifikasjon_liste_element-virksomhetsnavn'>
+      <Detail className='notifikasjon_liste_element-virksomhetsnavn' size="small">
         {notifikasjon.virksomhet.navn.toUpperCase()}
-      </Undertekst>
+      </Detail>
 
       <div className='notifikasjon_liste_element-metadata'>
-        <Undertekst className='notifikasjon_liste_element-metadata-dato'>
-          {erUtgaatt ? ('Frist utgått ' + datotekst(date)) : (notifikasjon.__typename + (erUtfoert ? ' utført ' : ' sendt ') + datotekst(date))}
-        </Undertekst>
+        <BodyShort className='notifikasjon_liste_element-metadata-dato' size='small'>
+          {(notifikasjon.__typename + (erUtfoert ? ' utført ' : ' sendt ') + datotekst(date))}
+        </BodyShort>
 
-        <UndertekstBold
+        <Detail
+          size='small'
           aria-label={'merkelapp ' + notifikasjon.merkelapp}
           className='notifikasjon_liste_element-metadata-merkelapp'
         >
           {notifikasjon.merkelapp.toUpperCase()}
-        </UndertekstBold>
+        </Detail>
       </div>
     </a>
   )

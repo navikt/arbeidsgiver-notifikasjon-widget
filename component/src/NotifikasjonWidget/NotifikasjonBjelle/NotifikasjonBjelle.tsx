@@ -1,7 +1,7 @@
 import React, { Ref } from 'react'
 import './NotifikasjonBjelle.less'
-import { Element } from '../../typography'
 import Ikon from './NotifikasjonBjelle.svg'
+import {Label} from "@navikt/ds-react";
 
 interface Props {
   antallUleste?: number
@@ -39,9 +39,9 @@ export const NotifikasjonBjelle = ({
                 : ''
             }`}
           >
-            <Element className='notifikasjon_bjelle-ikon__ulest-antall'>
+            <Label className='notifikasjon_bjelle-ikon__ulest-antall'>
               {antallUleste < 10 ? antallUleste : '9+'}
-            </Element>
+            </Label>
           </div>
         </div>
       </button>
