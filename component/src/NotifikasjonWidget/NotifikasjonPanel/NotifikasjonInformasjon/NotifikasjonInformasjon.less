@@ -1,4 +1,3 @@
-@import 'nav-frontend-core/less/_variabler';
 
 .notifikasjon-informasjon {
   display: flex;
@@ -13,7 +12,7 @@
     border: none;
     background-color: transparent;
     text-decoration: underline;
-    color: @navBla;
+    color: var(--navds-global-color-blue-500);
 
     svg {
       margin-right: .4rem;
@@ -31,15 +30,14 @@
   // No obvious way to get the desired effect with our own classes. Override
   // classes from design system.
   .navds-popover {
-    border: @navLysBla 2px solid;
+    border: var(--navds-global-color-lightblue-500) 2px solid;
     border-radius: 5px;
-    background-color: @navLysBlaLighten80;
+    background-color: var(--navds-global-color-lightblue-100);
   }
 
   .navds-popover__arrow::before {
-    background-color: @navLysBlaLighten80;
-    border-right: @navLysBla 2px solid;
-    border-bottom: @navLysBla 2px solid;
+    background-color: var(--navds-global-color-lightblue-100);
+    border-right: var(--navds-global-color-lightblue-500) 2px solid;
+    border-bottom: var(--navds-global-color-lightblue-500) 2px solid;
   }
-
 }
