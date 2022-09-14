@@ -1,13 +1,14 @@
 import React from 'react'
-import { Undertekst, UndertekstBold } from '../../../typography'
 import { datotekst } from '../dato-funksjoner'
 import './NotifikasjonListeElement.less'
 import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
 import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
 import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
-import { Next as HoyreChevron } from '@navikt/ds-icons'
+import IkonOppgaveUtgaatt from './ikon-oppgave-utgaatt.svg'
+import { Next as HoyreChevron, StopWatch } from '@navikt/ds-icons'
 import { useAmplitude } from '../../../utils/amplitude'
+import {BodyShort, Detail} from "@navikt/ds-react";
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -24,6 +25,7 @@ export const NotifikasjonListeElement = (props: Props) => {
   const notifikasjon = props.notifikasjon
 
   const date = new Date(notifikasjon.opprettetTidspunkt)
+  let utgaattDate = null;
 
   let ikon
   switch (props.notifikasjon.__typename) {
@@ -35,7 +37,11 @@ export const NotifikasjonListeElement = (props: Props) => {
         props.notifikasjon.tilstand === OppgaveTilstand.Utfoert ? (
           <IkonOppgaveUtfoert />
         ) : (
-          <IkonOppgave />
+          props.notifikasjon.tilstand === OppgaveTilstand.Utgaatt ? (
+            <IkonOppgaveUtgaatt />
+          ) : (
+            <IkonOppgave />
+          )
         )
       break
     default:
@@ -48,7 +54,13 @@ export const NotifikasjonListeElement = (props: Props) => {
 
   const erUtfoert =
     notifikasjon.__typename === 'Oppgave' &&
-    notifikasjon.tilstand === OppgaveTilstand.Utfoert
+    notifikasjon.tilstand === OppgaveTilstand.Utfoert;
+  const erUtgaatt =
+    notifikasjon.__typename === 'Oppgave' &&
+    notifikasjon.tilstand === OppgaveTilstand.Utgaatt;
+  if (notifikasjon.__typename === 'Oppgave' && notifikasjon.tilstand === OppgaveTilstand.Utgaatt) {
+    utgaattDate = new Date(notifikasjon.utgaattTidspunkt)
+  }
   return (
     <a
       tabIndex={props.erValgt ? 0 : -1}
@@ -86,24 +98,29 @@ export const NotifikasjonListeElement = (props: Props) => {
         <div className='notifikasjon_liste_element-lenkepanel-chevron'>
           <HoyreChevron />
         </div>
+        {erUtgaatt && utgaattDate && (
+          <BodyShort className='notifikasjon_liste_element-metadata-utgaattdato' size='small'>
+            <StopWatch/> Fristen gikk ut {datotekst(utgaattDate)}
+          </BodyShort>
+        )}
       </div>
 
-      <Undertekst className='notifikasjon_liste_element-virksomhetsnavn'>
+      <Detail className='notifikasjon_liste_element-virksomhetsnavn' size="small">
         {notifikasjon.virksomhet.navn.toUpperCase()}
-      </Undertekst>
+      </Detail>
 
       <div className='notifikasjon_liste_element-metadata'>
-        <Undertekst className='notifikasjon_liste_element-metadata-dato'>
-          {notifikasjon.__typename} {erUtfoert ? 'utført' : 'sendt'}{' '}
-          {datotekst(date)}
-        </Undertekst>
+        <BodyShort className='notifikasjon_liste_element-metadata-dato' size='small'>
+          {(notifikasjon.__typename + (erUtfoert ? ' utført ' : ' sendt ') + datotekst(date))}
+        </BodyShort>
 
-        <UndertekstBold
+        <Detail
+          size='small'
           aria-label={'merkelapp ' + notifikasjon.merkelapp}
           className='notifikasjon_liste_element-metadata-merkelapp'
         >
           {notifikasjon.merkelapp.toUpperCase()}
-        </UndertekstBold>
+        </Detail>
       </div>
     </a>
   )

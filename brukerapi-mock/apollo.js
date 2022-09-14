@@ -97,7 +97,8 @@ const startApolloMock = () => {
   const Notifikasjon = (navn) => {
     const merkelapp = casual.random_key(eksempler);
     const tekst = casual.random_element(eksempler[merkelapp]);
-
+    const erUtgåttOppgave = navn === 'Oppgave' && casual.boolean;
+    const tilstand = navn === 'Oppgave' ? { tilstand: erUtgåttOppgave ? 'UTGAATT' : casual.random_element(['NY', 'UTFOERT'])} : {};
     return {
       __typename: navn, //casual.boolean ? 'Beskjed' : 'Oppgave',
       id: Math.random().toString(36),
@@ -105,6 +106,8 @@ const startApolloMock = () => {
       tekst,
       lenke: `#${casual.word}`,
       opprettetTidspunkt: casualDate().toISOString(),
+      utgaattTidspunkt: erUtgåttOppgave ? casualDate().toISOString() : null,
+      ...tilstand,
       virksomhet: {
         navn: casual.random_element([
           "Ballstad og Hamarøy",

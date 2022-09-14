@@ -69,7 +69,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  mockserver:
+  brukerapi-mock:
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -81,17 +81,17 @@ jobs:
           node-version: '16'
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
-          cache-dependency-path: server/package-lock.json
+          cache-dependency-path: brukerapi-mock/package-lock.json
 
       - name: install dependencies
         run: |
-          cd server
+          cd brukerapi-mock
           npm ci
 
       - if: github.ref == 'refs/heads/main'
         name: publish
         run: |
-          cd server
+          cd brukerapi-mock
           if jq --null-input --exit-status \
               --argjson local "$(jq .version package.json)" \
               --argjson published "$(npm view --json @navikt/arbeidsgiver-notifikasjoner-brukerapi-mock versions)" \
@@ -112,6 +112,7 @@ jobs:
       - if: github.ref == 'refs/heads/main'
         name: publish on github
         run: |
+          cd brukerapi-mock
           if jq --null-input --exit-status \
               --argjson local "$(jq .version package.json)" \
               --argjson published "$(npm view --json @navikt/arbeidsgiver-notifikasjoner-brukerapi-mock versions)" \

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Undertittel } from '../../typography'
 import { Close } from '@navikt/ds-icons'
-import { Alert } from '@navikt/ds-react'
+import {Alert, Heading} from '@navikt/ds-react'
 import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'
 import './NotifikasjonPanel.less'
 import { Notifikasjon, NotifikasjonerResultat } from '../../api/graphql-types'
@@ -88,7 +87,7 @@ const NotifikasjonPanel = (
           id='notifikasjon_panel-header'
           className='notifikasjon_panel-header'
         >
-          <Undertittel>Beskjeder og oppgaver</Undertittel>
+          <Heading level='2' size='small'>Beskjeder og oppgaver</Heading>
           <button
             id='notifikasjon_panel-header-xbtn'
             className='notifikasjon_panel-header-xbtn'

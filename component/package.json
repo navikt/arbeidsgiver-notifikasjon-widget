@@ -2,7 +2,7 @@
   "name": "@navikt/arbeidsgiver-notifikasjon-widget",
   "description": "React component for notifikasjoner for arbeidsgivere",
   "repository": "github:navikt/arbeidsgiver-notifikasjon-widget",
-  "version": "2.0.4",
+  "version": "3.0.0-rc1",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/lib/esm/index.d.ts",
@@ -24,8 +24,6 @@
     "nav-frontend-core": "6",
     "nav-frontend-popover": "2.0.3",
     "nav-frontend-popover-style": "2",
-    "nav-frontend-typografi": "4",
-    "nav-frontend-typografi-style": "2",
     "prop-types": "15.8.1"
   },
   "devDependencies": {

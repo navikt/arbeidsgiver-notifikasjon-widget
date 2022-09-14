@@ -7,6 +7,7 @@ import React, {
   useState
 } from 'react'
 import './NotifikasjonInformasjon.less'
+import 'nav-frontend-core/dist/main.css'
 import { Helptext } from '@navikt/ds-icons'
 
 interface NotifikasjonInformasjonProps {
