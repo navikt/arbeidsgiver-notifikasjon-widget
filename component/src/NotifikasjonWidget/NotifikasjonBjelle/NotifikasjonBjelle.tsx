@@ -1,5 +1,5 @@
 import React, { Ref } from 'react'
-import './NotifikasjonBjelle.less'
+import './NotifikasjonBjelle.css'
 import Ikon from './NotifikasjonBjelle.svg'
 import {Label} from "@navikt/ds-react";
 

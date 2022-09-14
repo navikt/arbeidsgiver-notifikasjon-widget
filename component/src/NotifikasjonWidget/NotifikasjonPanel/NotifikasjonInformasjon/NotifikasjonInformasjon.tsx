@@ -4,7 +4,7 @@ import React, {
   useRef,
   useState
 } from 'react'
-import './NotifikasjonInformasjon.less'
+import './NotifikasjonInformasjon.css'
 import { Helptext } from '@navikt/ds-icons'
 import { BodyShort, Popover } from '@navikt/ds-react';
 

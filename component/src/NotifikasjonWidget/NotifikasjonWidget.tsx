@@ -1,7 +1,7 @@
 import React, {CSSProperties, useCallback, useEffect, useRef, useState} from 'react'
 import {NotifikasjonBjelle} from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
-import './NotifikasjonWidget.less'
+import './NotifikasjonWidget.css'
 import {ServerError, useQuery} from '@apollo/client'
 import {HENT_NOTIFIKASJONER} from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
