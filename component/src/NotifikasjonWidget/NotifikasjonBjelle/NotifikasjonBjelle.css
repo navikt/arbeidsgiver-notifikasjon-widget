@@ -1,0 +1,86 @@
+.notifikasjon_bjelle {
+  float: right;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.1rem 0.1rem 0 0;
+  background-color: transparent;
+  border: none;
+}
+.notifikasjon_bjelle-knapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 50%;
+  border: none;
+  width: 56px;
+  height: 56px;
+}
+.notifikasjon_bjelle-knapp svg path {
+  fill: var(--navds-global-color-gray-900);
+}
+.notifikasjon_bjelle-knapp:focus,
+.notifikasjon_bjelle-knapp:hover {
+  border: none;
+  background-color: var(--navds-global-color-deepblue-500);
+}
+.notifikasjon_bjelle-knapp:focus svg path,
+.notifikasjon_bjelle-knapp:hover svg path {
+  fill: var(--navds-global-color-white);
+}
+.notifikasjon_bjelle-knapp--open {
+  background-color: var(--navds-global-color-white);
+}
+.notifikasjon_bjelle-knapp--open:focus,
+.notifikasjon_bjelle-knapp--open:hover {
+  background-color: var(--navds-global-color-white);
+}
+.notifikasjon_bjelle-knapp--open:focus svg path,
+.notifikasjon_bjelle-knapp--open:hover svg path {
+  fill: var(--navds-global-color-gray-900);
+}
+.notifikasjon_bjelle-ikon {
+  --width: 33px;
+  --height: 33px;
+  --ulest-diameter: 22px;
+  --ulest-top: var(--height) * 0.2;
+  --ulest-left: var(--width) * 0.05;
+  position: relative;
+  width: var(--width);
+  height: var(--height);
+}
+.notifikasjon_bjelle-ikon__ulest-sirkel {
+  position: absolute;
+  z-index: 4;
+  top: -10px;
+  right: -5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--ulest-diameter);
+  width: var(--ulest-diameter);
+  border-radius: 50%;
+  background-color: var(--navds-global-color-red-500);
+  transform: translate(var(--ulest-left), var(--ulest-top));
+  transition: all 0.35s ease-in;
+}
+.notifikasjon_bjelle-ikon__ulest-sirkel--hide {
+  visibility: hidden;
+  transition: 0.2s all linear;
+}
+.notifikasjon_bjelle-ikon__ulest-antall {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+.notifikasjon_bjelle-understrek {
+  width: 4.5rem;
+  height: 0.25rem;
+  margin-top: 0.25rem;
+  background-color: var(--navds-global-color-deepblue-500);
+}
+.notifikasjon_bjelle-understrek--closed {
+  visibility: hidden;
+}

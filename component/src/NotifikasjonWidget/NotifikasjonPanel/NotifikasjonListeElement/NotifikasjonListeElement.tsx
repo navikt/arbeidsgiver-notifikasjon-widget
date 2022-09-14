@@ -1,6 +1,6 @@
 import React from 'react'
 import { datotekst } from '../dato-funksjoner'
-import './NotifikasjonListeElement.less'
+import './NotifikasjonListeElement.css'
 import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
 import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'

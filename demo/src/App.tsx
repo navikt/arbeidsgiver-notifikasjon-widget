@@ -11,7 +11,7 @@ const history: History = createBrowserHistory()
 
 const App = () => {
   const [orgname, setOrgname] = useState("")
-  return <div className={'typo-normal bakgrunnsside'}>
+  return <div className={'bakgrunnsside'}>
     <NotifikasjonWidgetProvider miljo={'local'}>
       <Router history={history}>
         <Bedriftsmeny
