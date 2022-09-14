@@ -1,6 +1,5 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react'
 import { ApolloProvider } from '@apollo/client'
-import 'nav-frontend-core/dist/main.css'
 import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget'
 import { createClient } from './api/graphql'
 import '@navikt/ds-css'

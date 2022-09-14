@@ -1,18 +1,14 @@
 @import 'nav-frontend-core/less/_variabler';
 
 .notifikasjon-informasjon {
-  position: relative;
-
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  @knapp-hoyde: 2rem;
-
   &-knapp {
     display: flex;
     align-items: center;
-    height: @knapp-hoyde;
+    height: 2rem;
     cursor: pointer;
     border: none;
     background-color: transparent;
@@ -29,25 +25,21 @@
   }
 
   &-popover {
-    position: absolute;
-    bottom: calc(@knapp-hoyde + .8rem);
-    display: none;
-    z-index: 300;
     padding: 1rem;
+  }
+
+  // No obvious way to get the desired effect with our own classes. Override
+  // classes from design system.
+  .navds-popover {
     border: @navLysBla 2px solid;
     border-radius: 5px;
     background-color: @navLysBlaLighten80;
-
-    .popover__pil {
-      border-top-color: transparent;
-      border-left-color: transparent;
-      border-bottom: @navLysBla 2px solid;
-      border-right: @navLysBla 2px solid;
-      background-color: @navLysBlaLighten80;
-    }
-
-    &__vis {
-      display: block;
-    }
   }
+
+  .navds-popover__arrow::before {
+    background-color: @navLysBlaLighten80;
+    border-right: @navLysBla 2px solid;
+    border-bottom: @navLysBla 2px solid;
+  }
+
 }

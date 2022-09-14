@@ -22,8 +22,6 @@
     "classnames": "2",
     "graphql": "^15.8.0",
     "nav-frontend-core": "6",
-    "nav-frontend-popover": "2.0.3",
-    "nav-frontend-popover-style": "2",
     "prop-types": "15.8.1"
   },
   "devDependencies": {
