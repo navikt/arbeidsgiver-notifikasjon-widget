@@ -30,7 +30,7 @@
   border-radius: 5px;
   background-color: var(--navds-global-color-lightblue-100);
 }
-.notifikasjon-informasjon .navds-popover__arrow::before {
+.notifikasjon-informasjon .navds-popover__arrow {
   background-color: var(--navds-global-color-lightblue-100);
   border-right: var(--navds-global-color-lightblue-500) 2px solid;
   border-bottom: var(--navds-global-color-lightblue-500) 2px solid;
