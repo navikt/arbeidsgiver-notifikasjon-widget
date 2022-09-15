@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Close } from '@navikt/ds-icons'
+import {Close} from '@navikt/ds-icons'
 import { Alert, Heading, HelpText } from '@navikt/ds-react'
 import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'
 import './NotifikasjonPanel.css'
@@ -7,6 +7,7 @@ import { Notifikasjon, NotifikasjonerResultat } from '../../api/graphql-types'
 import { useMutation } from '@apollo/client'
 import { NOTIFIKASJONER_KLIKKET_PAA } from '../../api/graphql'
 import { useAmplitude } from '../../utils/amplitude'
+
 
 interface Props {
   erApen: boolean
@@ -44,6 +45,7 @@ const NotifikasjonPanel = (
   const focusMoreInfo = () => {
     document.getElementById('notifikasjon-informasjon-knapp')?.focus()
   }
+
 
   useEffect(() => {
     if (erApen) {
@@ -155,6 +157,16 @@ const NotifikasjonPanel = (
           role='feed'
           id='notifikasjon_panel-liste'
           className='notifikasjon_panel-liste'
+          onScroll={(t)=> {
+              const {scrollTop, clientHeight, scrollHeight} = t.nativeEvent.srcElement as any;
+              if (scrollHeight-clientHeight - Math.ceil(scrollTop) < 40){
+                (t.nativeEvent.srcElement as any).setAttribute("xyz", "bottom")
+              }
+              else {
+                (t.nativeEvent.srcElement as any).setAttribute("xyz", "notBottom")
+              }
+          }
+          }
         >
           {notifikasjoner?.map((notifikasjon: Notifikasjon, index: number) => (
             <li key={index} role='article'>
