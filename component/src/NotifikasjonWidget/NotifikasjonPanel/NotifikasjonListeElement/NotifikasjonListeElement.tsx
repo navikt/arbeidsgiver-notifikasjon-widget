@@ -71,6 +71,7 @@ export const NotifikasjonListeElement = (props: Props) => {
         loggPilTastNavigasjon()
         if (event.key === 'Tab') {
           props.onTabEvent?.(event.shiftKey)
+          event.preventDefault()
         }
         if (event.key === 'ArrowUp' || event.key === 'Up') {
           props.gåTilForrige()

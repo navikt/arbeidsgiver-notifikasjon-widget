@@ -58,6 +58,13 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.notifikasjon_panel-header-title-help {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 .notifikasjon_panel-header-xbtn {
   height: 16px; /* får 6 ekstra piksler fra et sted ¯\_(ツ)_/¯ */
   padding: 0;
@@ -65,11 +72,6 @@
   cursor: pointer;
   border: none;
   background-color: transparent;
-}
-.notifikasjon_panel-footer {
-  margin: 0 1rem 1rem 1rem;
-  padding-top: 1rem;
-  border-top: var(--navds-global-color-gray-600) 1px solid;
 }
 .notifikasjon_panel-liste {
   display: flex;
@@ -104,8 +106,5 @@
   }
   .notifikasjon_panel-liste {
     height: 80vh;
-  }
-  .notifikasjon_panel-footer {
-    height: 5vh;
   }
 }

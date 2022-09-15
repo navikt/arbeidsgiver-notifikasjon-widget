@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Close } from '@navikt/ds-icons'
-import {Alert, Heading} from '@navikt/ds-react'
+import { Alert, Heading, HelpText } from '@navikt/ds-react'
 import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'
 import './NotifikasjonPanel.css'
 import { Notifikasjon, NotifikasjonerResultat } from '../../api/graphql-types'
 import { useMutation } from '@apollo/client'
 import { NOTIFIKASJONER_KLIKKET_PAA } from '../../api/graphql'
-import { NotifikasjonInformasjon } from './NotifikasjonInformasjon/NotifikasjonInformasjon'
 import { useAmplitude } from '../../utils/amplitude'
 
 interface Props {
@@ -87,7 +86,27 @@ const NotifikasjonPanel = (
           id='notifikasjon_panel-header'
           className='notifikasjon_panel-header'
         >
-          <Heading level='2' size='small'>Beskjeder og oppgaver</Heading>
+          <div className="notifikasjon_panel-header-title-help">
+            <Heading level='2' size='small'>Beskjeder og oppgaver</Heading>
+            <HelpText
+              id="notifikasjon-informasjon-knapp"
+              title="Hva vises her?"
+              placement="bottom"
+              onKeyDown={event => {
+                if (event.key === 'Tab') {
+                  if (event.shiftKey) {
+                    focusNotifikasjon()
+                  } else {
+                    focusXButton()
+                  }
+                  event.preventDefault()
+                }
+              }}
+            >
+              Notifikasjoner er under utvikling og alle notifikasjoner vises ikke her
+              ennå. Gamle notifikasjoner slettes etter hvert.
+            </HelpText>
+          </div>
           <button
             id='notifikasjon_panel-header-xbtn'
             className='notifikasjon_panel-header-xbtn'
@@ -96,8 +115,10 @@ const NotifikasjonPanel = (
               if (event.key === 'Tab') {
                 if (event.shiftKey) {
                   focusMoreInfo()
-                  event.preventDefault()
+                } else {
+                  focusNotifikasjon()
                 }
+                event.preventDefault()
               }
             }}
             onClick={() => {
@@ -155,21 +176,17 @@ const NotifikasjonPanel = (
                   setValgtNotifikasjon(klikketPaaNotifikasjon)
                 }}
                 notifikasjon={notifikasjon}
+                onTabEvent={(shiftKey) => {
+                  if (shiftKey) {
+                    focusXButton()
+                  } else {
+                    focusMoreInfo()
+                  }
+                }}
               />
             </li>
           ))}
         </ul>
-
-        <div className='notifikasjon_panel-footer'>
-          <NotifikasjonInformasjon
-            onTabEvent={(shiftKey, event) => {
-              if (!shiftKey) {
-                focusXButton()
-                event.preventDefault()
-              }
-            }}
-          />
-        </div>
       </div>
     </div>
   )
