@@ -33,6 +33,25 @@ const Banner: FunctionComponent<RouteComponentProps & OwnProps> = ({history, sid
 };
 ```
 
+## Running Demo App for Widget-development 
+To run the demo app locally you need to run the three following scripts.
+
+```bash
+cd brukerapi-mock
+npm i
+npm start
+```
+```bash
+cd component
+npm i
+npm start
+```
+```bash
+cd demo
+npm i
+npm start
+```
+
 ## License
 
 MIT © [navikt](https://github.com/navikt)
