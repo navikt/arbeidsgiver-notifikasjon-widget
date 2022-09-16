@@ -156,17 +156,7 @@ const NotifikasjonPanel = (
         <ul
           role='feed'
           id='notifikasjon_panel-liste'
-          className='notifikasjon_panel-liste'
-          onScroll={(t)=> {
-              const {scrollTop, clientHeight, scrollHeight} = t.nativeEvent.srcElement as any;
-              if (scrollHeight-clientHeight - Math.ceil(scrollTop) < 40){
-                (t.nativeEvent.srcElement as any).setAttribute("xyz", "bottom")
-              }
-              else {
-                (t.nativeEvent.srcElement as any).setAttribute("xyz", "notBottom")
-              }
-          }
-          }
+          className='notifikasjon_panel-liste notifikasjon_panel-liste_shadows'
         >
           {notifikasjoner?.map((notifikasjon: Notifikasjon, index: number) => (
             <li key={index} role='article'>
