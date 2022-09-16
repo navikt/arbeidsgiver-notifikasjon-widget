@@ -42,6 +42,7 @@
   transition: max-height 0.6s linear;
   transform: rotateX(0);
   z-index: 999;
+
 }
 .notifikasjon_panel-feilmelding {
   margin: 1rem 1rem 0 1rem;
@@ -76,24 +77,48 @@
 .notifikasjon_panel-liste {
   display: flex;
   flex-direction: column;
-  height: 60vh;
+  max-height: 60vh;
   padding: 0;
   margin: 0;
   overflow-y: auto;
   overflow-x: hidden;
   list-style: none;
 }
+
+.notifikasjon_panel-liste_shadows {
+  background:
+    /* Shadow covers */
+    linear-gradient(white 30%, rgba(255,255,255,0)),
+    linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+
+      /* Shadows */
+    radial-gradient(50% 0, farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)),
+    radial-gradient(50% 100%,farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
+  background:
+    /* Shadow covers */
+    linear-gradient(white 30%, rgba(255,255,255,0)),
+    linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+
+      /* Shadows */
+    radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)),
+    radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+
+  background-attachment: local, local, scroll, scroll;
+}
 .notifikasjon_panel-liste::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: transparent;
 }
 .notifikasjon_panel-liste::-webkit-scrollbar {
-  width: 6px;
+  width: 12px;
   background-color: transparent;
 }
 .notifikasjon_panel-liste::-webkit-scrollbar-thumb {
   border-radius: 6px;
-  background-color: var(--navds-global-color-gray-300);
+  background-color: var(--navds-global-color-gray-700);
 }
 @media (max-width: 768px) {
   .notifikasjon_panel {
@@ -105,6 +130,6 @@
     height: 5vh; /* får 6 ekstra piksler fra et sted ¯\_(ツ)_/¯ */
   }
   .notifikasjon_panel-liste {
-    height: 80vh;
+    max-height: 80vh;
   }
 }
