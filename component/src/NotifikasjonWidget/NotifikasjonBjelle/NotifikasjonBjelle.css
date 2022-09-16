@@ -42,8 +42,8 @@
   fill: var(--navds-global-color-gray-900);
 }
 .notifikasjon_bjelle-ikon {
-  --width: 33px;
-  --height: 33px;
+  --width: 45px;
+  --height: 45px;
   --ulest-diameter: 22px;
   --ulest-top: calc(var(--height) * 0.2);
   --ulest-left: calc(var(--width) * 0.05);

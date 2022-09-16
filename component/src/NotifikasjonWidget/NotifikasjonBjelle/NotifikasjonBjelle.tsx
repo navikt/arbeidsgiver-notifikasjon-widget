@@ -1,7 +1,7 @@
 import React, { Ref } from 'react'
 import './NotifikasjonBjelle.css'
-import Ikon from './NotifikasjonBjelle.svg'
 import {Label} from "@navikt/ds-react";
+import {Bell} from "@navikt/ds-icons";
 
 interface Props {
   antallUleste?: number
@@ -30,7 +30,7 @@ export const NotifikasjonBjelle = ({
         aria-pressed={erApen}
       >
         <div className='notifikasjon_bjelle-ikon'>
-          <Ikon />
+          <Bell width="100%" height="100%"/>
 
           <div
             className={`notifikasjon_bjelle-ikon__ulest-sirkel ${
