@@ -17,11 +17,14 @@
   border: none;
   width: 56px;
   height: 56px;
-  -webkit-tap-highlight-color:transparent
 
 }
 .notifikasjon_bjelle-knapp svg path {
   fill: var(--navds-global-color-gray-900);
+}
+
+.notifikasjon_bjelle-knapp:focus-visible {
+  outline-style: solid;
 }
 
 @media (hover: hover) {
@@ -29,7 +32,6 @@
   .notifikasjon_bjelle-knapp:hover,
   .notifikasjon_bjelle-knapp:focus-visible {
     border: none;
-    -webkit-tap-highlight-color: transparent;
     background-color: var(--navds-global-color-deepblue-500);
   }
 
