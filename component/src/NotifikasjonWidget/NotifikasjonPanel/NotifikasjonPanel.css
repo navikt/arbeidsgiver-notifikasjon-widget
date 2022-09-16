@@ -1,4 +1,6 @@
 .notifikasjon_panel {
+  display: flex;
+  flex-direction: column;
   z-index: 10;
   color: var(--navds-global-color-gray-900);
   position: absolute;
@@ -17,6 +19,7 @@
   transform-origin: top center;
   opacity: 0.3;
   transition: 0.4s ease;
+  max-height: 80vw;
 }
 .notifikasjon_panel li {
   border: transparent 4px solid;
@@ -77,7 +80,7 @@
 .notifikasjon_panel-liste {
   display: flex;
   flex-direction: column;
-  max-height: 60vh;
+  max-height: 100%;
   padding: 0;
   margin: 0;
   overflow-y: auto;
@@ -122,14 +125,12 @@
 }
 @media (max-width: 768px) {
   .notifikasjon_panel {
+    max-height: unset;
     position: fixed;
     top: calc(var(--decorator-sticky-offset, 0px) + 0rem);
-    height: 100vh;
+    height: calc(100% - env(safe-area-inset-bottom));
   }
   .notifikasjon_panel-header {
     height: 5vh; /* får 6 ekstra piksler fra et sted ¯\_(ツ)_/¯ */
-  }
-  .notifikasjon_panel-liste {
-    max-height: 80vh;
   }
 }
