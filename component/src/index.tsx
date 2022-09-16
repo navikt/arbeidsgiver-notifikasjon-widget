@@ -60,7 +60,7 @@ const DecoratedApolloProvider: React.FC = ({children}) => {
     prod: 'https://ag-notifikasjon-proxy.nav.no/api/graphql',
     dev: 'https://ag-notifikasjon-proxy.dev.nav.no/api/graphql',
     labs: 'https://ag-notifikasjon-proxy.labs.nais.io/api/graphql',
-    other: 'http://localhost:8081/api/graphql'
+    other: 'https://ag-notifikasjon-proxy.labs.nais.io/api/graphql',
   })
 
   const credentials = gittMiljø({
