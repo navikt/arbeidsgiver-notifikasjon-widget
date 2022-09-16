@@ -19,7 +19,7 @@
   transform-origin: top center;
   opacity: 0.3;
   transition: 0.4s ease;
-  max-height: 80vw;
+  max-height: 65vh;
 }
 .notifikasjon_panel li {
   border: transparent 4px solid;
@@ -128,7 +128,7 @@
     max-height: unset;
     position: fixed;
     top: calc(var(--decorator-sticky-offset, 0px) + 0rem);
-    height: calc(100% - env(safe-area-inset-bottom));
+    height: calc(100% - env(safe-area-inset-bottom) - var(--decorator-sticky-offset, 0px));
   }
   .notifikasjon_panel-header {
     height: 5vh; /* får 6 ekstra piksler fra et sted ¯\_(ツ)_/¯ */
