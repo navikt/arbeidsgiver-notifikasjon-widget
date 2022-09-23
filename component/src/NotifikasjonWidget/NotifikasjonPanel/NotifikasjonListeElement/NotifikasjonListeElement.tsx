@@ -1,14 +1,15 @@
 import React from 'react'
-import { datotekst } from '../dato-funksjoner'
-import './NotifikasjonListeElement.css'
-import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
+import {Next as HoyreChevron} from '@navikt/ds-icons'
+import {BodyShort, Detail} from "@navikt/ds-react";
+import {datotekst} from '../dato-funksjoner'
+import {Notifikasjon, OppgaveTilstand} from '../../../api/graphql-types'
 import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
 import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
 import IkonOppgaveUtgaatt from './ikon-oppgave-utgaatt.svg'
-import { Next as HoyreChevron, StopWatch } from '@navikt/ds-icons'
-import { useAmplitude } from '../../../utils/amplitude'
-import {BodyShort, Detail} from "@navikt/ds-react";
+import {useAmplitude} from '../../../utils/amplitude'
+import {StatusLinje} from './StatusLinje';
+import './NotifikasjonListeElement.css'
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -21,26 +22,25 @@ interface Props {
 }
 
 export const NotifikasjonListeElement = (props: Props) => {
-  const { loggPilTastNavigasjon } = useAmplitude()
+  const {loggPilTastNavigasjon} = useAmplitude()
   const notifikasjon = props.notifikasjon
 
   const date = new Date(notifikasjon.opprettetTidspunkt)
-  let utgaattDate = null;
 
   let ikon
   switch (props.notifikasjon.__typename) {
     case 'Beskjed':
-      ikon = <IkonBeskjed />
+      ikon = <IkonBeskjed/>
       break
     case 'Oppgave':
       ikon =
         props.notifikasjon.tilstand === OppgaveTilstand.Utfoert ? (
-          <IkonOppgaveUtfoert />
+          <IkonOppgaveUtfoert/>
         ) : (
           props.notifikasjon.tilstand === OppgaveTilstand.Utgaatt ? (
-            <IkonOppgaveUtgaatt />
+            <IkonOppgaveUtgaatt/>
           ) : (
-            <IkonOppgave />
+            <IkonOppgave/>
           )
         )
       break
@@ -52,15 +52,6 @@ export const NotifikasjonListeElement = (props: Props) => {
       return null
   }
 
-  const erUtfoert =
-    notifikasjon.__typename === 'Oppgave' &&
-    notifikasjon.tilstand === OppgaveTilstand.Utfoert;
-  const erUtgaatt =
-    notifikasjon.__typename === 'Oppgave' &&
-    notifikasjon.tilstand === OppgaveTilstand.Utgaatt;
-  if (notifikasjon.__typename === 'Oppgave' && notifikasjon.tilstand === OppgaveTilstand.Utgaatt) {
-    utgaattDate = new Date(notifikasjon.utgaattTidspunkt)
-  }
   return (
     <a
       tabIndex={props.erValgt ? 0 : -1}
@@ -97,13 +88,9 @@ export const NotifikasjonListeElement = (props: Props) => {
           aria-label={notifikasjon.brukerKlikk?.klikketPaa ? '' : 'ikke besøkt'}
         />
         <div className='notifikasjon_liste_element-lenkepanel-chevron'>
-          <HoyreChevron />
+          <HoyreChevron/>
         </div>
-        {erUtgaatt && utgaattDate && (
-          <BodyShort className='notifikasjon_liste_element-metadata-utgaattdato' size='small'>
-            <StopWatch/> Fristen gikk ut {datotekst(utgaattDate)}
-          </BodyShort>
-        )}
+        <StatusLinje notifikasjon={notifikasjon}/>
       </div>
 
       <Detail className='notifikasjon_liste_element-virksomhetsnavn' size="small">
@@ -112,7 +99,7 @@ export const NotifikasjonListeElement = (props: Props) => {
 
       <div className='notifikasjon_liste_element-metadata'>
         <BodyShort className='notifikasjon_liste_element-metadata-dato' size='small'>
-          {(notifikasjon.__typename + (erUtfoert ? ' utført ' : ' sendt ') + datotekst(date))}
+          {notifikasjon.__typename} sendt {datotekst(date)}
         </BodyShort>
 
         <Detail

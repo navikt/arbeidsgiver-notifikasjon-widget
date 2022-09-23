@@ -26,12 +26,6 @@
   border-radius: 4px;
   padding: 0.3rem 0.5rem;
 }
-.notifikasjon_liste_element-metadata-utgaattdato {
-  grid-column-start: 2;
-  display: flex;
-  align-items: center;
-  gap: 0.5ch;
-}
 .notifikasjon_liste_element:hover .notifikasjon_liste_element-lenkepanel-chevron {
   transform: translateX(25%);
   transition: all 100ms linear;
