@@ -6,9 +6,10 @@ import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
 import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
 import IkonOppgaveUtgaatt from './ikon-oppgave-utgaatt.svg'
-import { Next as HoyreChevron, StopWatch } from '@navikt/ds-icons'
+import { Next as HoyreChevron, StopWatch, SuccessStroke } from '@navikt/ds-icons'
 import { useAmplitude } from '../../../utils/amplitude'
 import {BodyShort, Detail} from "@navikt/ds-react";
+import { Status } from './Status';
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -25,7 +26,6 @@ export const NotifikasjonListeElement = (props: Props) => {
   const notifikasjon = props.notifikasjon
 
   const date = new Date(notifikasjon.opprettetTidspunkt)
-  let utgaattDate = null;
 
   let ikon
   switch (props.notifikasjon.__typename) {
@@ -58,9 +58,9 @@ export const NotifikasjonListeElement = (props: Props) => {
   const erUtgaatt =
     notifikasjon.__typename === 'Oppgave' &&
     notifikasjon.tilstand === OppgaveTilstand.Utgaatt;
-  if (notifikasjon.__typename === 'Oppgave' && notifikasjon.tilstand === OppgaveTilstand.Utgaatt) {
-    utgaattDate = new Date(notifikasjon.utgaattTidspunkt)
-  }
+  const utgaattDate = (notifikasjon.__typename === 'Oppgave' && notifikasjon.tilstand === OppgaveTilstand.Utgaatt)
+    ?  new Date(notifikasjon.utgaattTidspunkt)
+    : null;
   return (
     <a
       tabIndex={props.erValgt ? 0 : -1}
@@ -100,9 +100,14 @@ export const NotifikasjonListeElement = (props: Props) => {
           <HoyreChevron />
         </div>
         {erUtgaatt && utgaattDate && (
-          <BodyShort className='notifikasjon_liste_element-metadata-utgaattdato' size='small'>
-            <StopWatch/> Fristen gikk ut {datotekst(utgaattDate)}
-          </BodyShort>
+          <Status icon={<StopWatch />}>
+            Fristen gikk ut {datotekst(utgaattDate)}
+          </Status>
+        )}
+        {erUtfoert && (
+          <Status icon={<SuccessStroke />}>
+            Oppgaven er utført
+          </Status>
         )}
       </div>
 
@@ -112,7 +117,7 @@ export const NotifikasjonListeElement = (props: Props) => {
 
       <div className='notifikasjon_liste_element-metadata'>
         <BodyShort className='notifikasjon_liste_element-metadata-dato' size='small'>
-          {(notifikasjon.__typename + (erUtfoert ? ' utført ' : ' sendt ') + datotekst(date))}
+          {notifikasjon.__typename} sendt {datotekst(date)}
         </BodyShort>
 
         <Detail
