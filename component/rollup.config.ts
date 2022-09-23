@@ -6,8 +6,8 @@ import commonjs from "@rollup/plugin-commonjs"
 import NpmImport from "less-plugin-npm-import";
 import url from "@rollup/plugin-url";
 import postcssPrefixSelector from "postcss-prefix-selector"
+import svgr from '@svgr/rollup'
 
-const svgr = require('@svgr/rollup').default
 const packageJson = require("./package.json");
 
 export default {
