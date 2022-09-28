@@ -6,7 +6,7 @@ import '@navikt/ds-css'
 import { AmplitudeProvider } from './utils/amplitude';
 
 export type Props = {
-  apiUrl: string
+  apiUrl?: string
 }
 export {Miljø} from './utils/EnvironmentProvider'
 export * as GQL from './api/graphql-types'
@@ -41,9 +41,10 @@ export type ProviderProps = PropsWithChildren<{
 export const NotifikasjonWidgetProvider = ({apiUrl, children}: ProviderProps) => {
   return (
     <NotifikasjonWidgetProviderLoadedContext.Provider value={true}>
-        <AmplitudeProvider><ApolloProvider client={createClient(apiUrl)}>
-          {children}
-        </ApolloProvider>
+        <AmplitudeProvider>
+          <ApolloProvider client={createClient(apiUrl)}>
+            {children}
+          </ApolloProvider>
         </AmplitudeProvider>
     </NotifikasjonWidgetProviderLoadedContext.Provider>
   )
