@@ -3,11 +3,10 @@ import { ApolloProvider } from '@apollo/client'
 import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget'
 import { createClient } from './api/graphql'
 import '@navikt/ds-css'
-import { EnvironmentProvider, Miljø, useEnvironment } from './utils/EnvironmentProvider'
 import { AmplitudeProvider } from './utils/amplitude';
 
 export type Props = {
-  miljo?: Miljø
+  apiUrl: string
 }
 export {Miljø} from './utils/EnvironmentProvider'
 export * as GQL from './api/graphql-types'
@@ -16,16 +15,16 @@ export const NotifikasjonWidget = (props: Props) => {
   if (useContext(NotifikasjonWidgetProviderLoadedContext)) {
     return <NotifikasjonWidgetComponent/>
   } else {
-    if (props.miljo === undefined) {
+    if (props.apiUrl === undefined) {
       console.error(`
         Unable to load Notifikasjonwidget.
-        NotifikasjonWidget is missing property 'miljo'.
+        NotifikasjonWidget is missing property 'apiUrl'.
         It must be provided by NotifikasjonWidgetProvider or directly as a property.
       `)
       return null
     } else {
       return (
-        <NotifikasjonWidgetProvider miljo={props.miljo}>
+        <NotifikasjonWidgetProvider apiUrl={props.apiUrl}>
           <NotifikasjonWidgetComponent/>
         </NotifikasjonWidgetProvider>
       )
@@ -36,43 +35,16 @@ export const NotifikasjonWidget = (props: Props) => {
 const NotifikasjonWidgetProviderLoadedContext  = createContext<boolean>(false);
 
 export type ProviderProps = PropsWithChildren<{
-  miljo: Miljø;
+  apiUrl: string;
 }>
 
-export const NotifikasjonWidgetProvider = (props: ProviderProps) => {
+export const NotifikasjonWidgetProvider = ({apiUrl, children}: ProviderProps) => {
   return (
     <NotifikasjonWidgetProviderLoadedContext.Provider value={true}>
-      <EnvironmentProvider miljø={props.miljo}>
-        <AmplitudeProvider>
-          <DecoratedApolloProvider>
-            {props.children}
-          </DecoratedApolloProvider>
+        <AmplitudeProvider><ApolloProvider client={createClient(apiUrl)}>
+          {children}
+        </ApolloProvider>
         </AmplitudeProvider>
-      </EnvironmentProvider>
     </NotifikasjonWidgetProviderLoadedContext.Provider>
   )
 };
-
-const DecoratedApolloProvider: React.FC = ({children}) => {
-  const {gittMiljø} = useEnvironment()
-
-  const apiurl = gittMiljø({
-    prod: 'https://ag-notifikasjon-proxy.nav.no/api/graphql',
-    dev: 'https://ag-notifikasjon-proxy.dev.nav.no/api/graphql',
-    labs: 'https://ag-notifikasjon-proxy.labs.nais.io/api/graphql',
-    other: 'https://ag-notifikasjon-proxy.labs.nais.io/api/graphql',
-  })
-
-  const credentials = gittMiljø({
-    prod: 'include',
-    dev: 'include',
-    labs: 'include',
-    other: undefined
-  })
-
-  return (
-    <ApolloProvider client={createClient(apiurl, credentials)}>
-      {children}
-    </ApolloProvider>
-  )
-}
