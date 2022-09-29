@@ -1,4 +1,5 @@
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -15,11 +16,11 @@ export type Scalars = {
 export type Beskjed = {
   __typename?: 'Beskjed';
   brukerKlikk: BrukerKlikk;
-  merkelapp: Scalars['String'];
-  tekst: Scalars['String'];
-  lenke: Scalars['String'];
-  opprettetTidspunkt: Scalars['ISO8601DateTime'];
   id: Scalars['ID'];
+  lenke: Scalars['String'];
+  merkelapp: Scalars['String'];
+  opprettetTidspunkt: Scalars['ISO8601DateTime'];
+  tekst: Scalars['String'];
   virksomhet: Virksomhet;
 };
 
@@ -28,7 +29,6 @@ export type BrukerKlikk = {
   id: Scalars['ID'];
   klikketPaa: Scalars['Boolean'];
 };
-
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -46,21 +46,21 @@ export type NotifikasjonKlikketPaaResultat = BrukerKlikk | UgyldigId;
 
 export type NotifikasjonerResultat = {
   __typename?: 'NotifikasjonerResultat';
-  notifikasjoner: Array<Notifikasjon>;
   feilAltinn: Scalars['Boolean'];
   feilDigiSyfo: Scalars['Boolean'];
+  notifikasjoner: Array<Notifikasjon>;
 };
 
 export type Oppgave = {
   __typename?: 'Oppgave';
   brukerKlikk: BrukerKlikk;
-  tilstand?: Maybe<OppgaveTilstand>;
-  merkelapp: Scalars['String'];
-  tekst: Scalars['String'];
-  lenke: Scalars['String'];
-  opprettetTidspunkt: Scalars['ISO8601DateTime'];
-  utgaattTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
   id: Scalars['ID'];
+  lenke: Scalars['String'];
+  merkelapp: Scalars['String'];
+  opprettetTidspunkt: Scalars['ISO8601DateTime'];
+  tekst: Scalars['String'];
+  tilstand?: Maybe<OppgaveTilstand>;
+  utgaattTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
   virksomhet: Virksomhet;
 };
 
@@ -79,41 +79,41 @@ export type Query = {
 
 
 export type QuerySakerArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  tekstsoek?: InputMaybe<Scalars['String']>;
   virksomhetsnummer: Scalars['String'];
-  offset?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  tekstsoek?: Maybe<Scalars['String']>;
 };
 
 export type Sak = {
   __typename?: 'Sak';
   id: Scalars['ID'];
-  virksomhet: Virksomhet;
-  tittel: Scalars['String'];
   lenke: Scalars['String'];
   merkelapp: Scalars['String'];
   sisteStatus: SakStatus;
+  tittel: Scalars['String'];
+  virksomhet: Virksomhet;
 };
 
 export type SakStatus = {
   __typename?: 'SakStatus';
-  type: SakStatusType;
   tekst: Scalars['String'];
   tidspunkt: Scalars['ISO8601DateTime'];
+  type: SakStatusType;
 };
 
 export enum SakStatusType {
+  Ferdig = 'FERDIG',
   Mottatt = 'MOTTATT',
-  UnderBehandling = 'UNDER_BEHANDLING',
-  Ferdig = 'FERDIG'
+  UnderBehandling = 'UNDER_BEHANDLING'
 }
 
 export type SakerResultat = {
   __typename?: 'SakerResultat';
+  feilAltinn: Scalars['Boolean'];
   saker: Array<Sak>;
   /** Antall saker for gitt filter, men uavhengig av offset/limit. */
   totaltAntallSaker: Scalars['Int'];
-  feilAltinn: Scalars['Boolean'];
 };
 
 export type UgyldigId = {
@@ -123,6 +123,6 @@ export type UgyldigId = {
 
 export type Virksomhet = {
   __typename?: 'Virksomhet';
-  virksomhetsnummer: Scalars['String'];
   navn: Scalars['String'];
+  virksomhetsnummer: Scalars['String'];
 };
