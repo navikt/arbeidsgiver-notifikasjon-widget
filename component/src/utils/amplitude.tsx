@@ -1,7 +1,7 @@
-import amplitude, { AmplitudeClient } from 'amplitude-js'
-import { Notifikasjon } from '../api/graphql-types'
-import { useEnvironment } from './EnvironmentProvider'
-import React, { createContext, FC, useContext } from "react";
+import amplitude, {AmplitudeClient} from 'amplitude-js'
+import {Notifikasjon} from '../api/graphql-types'
+import React, {createContext, FC, useContext, useMemo} from "react";
+import {Miljø} from "../index";
 
 const createAmpltiudeInstance = (apiKey: string) => {
   const instance = amplitude.getInstance()
@@ -72,13 +72,12 @@ const stubbedAmplitudeClient = {
 
 const AmplitudeContext = createContext(createAmplitudeLogger(stubbedAmplitudeClient))
 
-export const AmplitudeProvider: FC = ({children}) => {
-  const { gittMiljø } = useEnvironment();
-  const client = gittMiljø({
-    prod: () => createAmpltiudeInstance('a8243d37808422b4c768d31c88a22ef4'),
-    dev: () => createAmpltiudeInstance('6ed1f00aabc6ced4fd6fcb7fcdc01b30'),
-    other: () => stubbedAmplitudeClient
-  })()
+type Props = {
+  miljo: Miljø,
+}
+
+export const AmplitudeProvider: FC<Props> = ({miljo, children}) => {
+  const client = useAmplitudeClient(miljo)
   const logger = createAmplitudeLogger(client)
   return <AmplitudeContext.Provider value={logger}>
     {children}
@@ -90,4 +89,17 @@ export function useAmplitude() {
 }
 
 
-
+const useAmplitudeClient = (miljø: Miljø): AmplitudeClient => {
+  return useMemo(
+    () => {
+      switch (miljø) {
+        case 'prod':
+          return createAmpltiudeInstance('a8243d37808422b4c768d31c88a22ef4');
+        case 'dev':
+          return createAmpltiudeInstance('6ed1f00aabc6ced4fd6fcb7fcdc01b30');
+        default:
+          return stubbedAmplitudeClient
+      }
+    }, [miljø]
+  )
+}

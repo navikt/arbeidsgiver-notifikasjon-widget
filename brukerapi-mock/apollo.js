@@ -106,7 +106,10 @@ const startApolloMock = () => {
       tekst,
       lenke: `#${casual.word}`,
       opprettetTidspunkt: casualDate().toISOString(),
-      utgaattTidspunkt: erUtgåttOppgave ? casualDate().toISOString() : null,
+      ...(navn === "Oppgave"
+        ? { utgaattTidspunkt: erUtgåttOppgave ? casualDate().toISOString() : null }
+        : {}
+      ),
       ...tilstand,
       virksomhet: {
         navn: casual.random_element([
