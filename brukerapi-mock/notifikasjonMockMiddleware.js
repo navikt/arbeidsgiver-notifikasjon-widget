@@ -90,7 +90,7 @@ const saker = [
   "Søknad om fritak fra arbeidsgiverperioden – gravid ansatt Marie Svensson",
 ];
 
-const Notifikasjon = (navn, opprettetTidspunkt) => {
+const Notifikasjon = (navn) => {
   const merkelapp = casual.random_key(eksempler);
   const tekst = casual.random_element(eksempler[merkelapp]);
   const erUtgåttOppgave = navn === 'Oppgave' && casual.boolean;
@@ -101,7 +101,7 @@ const Notifikasjon = (navn, opprettetTidspunkt) => {
     merkelapp,
     tekst,
     lenke: `#${casual.word}`,
-    opprettetTidspunkt: (opprettetTidspunkt ?? casualDate()).toISOString(),
+    opprettetTidspunkt: casualDate().toISOString(),
     ...(navn === "Oppgave"
         ? { utgaattTidspunkt: erUtgåttOppgave ? casualDate().toISOString() : null }
         : {}
