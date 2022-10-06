@@ -12,14 +12,14 @@ const history: History = createBrowserHistory()
 const App = () => {
   const [orgname, setOrgname] = useState("")
   return <div className={'bakgrunnsside'}>
-    {/*<NotifikasjonWidgetProvider miljo="local" apiUrl="http://localhost:8081/api/graphql">*/}
+    {/*<NotifikasjonWidgetProvider miljo="local" apiUrl="/api/graphql">*/}
       <Router history={history}>
         <Bedriftsmeny
           sidetittel={orgname}
           organisasjoner={MOCK_ORGANISASJONER}
           onOrganisasjonChange={(org) => setOrgname(org.Name)}
           history={history}>
-          <NotifikasjonWidget miljo="local" apiUrl="http://localhost:8081/api/graphql"/>
+          <NotifikasjonWidget miljo="local" apiUrl="/api/graphql"/>
         </Bedriftsmeny>
       </Router>
     {/*</NotifikasjonWidgetProvider>*/}

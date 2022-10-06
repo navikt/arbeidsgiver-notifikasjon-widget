@@ -81,13 +81,11 @@ jobs:
         with:
           node-version: '16'
           registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
-          cache-dependency-path: brukerapi-mock/package-lock.json
 
-      - name: install dependencies
+      - name: build
         run: |
           cd brukerapi-mock
-          npm ci
+          npm run build
 
       - if: github.ref == 'refs/heads/main'
         name: publish

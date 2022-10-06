@@ -1,8 +1,6 @@
-#!/usr/bin/env node
 const fs = require('fs');
-const casual = require('casual');
 const path = require("path");
-const {ApolloServer, gql} = require("apollo-server");
+let casual;
 
 const roundDate = (millis) => {
   const date = new Date();
@@ -91,92 +89,98 @@ const saker = [
   "Refusjon - fritak fra arbeidsgiverperioden - Lena Ek",
   "Søknad om fritak fra arbeidsgiverperioden – gravid ansatt Marie Svensson",
 ];
-const startApolloMock = () => {
-  const data = fs.readFileSync(path.join(__dirname, 'bruker.graphql'));
-  const typeDefs = gql(data.toString());
-  const Notifikasjon = (navn) => {
-    const merkelapp = casual.random_key(eksempler);
-    const tekst = casual.random_element(eksempler[merkelapp]);
-    const erUtgåttOppgave = navn === 'Oppgave' && casual.boolean;
-    const tilstand = navn === 'Oppgave' ? { tilstand: erUtgåttOppgave ? 'UTGAATT' : casual.random_element(['NY', 'UTFOERT'])} : {};
-    return {
-      __typename: navn, //casual.boolean ? 'Beskjed' : 'Oppgave',
-      id: Math.random().toString(36),
-      merkelapp,
-      tekst,
-      lenke: `#${casual.word}`,
-      opprettetTidspunkt: casualDate().toISOString(),
-      ...(navn === "Oppgave"
+
+const Notifikasjon = (navn, opprettetTidspunkt) => {
+  const merkelapp = casual.random_key(eksempler);
+  const tekst = casual.random_element(eksempler[merkelapp]);
+  const erUtgåttOppgave = navn === 'Oppgave' && casual.boolean;
+  const tilstand = navn === 'Oppgave' ? { tilstand: erUtgåttOppgave ? 'UTGAATT' : casual.random_element(['NY', 'UTFOERT'])} : {};
+  return {
+    __typename: navn,
+    id: Math.random().toString(36),
+    merkelapp,
+    tekst,
+    lenke: `#${casual.word}`,
+    opprettetTidspunkt: (opprettetTidspunkt ?? casualDate()).toISOString(),
+    ...(navn === "Oppgave"
         ? { utgaattTidspunkt: erUtgåttOppgave ? casualDate().toISOString() : null }
         : {}
-      ),
-      ...tilstand,
-      virksomhet: {
-        navn: casual.random_element([
-          "Ballstad og Hamarøy",
-          "Saltrød og Høneby",
-          "Arendal og Bønes Revisjon",
-          "Gravdal og Solli Revisjon",
-          "Storfonsa og Fredrikstad Regnskap"
-        ])
-      }
-    };
+    ),
+    ...tilstand,
+    virksomhet: {
+      navn: casual.random_element([
+        "Ballstad og Hamarøy",
+        "Saltrød og Høneby",
+        "Arendal og Bønes Revisjon",
+        "Gravdal og Solli Revisjon",
+        "Storfonsa og Fredrikstad Regnskap"
+      ])
+    }
   };
+};
+
+const mocks = (notifikasjoner) => ({
+  Query: () => ({
+    notifikasjoner: () => ({
+      notifikasjoner: notifikasjoner,
+      feilAltinn: false,
+      feilDigiSyfo: false,
+    }),
+    saker: () => ({
+      saker: [
+        casual.random_element(saker),
+        casual.random_element(saker),
+        casual.random_element(saker),
+      ].map((tittel) => (
+        {
+          tittel,
+          lenke: "#",
+          virksomhet: {navn: "Gamle Fredikstad og Riksdalen regnskap"},
+          sisteStatus: {
+            tekst: casual.random_element(["Mottatt", "Under behandling", "Utbetalt"]),
+            tidspunkt: casualDate().toISOString()
+          }
+        })),
+      totaltAntallSaker: 314
+    })
+  }),
+  Int: () => casual.integer(0, 1000),
+  String: () => casual.string,
+  ISO8601DateTime: () => roundDate(5000).toISOString(),
+  Virksomhet: () => ({
+    navn: casual.catch_phrase,
+  }),
+});
+
+const createApolloServer = (apolloServerOptions) => {
+  const {ApolloServer, gql} = require("apollo-server-express");
+  casual = require("casual");
+
   const notifikasjoner = [...new Array(10)]
     .map(_ => Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])))
     .sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt))
-  const leggTilOgReturnerNotifikasjoner = () => {
-    notifikasjoner.splice(0, 0, Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])));
-    if (notifikasjoner.length > 200) {
-      notifikasjoner.splice(0, notifikasjoner.length - 200)
-    }
-    notifikasjoner.sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt));
-    return notifikasjoner
-  }
-  new ApolloServer({
-    typeDefs,
-    cors: {
-      origin: true,
-      credentials: true,
-    },
-    mocks: {
-      Query: () => ({
-        notifikasjoner: () => ({
-          notifikasjoner: leggTilOgReturnerNotifikasjoner(),
-          feilAltinn: false,
-          feilDigiSyfo: false,
-        }),
-        saker: () => ({
-          saker: [
-            casual.random_element(saker),
-            casual.random_element(saker),
-            casual.random_element(saker),
-          ].map((tittel) => (
-            {
-                tittel,
-                lenke: "#",
-                virksomhet: { navn: "Gamle Fredikstad og Riksdalen regnskap" },
-                sisteStatus: {
-                  tekst: casual.random_element(["Mottatt", "Under behandling", "Utbetalt"]),
-                  tidspunkt: casualDate().toISOString()
-                }
-            })),
-          totaltAntallSaker: 314
-        })
-      }),
-      Int: () => casual.integer(0, 1000),
-      String: () => casual.string,
-      ISO8601DateTime: () => roundDate(5000).toISOString(),
-      Virksomhet: () => ({
-        navn: casual.catch_phrase,
-      }),
-    }
-  }).listen({
-    port: 8081,
-    path: '/api/graphql',
-  }).then(({url}) => {
-    console.log(`🚀 gql server ready at ${url}`)
+
+  const data = fs.readFileSync(path.join(__dirname, 'bruker.graphql'));
+
+  return new ApolloServer({
+    ...apolloServerOptions,
+    typeDefs: gql(data.toString()),
+    mocks: mocks(notifikasjoner),
   });
 }
 
-startApolloMock()
+function applyNotifikasjonMockMiddleware(middlewareOptions, apolloServerOptions) {
+  const apolloServer = createApolloServer(apolloServerOptions);
+  apolloServer.start()
+    .then(() => {
+      apolloServer.applyMiddleware(middlewareOptions)
+    })
+    .catch(error =>
+      console.log("error starting apollo server", {error})
+    );
+}
+
+module.exports = {
+  createApolloServer,
+  applyNotifikasjonMockMiddleware,
+}
