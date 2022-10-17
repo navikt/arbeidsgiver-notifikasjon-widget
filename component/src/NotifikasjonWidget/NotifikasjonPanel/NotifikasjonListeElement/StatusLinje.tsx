@@ -3,7 +3,7 @@ import { BodyShort } from '@navikt/ds-react';
 import './StatusLinje.less';
 import {Notifikasjon, OppgaveTilstand} from "../../../api/graphql-types";
 import {StopWatch, SuccessStroke} from "@navikt/ds-icons";
-import {datotekst} from "../dato-funksjoner";
+import {fristDatotekst} from "../dato-funksjoner";
 
 
 export interface StatusLinjeProps {
@@ -26,7 +26,7 @@ export const StatusLinje: FC<StatusLinjeProps> = ({notifikasjon}) => {
     case OppgaveTilstand.Utgaatt:
       return (
         <StatusIkonMedTekst icon={<StopWatch/>}>
-          Fristen gikk ut {datotekst(new Date(notifikasjon.utgaattTidspunkt))}
+          Fristen gikk ut {fristDatotekst(new Date(notifikasjon.utgaattTidspunkt))}
         </StatusIkonMedTekst>
       )
 

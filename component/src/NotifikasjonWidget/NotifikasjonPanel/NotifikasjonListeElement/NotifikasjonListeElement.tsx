@@ -1,7 +1,7 @@
 import React from 'react'
 import {Next as HoyreChevron} from '@navikt/ds-icons'
 import {BodyShort, Detail} from "@navikt/ds-react";
-import {datotekst} from '../dato-funksjoner'
+import {sendtDatotekst} from '../dato-funksjoner'
 import {Notifikasjon, OppgaveTilstand} from '../../../api/graphql-types'
 import IkonBeskjed from './ikon-beskjed.svg'
 import IkonOppgave from './ikon-oppgave.svg'
@@ -99,7 +99,7 @@ export const NotifikasjonListeElement = (props: Props) => {
 
       <div className='notifikasjon_liste_element-metadata'>
         <BodyShort className='notifikasjon_liste_element-metadata-dato' size='small'>
-          {notifikasjon.__typename} sendt {datotekst(date)}
+          {notifikasjon.__typename} sendt {sendtDatotekst(date)}
         </BodyShort>
 
         <Detail
