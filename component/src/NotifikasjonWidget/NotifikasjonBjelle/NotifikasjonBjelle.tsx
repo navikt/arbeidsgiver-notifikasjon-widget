@@ -30,7 +30,7 @@ export const NotifikasjonBjelle = ({
         aria-pressed={erApen}
       >
         <div className='notifikasjon_bjelle-ikon'>
-          <Bell title={'bjelleikon'} width="45px" height="45px" aria-hidden="true" />
+          <Bell title="bjelleikon" width="45px" height="45px" aria-hidden="true" />
 
           <div
             className={`notifikasjon_bjelle-ikon__ulest-sirkel ${
