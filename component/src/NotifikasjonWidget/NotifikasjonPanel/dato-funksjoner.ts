@@ -4,7 +4,7 @@ const måndenavn = [
     'juli', 'aug.', 'sep.', 'okt.', 'nov.', 'des.'
 ];
 
-const formatterDato = (dato: Date) =>
+export const formatterDato = (dato: Date) =>
     `${dato.getDate()}. ${måndenavn[dato.getMonth()]} ${dato.getFullYear()}`;
 
 const today = new Date();

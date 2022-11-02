@@ -10,6 +10,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  ISO8601Date: any;
   ISO8601DateTime: any;
 };
 
@@ -54,6 +55,7 @@ export type NotifikasjonerResultat = {
 export type Oppgave = {
   __typename?: 'Oppgave';
   brukerKlikk: BrukerKlikk;
+  frist?: Maybe<Scalars['ISO8601Date']>;
   id: Scalars['ID'];
   lenke: Scalars['String'];
   merkelapp: Scalars['String'];

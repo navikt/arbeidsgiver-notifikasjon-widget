@@ -147,6 +147,7 @@ const mocks = (notifikasjoner) => ({
   Int: () => casual.integer(0, 1000),
   String: () => casual.string,
   ISO8601DateTime: () => roundDate(5000).toISOString(),
+  ISO8601Date: () => roundDate(5000).toISOString().slice(0,10),
   Virksomhet: () => ({
     navn: casual.catch_phrase,
   }),

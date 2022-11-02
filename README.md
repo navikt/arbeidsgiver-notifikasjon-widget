@@ -33,7 +33,7 @@ const Banner: FunctionComponent<RouteComponentProps & OwnProps> = ({history, sid
 };
 ```
 
-## Running Demo App for Widget-development 
+## Running Demo App for Widget-development
 To run the demo app locally you need to run the three following scripts.
 
 ```bash
@@ -51,6 +51,16 @@ cd demo
 npm i
 npm start
 ```
+
+## Oppdatere kode ved graphql-skjemaendring
+````bash
+cd component
+npm run gql:cp_schema
+npm run gql:generate
+
+cd ../brukerapi-mock
+npm build
+````
 
 ## License
 

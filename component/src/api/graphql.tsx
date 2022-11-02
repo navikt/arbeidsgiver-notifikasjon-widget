@@ -49,6 +49,7 @@ export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner"
                 utgaattTidspunkt
                 tilstand
                 id
+                frist
             }
         }
     }
