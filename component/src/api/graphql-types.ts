@@ -89,6 +89,8 @@ export type QuerySakerArgs = {
 
 export type Sak = {
   __typename?: 'Sak';
+  /** frist fra oppgaver med status ny. null i array betyr oppgave uten frist */
+  frister: Array<Maybe<Scalars['ISO8601Date']>>;
   id: Scalars['ID'];
   lenke: Scalars['String'];
   merkelapp: Scalars['String'];
