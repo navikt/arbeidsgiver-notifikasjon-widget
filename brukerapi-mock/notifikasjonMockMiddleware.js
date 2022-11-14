@@ -94,7 +94,7 @@ const Notifikasjon = (navn) => {
   const merkelapp = casual.random_key(eksempler);
   const tekst = casual.random_element(eksempler[merkelapp]);
   const erUtgåttOppgave = navn === 'Oppgave' && casual.boolean;
-  const tilstand = navn === 'Oppgave' ? { tilstand: erUtgåttOppgave ? 'UTGAATT' : casual.random_element(['NY', 'UTFOERT'])} : {};
+  const tilstand = navn === 'Oppgave' ? {tilstand: erUtgåttOppgave ? 'UTGAATT' : casual.random_element(['NY', 'UTFOERT'])} : {};
   return {
     __typename: navn,
     id: Math.random().toString(36),
@@ -103,7 +103,7 @@ const Notifikasjon = (navn) => {
     lenke: `#${casual.word}`,
     opprettetTidspunkt: casualDate().toISOString(),
     ...(navn === "Oppgave"
-        ? { utgaattTidspunkt: erUtgåttOppgave ? casualDate().toISOString() : null }
+        ? {utgaattTidspunkt: erUtgåttOppgave ? casualDate().toISOString() : null}
         : {}
     ),
     ...tilstand,
@@ -139,7 +139,11 @@ const mocks = (notifikasjoner) => ({
           sisteStatus: {
             tekst: casual.random_element(["Mottatt", "Under behandling", "Utbetalt"]),
             tidspunkt: casualDate().toISOString()
-          }
+          },
+          frister: casual.boolean ? [
+            casual.random_element([null, casualDate().toISOString().slice(0, 10)]),
+            casual.random_element([null, new Date().toISOString().replace(/T.*/, "")])
+          ] : []
         })),
       totaltAntallSaker: 314
     })
@@ -147,7 +151,7 @@ const mocks = (notifikasjoner) => ({
   Int: () => casual.integer(0, 1000),
   String: () => casual.string,
   ISO8601DateTime: () => roundDate(5000).toISOString(),
-  ISO8601Date: () => roundDate(5000).toISOString().slice(0,10),
+  ISO8601Date: () => roundDate(5000).toISOString().slice(0, 10),
   Virksomhet: () => ({
     navn: casual.catch_phrase,
   }),
