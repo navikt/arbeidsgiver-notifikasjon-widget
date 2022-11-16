@@ -18,14 +18,14 @@ export const StatusLinje: FC<StatusLinjeProps> = ({notifikasjon}) => {
   switch (notifikasjon.tilstand) {
     case OppgaveTilstand.Utfoert:
       return (
-        <StatusIkonMedTekst icon={<SuccessStroke/>}>
+        <StatusIkonMedTekst icon={<SuccessStroke aria-hidden={true}/>}>
           Oppgaven er utført
         </StatusIkonMedTekst>
       )
 
     case OppgaveTilstand.Utgaatt:
       return (
-        <StatusIkonMedTekst icon={<StopWatch/>}>
+        <StatusIkonMedTekst icon={<StopWatch aria-hidden={true}/>}>
           Fristen gikk ut {fristDatotekst(new Date(notifikasjon.utgaattTidspunkt))}
         </StatusIkonMedTekst>
       )
@@ -34,7 +34,7 @@ export const StatusLinje: FC<StatusLinjeProps> = ({notifikasjon}) => {
       if (!notifikasjon.frist){
         return null
       }
-      return <StatusIkonMedTekst icon={<StopWatch/>}>
+      return <StatusIkonMedTekst icon={<StopWatch aria-hidden={true}/>}>
         Frist {formatterDato(new Date(notifikasjon.frist))}
       </StatusIkonMedTekst>
 
