@@ -1,17 +1,18 @@
-import React from "react";
+import React, {useMemo} from "react";
 
 /**
  * Poor man's useId. React 18 har useId
  * Fjern denne når på React 18
  */
 let globalId = 0;
-function useId() {
-  globalId += 1
-  return `ikonId-${globalId}`
-}
+const useId = () => useMemo(() => {
+    globalId += 1
+    return `ikonId-${globalId}`
+  }, []
+)
 
 export const OppgaveIkon = () => {
-  const id = useId();
+  const id = useId()
   return <svg role="img" width="52" height="52" aria-labelledby={id} viewBox="0 0 52 52" fill="none"
               xmlns="http://www.w3.org/2000/svg">
     <title id={id}>Oppgave</title>
