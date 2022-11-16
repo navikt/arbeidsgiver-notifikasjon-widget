@@ -93,6 +93,7 @@ const NotifikasjonPanel = (
             <HelpText
               id="notifikasjon-informasjon-knapp"
               title="Hva vises her?"
+              aria-label="Hjelpetekst. Hva vises her?"
               placement="bottom"
               onKeyDown={event => {
                 if (event.key === 'Tab') {
@@ -112,7 +113,7 @@ const NotifikasjonPanel = (
           <button
             id='notifikasjon_panel-header-xbtn'
             className='notifikasjon_panel-header-xbtn'
-            aria-label='lukk'
+            aria-labelledby='notifikasjon_panel-header-xbtn-ikon'
             onKeyDown={(event) => {
               if (event.key === 'Tab') {
                 if (event.shiftKey) {
@@ -127,7 +128,7 @@ const NotifikasjonPanel = (
               lukkPanel()
             }}
           >
-            <Close />
+            <Close titleId="notifikasjon_panel-header-xbtn-ikon" title="lukk"/>
           </button>
         </div>
 

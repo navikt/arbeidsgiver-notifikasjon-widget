@@ -3,13 +3,10 @@ import {Next as HoyreChevron} from '@navikt/ds-icons'
 import {BodyShort, Detail} from "@navikt/ds-react";
 import {sendtDatotekst} from '../dato-funksjoner'
 import {Notifikasjon, OppgaveTilstand} from '../../../api/graphql-types'
-import IkonBeskjed from './ikon-beskjed.svg'
-import IkonOppgave from './ikon-oppgave.svg'
-import IkonOppgaveUtfoert from './ikon-oppgave-utfoert.svg'
-import IkonOppgaveUtgaatt from './ikon-oppgave-utgaatt.svg'
 import {useAmplitude} from '../../../utils/amplitude'
 import {StatusLinje} from './StatusLinje';
 import './NotifikasjonListeElement.css'
+import {BeskjedIkon, OppgaveIkon, OppgaveUtfoertIkon, OppgaveUtgaattIkon} from "./Ikoner";
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -30,17 +27,17 @@ export const NotifikasjonListeElement = (props: Props) => {
   let ikon
   switch (props.notifikasjon.__typename) {
     case 'Beskjed':
-      ikon = <IkonBeskjed/>
+      ikon = <BeskjedIkon/>
       break
     case 'Oppgave':
       ikon =
         props.notifikasjon.tilstand === OppgaveTilstand.Utfoert ? (
-          <IkonOppgaveUtfoert/>
+          <OppgaveUtfoertIkon/>
         ) : (
           props.notifikasjon.tilstand === OppgaveTilstand.Utgaatt ? (
-            <IkonOppgaveUtgaatt/>
+            <OppgaveUtgaattIkon/>
           ) : (
-            <IkonOppgave/>
+            <OppgaveIkon/>
           )
         )
       break
@@ -88,7 +85,7 @@ export const NotifikasjonListeElement = (props: Props) => {
           aria-label={notifikasjon.brukerKlikk?.klikketPaa ? '' : 'ikke besøkt'}
         />
         <div className='notifikasjon_liste_element-lenkepanel-chevron'>
-          <HoyreChevron/>
+          <HoyreChevron aria-hidden={true}/>
         </div>
         <StatusLinje notifikasjon={notifikasjon}/>
       </div>
