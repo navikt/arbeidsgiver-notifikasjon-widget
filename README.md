@@ -39,7 +39,7 @@ To run the demo app locally you need to run the three following scripts.
 ```bash
 cd brukerapi-mock
 npm i
-npm start
+npm run build
 ```
 ```bash
 cd component

@@ -83,6 +83,7 @@ export type Query = {
 export type QuerySakerArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  sortering?: SakSortering;
   tekstsoek?: InputMaybe<Scalars['String']>;
   virksomhetsnummer: Scalars['String'];
 };
@@ -98,6 +99,12 @@ export type Sak = {
   tittel: Scalars['String'];
   virksomhet: Virksomhet;
 };
+
+export enum SakSortering {
+  Frist = 'FRIST',
+  Oppdatert = 'OPPDATERT',
+  Opprettet = 'OPPRETTET'
+}
 
 export type SakStatus = {
   __typename?: 'SakStatus';
