@@ -21,6 +21,7 @@ export type Beskjed = {
   lenke: Scalars['String'];
   merkelapp: Scalars['String'];
   opprettetTidspunkt: Scalars['ISO8601DateTime'];
+  sorteringTidspunkt: Scalars['ISO8601DateTime'];
   tekst: Scalars['String'];
   virksomhet: Virksomhet;
 };
@@ -60,6 +61,8 @@ export type Oppgave = {
   lenke: Scalars['String'];
   merkelapp: Scalars['String'];
   opprettetTidspunkt: Scalars['ISO8601DateTime'];
+  paaminnelseTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
+  sorteringTidspunkt: Scalars['ISO8601DateTime'];
   tekst: Scalars['String'];
   tilstand?: Maybe<OppgaveTilstand>;
   utgaattTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
