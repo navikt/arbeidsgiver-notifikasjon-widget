@@ -20,7 +20,7 @@
 
 }
 .notifikasjon_bjelle-knapp svg path {
-  fill: var(--navds-global-color-gray-900);
+  fill: var(--a-gray-900);
 }
 
 .notifikasjon_bjelle-knapp:focus-visible {
@@ -32,24 +32,24 @@
   .notifikasjon_bjelle-knapp:hover,
   .notifikasjon_bjelle-knapp:focus-visible {
     border: none;
-    background-color: var(--navds-global-color-deepblue-500);
+    background-color: var(--a-deepblue-500);
   }
 
   .notifikasjon_bjelle-knapp:focus svg path,
   .notifikasjon_bjelle-knapp:hover svg path {
-    fill: var(--navds-global-color-white);
+    fill: var(--a-white);
   }
 }
 .notifikasjon_bjelle-knapp--open {
-  background-color: var(--navds-global-color-white);
+  background-color: var(--a-white);
 }
 .notifikasjon_bjelle-knapp--open:focus,
 .notifikasjon_bjelle-knapp--open:hover {
-  background-color: var(--navds-global-color-white);
+  background-color: var(--a-white);
 }
 .notifikasjon_bjelle-knapp--open:focus svg path,
 .notifikasjon_bjelle-knapp--open:hover svg path {
-  fill: var(--navds-global-color-gray-900);
+  fill: var(--a-gray-900);
 }
 .notifikasjon_bjelle-ikon {
   --width: 45px;
@@ -72,7 +72,7 @@
   height: var(--ulest-diameter);
   width: var(--ulest-diameter);
   border-radius: 50%;
-  background-color: var(--navds-global-color-red-500);
+  background-color: var(--a-red-500);
   transform: translate(var(--ulest-left), var(--ulest-top));
   transition: all 0.35s ease-in;
 }
@@ -89,7 +89,7 @@
   width: 4.5rem;
   height: 0.25rem;
   margin-top: 0.25rem;
-  background-color: var(--navds-global-color-deepblue-500);
+  background-color: var(--a-deepblue-500);
 }
 .notifikasjon_bjelle-understrek--closed {
   visibility: hidden;

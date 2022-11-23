@@ -95,21 +95,24 @@ const Notifikasjon = (navn) => {
   const tekst = casual.random_element(eksempler[merkelapp]);
   const erUtgåttOppgave = navn === 'Oppgave' && casual.boolean;
   const tilstand = navn === 'Oppgave' ? {tilstand: erUtgåttOppgave ? 'UTGAATT' : casual.random_element(['NY', 'UTFOERT'])} : {};
+  const opprettetTidspunkt = casualDate().toISOString();
+  const paaminnelseTidspunkt = casual.boolean ? casualDate().toISOString() : null
   return {
     __typename: navn,
     id: Math.random().toString(36),
     merkelapp,
     tekst,
     lenke: `#${casual.word}`,
-    opprettetTidspunkt: casualDate().toISOString(),
-    sorteringTidspunkt: casualDate().toISOString(),
+    opprettetTidspunkt: opprettetTidspunkt,
+
     ...(navn === "Oppgave"
         ? {utgaattTidspunkt: erUtgåttOppgave ? casualDate().toISOString() : null,
-          paaminnelseTidspunkt: casual.boolean ? casualDate().toISOString() : null,
+          paaminnelseTidspunkt: paaminnelseTidspunkt,
           frist: casual.boolean ? casualDate().toISOString() : null,
     }
         : {}
     ),
+    sorteringTidspunkt: paaminnelseTidspunkt ?? opprettetTidspunkt,
     ...tilstand,
     virksomhet: {
       navn: casual.random_element([
@@ -126,7 +129,7 @@ const Notifikasjon = (navn) => {
 const mocks = () => ({
   Query: () => ({
     notifikasjoner: () => ({
-      notifikasjoner: [...new Array(100)]
+      notifikasjoner: [...new Array(0)]
         .map(_ => Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])))
         .sort((a, b) => b.sorteringTidspunkt.localeCompare(a.sorteringTidspunkt)),
       feilAltinn: false,
