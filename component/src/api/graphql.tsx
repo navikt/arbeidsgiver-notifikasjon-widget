@@ -31,6 +31,7 @@ export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner"
                 tekst
                 merkelapp
                 opprettetTidspunkt
+                sorteringTidspunkt
                 id
             }
             ... on Oppgave {
@@ -46,6 +47,8 @@ export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner"
                 tekst
                 merkelapp
                 opprettetTidspunkt
+                sorteringTidspunkt
+                paaminnelseTidspunkt
                 utgaattTidspunkt
                 tilstand
                 id

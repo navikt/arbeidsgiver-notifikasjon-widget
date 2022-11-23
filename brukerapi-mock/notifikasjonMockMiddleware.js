@@ -102,8 +102,12 @@ const Notifikasjon = (navn) => {
     tekst,
     lenke: `#${casual.word}`,
     opprettetTidspunkt: casualDate().toISOString(),
+    sorteringTidspunkt: casualDate().toISOString(),
     ...(navn === "Oppgave"
-        ? {utgaattTidspunkt: erUtgåttOppgave ? casualDate().toISOString() : null}
+        ? {utgaattTidspunkt: erUtgåttOppgave ? casualDate().toISOString() : null,
+          paaminnelseTidspunkt: casual.boolean ? casualDate().toISOString() : null,
+          frist: casual.boolean ? casualDate().toISOString() : null,
+    }
         : {}
     ),
     ...tilstand,
@@ -119,10 +123,12 @@ const Notifikasjon = (navn) => {
   };
 };
 
-const mocks = (notifikasjoner) => ({
+const mocks = () => ({
   Query: () => ({
     notifikasjoner: () => ({
-      notifikasjoner: notifikasjoner,
+      notifikasjoner: [...new Array(100)]
+        .map(_ => Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])))
+        .sort((a, b) => b.sorteringTidspunkt.localeCompare(a.sorteringTidspunkt)),
       feilAltinn: false,
       feilDigiSyfo: false,
     }),
@@ -161,16 +167,12 @@ const createApolloServer = (apolloServerOptions) => {
   const {ApolloServer, gql} = require("apollo-server-express");
   casual = require("casual");
 
-  const notifikasjoner = [...new Array(10)]
-    .map(_ => Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])))
-    .sort((a, b) => b.opprettetTidspunkt.localeCompare(a.opprettetTidspunkt))
-
   const data = fs.readFileSync(path.join(__dirname, 'bruker.graphql'));
 
   return new ApolloServer({
     ...apolloServerOptions,
     typeDefs: gql(data.toString()),
-    mocks: mocks(notifikasjoner),
+    mocks: mocks(),
   });
 }
 
