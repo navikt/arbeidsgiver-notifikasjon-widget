@@ -129,7 +129,7 @@ const Notifikasjon = (navn) => {
 const mocks = () => ({
   Query: () => ({
     notifikasjoner: () => ({
-      notifikasjoner: [...new Array(0)]
+      notifikasjoner: [...new Array(10)]
         .map(_ => Notifikasjon(casual.random_element(["Oppgave", "Beskjed"])))
         .sort((a, b) => b.sorteringTidspunkt.localeCompare(a.sorteringTidspunkt)),
       feilAltinn: false,
