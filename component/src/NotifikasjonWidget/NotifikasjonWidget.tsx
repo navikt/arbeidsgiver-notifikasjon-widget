@@ -16,8 +16,8 @@ const uleste = (
     return notifikasjoner
   } else {
     return notifikasjoner.filter(
-      ({ opprettetTidspunkt }) =>
-        new Date(opprettetTidspunkt).getTime() > new Date(sistLest).getTime()
+      ({ sorteringTidspunkt }) =>
+        new Date(sorteringTidspunkt).getTime() > new Date(sistLest).getTime()
     )
   }
 }
@@ -51,7 +51,7 @@ const NotifikasjonWidget = () => {
   const setSistLest = useCallback(() => {
     if (notifikasjoner && notifikasjoner.length > 0) {
       // naiv impl forutsetter sortering
-      _setSistLest(notifikasjoner[0].opprettetTidspunkt)
+      _setSistLest(notifikasjoner[0].sorteringTidspunkt)
     }
   }, [notifikasjoner])
 

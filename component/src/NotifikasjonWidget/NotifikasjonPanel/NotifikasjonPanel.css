@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   z-index: 10;
-  color: var(--navds-global-color-gray-900);
+  color: var(--a-gray-900);
   position: absolute;
   margin: 0;
   padding: 0;
@@ -10,7 +10,7 @@
   max-width: 30rem;
   background-color: white;
   outline: none;
-  border: solid 2px var(--navds-global-color-deepblue-700);
+  border: solid 2px var(--a-deepblue-700);
   border-radius: 4px;
   top: 5rem;
   right: 0;
@@ -26,16 +26,16 @@
 }
 .notifikasjon_panel li:hover {
   background-color: #F0F6FB;
-  border-left: var(--navds-global-color-deepblue-500) 4px solid;
+  border-left: var(--a-deepblue-500) 4px solid;
 }
 .notifikasjon_panel li:focus-within {
-  border: var(--navds-global-color-deepblue-500) 4px solid;
+  border: var(--a-deepblue-500) 4px solid;
 }
 .notifikasjon_panel li:not(:last-child):focus-within .notifikasjon_liste_element {
   border-bottom: transparent 1px solid;
 }
 .notifikasjon_panel li:not(:last-child):not(:focus-within) .notifikasjon_liste_element {
-  border-bottom: var(--navds-global-color-gray-400) 1px solid;
+  border-bottom: var(--a-gray-400) 1px solid;
 }
 .notifikasjon_panel--apen {
   padding-right: 1px;
@@ -49,7 +49,7 @@
 }
 .notifikasjon_panel-feilmelding {
   margin: 1rem 1rem 0 1rem;
-  border-bottom: var(--navds-global-color-gray-400) 1px solid;
+  border-bottom: var(--a-gray-400) 1px solid;
 }
 .notifikasjon_panel-feilmelding > div {
   margin: 1rem 0;
@@ -57,7 +57,7 @@
 .notifikasjon_panel-header {
   margin: 1rem 1rem 0 1rem;
   padding-bottom: 1rem;
-  border-bottom: var(--navds-global-color-gray-600) 1px solid;
+  border-bottom: var(--a-gray-600) 1px solid;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -121,7 +121,7 @@
 }
 .notifikasjon_panel-liste::-webkit-scrollbar-thumb {
   border-radius: 6px;
-  background-color: var(--navds-global-color-gray-700);
+  background-color: var(--a-gray-700);
 }
 @media (max-width: 768px) {
   .notifikasjon_panel {

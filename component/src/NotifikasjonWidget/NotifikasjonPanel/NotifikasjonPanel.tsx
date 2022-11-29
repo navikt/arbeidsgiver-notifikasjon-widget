@@ -159,17 +159,17 @@ const NotifikasjonPanel = (
           id='notifikasjon_panel-liste'
           className='notifikasjon_panel-liste notifikasjon_panel-liste_shadows'
         >
-          {notifikasjoner?.map((notifikasjon: Notifikasjon, index: number) => (
+          {notifikasjoner.map((notifikasjon: Notifikasjon, index: number) => (
             <li key={index} role='article'>
               <NotifikasjonListeElement
-                antall={notifikasjoner?.length}
+                antall={notifikasjoner.length}
                 erValgt={notifikasjon === valgtNotifikasjon}
                 gåTilForrige={() => {
                   const forrigeIndex = Math.max(0, (notifikasjoner.indexOf(notifikasjon)) - 1)
                   setValgtNotifikasjon(notifikasjoner[forrigeIndex])
                 }}
                 gåTilNeste={() => {
-                  const nesteIndex = Math.min(notifikasjoner.indexOf(notifikasjon) + 1, notifikasjoner?.length - 1)
+                  const nesteIndex = Math.min(notifikasjoner.indexOf(notifikasjon) + 1, notifikasjoner.length - 1)
                   setValgtNotifikasjon(notifikasjoner[nesteIndex])
                 }}
                 onKlikketPaaLenke={(klikketPaaNotifikasjon) => {

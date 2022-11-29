@@ -2,7 +2,7 @@
   "name": "@navikt/arbeidsgiver-notifikasjon-widget",
   "description": "React component for notifikasjoner for arbeidsgivere",
   "repository": "github:navikt/arbeidsgiver-notifikasjon-widget",
-  "version": "5.4.0-rc",
+  "version": "5.4.0-rc1",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/lib/esm/index.d.ts",
@@ -13,16 +13,14 @@
     "start": "rollup --config rollup.config.ts --configPlugin typescript --watch",
     "test": "echo tests not implemented"
   },
-  "dependencies": {
+  "devDependencies": {
     "@apollo/client": "3.6.9",
-    "@navikt/ds-css": "1.3.4",
-    "@navikt/ds-react": "1.3.4",
-    "@navikt/ds-icons": "1.3.4",
     "amplitude-js": "^8.21.1",
     "graphql": "^16.6.0",
-    "prop-types": "15.8.1"
-  },
-  "devDependencies": {
+    "prop-types": "15.8.1",
+    "@navikt/ds-css": "2.0.1",
+    "@navikt/ds-react": "2.0.1",
+    "@navikt/ds-icons": "2.0.1",
     "@graphql-codegen/cli": "^2.13.1",
     "@graphql-codegen/typescript": "^2.7.3",
     "@graphql-codegen/typescript-operations": "^2.5.3",
