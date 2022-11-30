@@ -22,8 +22,8 @@ export default {
       format: "esm",
       sourcemap: true
     }
-
   ],
+  external: Object.keys(packageJson.dependencies),
   plugins: [
     typescript({ tsconfig: './tsconfig.json' }),
     commonjs(),
