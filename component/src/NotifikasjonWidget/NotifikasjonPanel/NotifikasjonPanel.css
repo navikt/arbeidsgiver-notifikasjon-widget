@@ -1,25 +1,12 @@
 .notifikasjon_panel {
   display: flex;
   flex-direction: column;
-  z-index: 10;
   color: var(--a-gray-900);
-  position: absolute;
   margin: 0;
   padding: 0;
-  width: 100vw;
-  max-width: 30rem;
   background-color: white;
   outline: none;
-  border: solid 2px var(--a-deepblue-700);
-  border-radius: 4px;
-  top: 5rem;
-  right: 0;
-  visibility: hidden;
-  transform: rotateX(-90deg);
-  transform-origin: top center;
-  opacity: 0.3;
-  transition: 0.4s ease;
-  max-height: 65vh;
+
 }
 .notifikasjon_panel li {
   border: transparent 4px solid;
@@ -37,16 +24,7 @@
 .notifikasjon_panel li:not(:last-child):not(:focus-within) .notifikasjon_liste_element {
   border-bottom: var(--a-gray-400) 1px solid;
 }
-.notifikasjon_panel--apen {
-  padding-right: 1px;
-  visibility: visible;
-  opacity: 1;
-  transform-origin: top center;
-  transition: max-height 0.6s linear;
-  transform: rotateX(0);
-  z-index: 999;
 
-}
 .notifikasjon_panel-feilmelding {
   margin: 1rem 1rem 0 1rem;
   border-bottom: var(--a-gray-400) 1px solid;
@@ -124,13 +102,7 @@
   background-color: var(--a-gray-700);
 }
 @media (max-width: 768px) {
-  .notifikasjon_panel {
-    max-height: unset;
-    position: fixed;
-    top: calc(var(--decorator-sticky-offset, 0px) + 0rem);
-    height: calc(100% - env(safe-area-inset-bottom) - var(--decorator-sticky-offset, 0px));
-  }
-  .notifikasjon_panel-header {
+   .notifikasjon_panel-header {
     height: 5vh; /* får 6 ekstra piksler fra et sted ¯\_(ツ)_/¯ */
   }
 }

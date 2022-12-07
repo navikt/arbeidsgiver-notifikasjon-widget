@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {Close} from '@navikt/ds-icons'
-import { Alert, Heading, HelpText } from '@navikt/ds-react'
-import { NotifikasjonListeElement } from './NotifikasjonListeElement/NotifikasjonListeElement'
+import {Alert, Heading, HelpText} from '@navikt/ds-react'
+import {NotifikasjonListeElement} from './NotifikasjonListeElement/NotifikasjonListeElement'
 import './NotifikasjonPanel.css'
-import { Notifikasjon, NotifikasjonerResultat } from '../../api/graphql-types'
-import { useMutation } from '@apollo/client'
-import { NOTIFIKASJONER_KLIKKET_PAA } from '../../api/graphql'
-import { useAmplitude } from '../../utils/amplitude'
+import {Notifikasjon, NotifikasjonerResultat} from '../../api/graphql-types'
+import {useMutation} from '@apollo/client'
+import {NOTIFIKASJONER_KLIKKET_PAA} from '../../api/graphql'
+import {useAmplitude} from '../../utils/amplitude'
 
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
 
 const NotifikasjonPanel = (
   {
-    notifikasjoner: { notifikasjoner, feilAltinn, feilDigiSyfo },
+    notifikasjoner: {notifikasjoner, feilAltinn, feilDigiSyfo},
     erApen,
     onLukkPanel
   }: Props
@@ -69,128 +69,120 @@ const NotifikasjonPanel = (
   return (
     <div
       role='presentation'
-      onKeyDown={({ key }) => {
+      id='notifikasjon_panel'
+      className='notifikasjon_panel--apen notifikasjon_panel'
+      onKeyDown={({key}) => {
         if (key === 'Escape' || key === 'Esc') {
           lukkPanel()
         }
       }}
     >
       <div
-        id='notifikasjon_panel'
-        role='dialog'
-        aria-modal='true'
-        aria-labelledby='notifikasjon_panel-header'
-        className={`notifikasjon_panel ${
-          erApen ? 'notifikasjon_panel--apen' : ''
-        }`}
+        id='notifikasjon_panel-header'
+        className='notifikasjon_panel-header'
       >
-        <div
-          id='notifikasjon_panel-header'
-          className='notifikasjon_panel-header'
-        >
-          <div className="notifikasjon_panel-header-title-help">
-            <Heading level='2' size='small'>Beskjeder og oppgaver</Heading>
-            <HelpText
-              id="notifikasjon-informasjon-knapp"
-              title="Hva vises her?"
-              aria-label="Hjelpetekst. Hva vises her?"
-              placement="bottom"
-              onKeyDown={event => {
-                if (event.key === 'Tab') {
-                  if (event.shiftKey) {
-                    focusNotifikasjon()
-                  } else {
-                    focusXButton()
-                  }
-                  event.preventDefault()
-                }
-              }}
-            >
-              Notifikasjoner er under utvikling og alle notifikasjoner vises ikke her
-              ennå. Gamle notifikasjoner slettes etter hvert.
-            </HelpText>
-          </div>
-          <button
-            id='notifikasjon_panel-header-xbtn'
-            className='notifikasjon_panel-header-xbtn'
-            aria-labelledby='notifikasjon_panel-header-xbtn-ikon'
-            onKeyDown={(event) => {
+        <div className="notifikasjon_panel-header-title-help">
+          <Heading level='2' size='small'>Beskjeder og oppgaver</Heading>
+          <HelpText
+            id="notifikasjon-informasjon-knapp"
+            title="Hva vises her?"
+            aria-label="Hjelpetekst. Hva vises her?"
+            placement="bottom"
+            onKeyDown={event => {
               if (event.key === 'Tab') {
                 if (event.shiftKey) {
-                  focusMoreInfo()
-                } else {
                   focusNotifikasjon()
+                } else {
+                  focusXButton()
                 }
                 event.preventDefault()
               }
             }}
-            onClick={() => {
-              lukkPanel()
-            }}
           >
-            <Close titleId="notifikasjon_panel-header-xbtn-ikon" title="lukk"/>
-          </button>
+            Notifikasjoner er under utvikling og alle notifikasjoner vises ikke her
+            ennå. Gamle notifikasjoner slettes etter hvert.
+          </HelpText>
         </div>
-
-        {(feilAltinn || feilDigiSyfo) ?
-          <div className='notifikasjon_panel-feilmelding'>
-            {feilAltinn ?
-              <Alert variant='error'>
-                Vi opplever ustabilitet med Altinn, så du
-                ser kanskje ikke alle notifikasjoner.
-                Prøv igjen senere.
-              </Alert>
-              : null}
-
-            {feilDigiSyfo ?
-              <Alert variant='error'>
-                Vi opplever feil og kan ikke hente
-                eventuelle notifikasjoner for sykemeldte
-                som du skal følge opp.
-                Prøv igjen senere.
-              </Alert>
-              : null}
-          </div>
-          : null
-        }
-
-        <ul
-          role='feed'
-          id='notifikasjon_panel-liste'
-          className='notifikasjon_panel-liste notifikasjon_panel-liste_shadows'
+        <button
+          id='notifikasjon_panel-header-xbtn'
+          className='notifikasjon_panel-header-xbtn'
+          aria-labelledby='notifikasjon_panel-header-xbtn-ikon'
+          onKeyDown={(event) => {
+            if (event.key === 'Tab') {
+              if (event.shiftKey) {
+                focusMoreInfo()
+              } else {
+                focusNotifikasjon()
+              }
+              event.preventDefault()
+            }
+          }}
+          onClick={() => {
+            lukkPanel()
+          }}
         >
-          {notifikasjoner.map((notifikasjon: Notifikasjon, index: number) => (
-            <li key={index} role='article'>
-              <NotifikasjonListeElement
-                antall={notifikasjoner.length}
-                erValgt={notifikasjon === valgtNotifikasjon}
-                gåTilForrige={() => {
-                  const forrigeIndex = Math.max(0, (notifikasjoner.indexOf(notifikasjon)) - 1)
-                  setValgtNotifikasjon(notifikasjoner[forrigeIndex])
-                }}
-                gåTilNeste={() => {
-                  const nesteIndex = Math.min(notifikasjoner.indexOf(notifikasjon) + 1, notifikasjoner.length - 1)
-                  setValgtNotifikasjon(notifikasjoner[nesteIndex])
-                }}
-                onKlikketPaaLenke={(klikketPaaNotifikasjon) => {
-                  // noinspection JSIgnoredPromiseFromCall sentry håndterer unhandled promise rejections
-                  loggNotifikasjonKlikk(klikketPaaNotifikasjon, notifikasjoner.indexOf(notifikasjon))
-                  notifikasjonKlikketPaa({ variables: { id: klikketPaaNotifikasjon.id } })
-                  setValgtNotifikasjon(klikketPaaNotifikasjon)
-                }}
-                notifikasjon={notifikasjon}
-                onTabEvent={(shiftKey) => {
-                  if (shiftKey) {
-                    focusXButton()
-                  } else {
-                    focusMoreInfo()
-                  }
-                }}
-              />
-            </li>
-          ))}
-        </ul>
+          <Close titleId="notifikasjon_panel-header-xbtn-ikon" title="lukk"/>
+        </button>
       </div>
+
+      {(feilAltinn || feilDigiSyfo) ?
+        <div className='notifikasjon_panel-feilmelding'>
+          {feilAltinn ?
+            <Alert variant='error'>
+              Vi opplever ustabilitet med Altinn, så du
+              ser kanskje ikke alle notifikasjoner.
+              Prøv igjen senere.
+            </Alert>
+            : null}
+
+          {feilDigiSyfo ?
+            <Alert variant='error'>
+              Vi opplever feil og kan ikke hente
+              eventuelle notifikasjoner for sykemeldte
+              som du skal følge opp.
+              Prøv igjen senere.
+            </Alert>
+            : null}
+        </div>
+        : null
+      }
+
+      <ul
+        role='feed'
+        id='notifikasjon_panel-liste'
+        className='notifikasjon_panel-liste notifikasjon_panel-liste_shadows'
+      >
+        {notifikasjoner.map((notifikasjon: Notifikasjon, index: number) => (
+          <li key={index} role='article'>
+            <NotifikasjonListeElement
+              antall={notifikasjoner.length}
+              erValgt={notifikasjon === valgtNotifikasjon}
+              gåTilForrige={() => {
+                const forrigeIndex = Math.max(0, (notifikasjoner.indexOf(notifikasjon)) - 1)
+                setValgtNotifikasjon(notifikasjoner[forrigeIndex])
+              }}
+              gåTilNeste={() => {
+                const nesteIndex = Math.min(notifikasjoner.indexOf(notifikasjon) + 1, notifikasjoner.length - 1)
+                setValgtNotifikasjon(notifikasjoner[nesteIndex])
+              }}
+              onKlikketPaaLenke={(klikketPaaNotifikasjon) => {
+                // noinspection JSIgnoredPromiseFromCall sentry håndterer unhandled promise rejections
+                loggNotifikasjonKlikk(klikketPaaNotifikasjon, notifikasjoner.indexOf(notifikasjon))
+                notifikasjonKlikketPaa({variables: {id: klikketPaaNotifikasjon.id}})
+                setValgtNotifikasjon(klikketPaaNotifikasjon)
+              }}
+              notifikasjon={notifikasjon}
+              onTabEvent={(shiftKey) => {
+                if (shiftKey) {
+                  focusXButton()
+                } else {
+                  focusMoreInfo()
+                }
+              }}
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import {HENT_NOTIFIKASJONER} from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
 import {Notifikasjon} from '../api/graphql-types'
 import {useAmplitude} from '../utils/amplitude'
+import Dropdown from "./NotifikasjonPanel/Dropdown";
 
 const uleste = (
   sistLest: string | undefined,
@@ -16,7 +17,7 @@ const uleste = (
     return notifikasjoner
   } else {
     return notifikasjoner.filter(
-      ({ sorteringTidspunkt }) =>
+      ({sorteringTidspunkt}) =>
         new Date(sorteringTidspunkt).getTime() > new Date(sistLest).getTime()
     )
   }
@@ -94,7 +95,7 @@ const NotifikasjonWidget = () => {
     }
   }, [handleFocusOutside])
 
-  const style: CSSProperties = notifikasjoner === undefined || notifikasjoner.length === 0 ? { visibility: 'hidden' } : {};
+  const style: CSSProperties = notifikasjoner === undefined || notifikasjoner.length === 0 ? {visibility: 'hidden'} : {};
 
   return <div ref={widgetRef} className='notifikasjoner_widget' style={style}>
     <NotifikasjonBjelle
@@ -107,18 +108,20 @@ const NotifikasjonWidget = () => {
         }
       }}
     />
-    <NotifikasjonPanel
-      notifikasjoner={notifikasjonerResultat ?? {
-        notifikasjoner: [],
-        feilAltinn: false,
-        feilDigiSyfo: false
-      }}
-      erApen={erApen}
-      onLukkPanel={() => {
-        lukkÅpentPanelMedLogging()
-        bjelleRef.current?.focus()
-      }}
-    />
+    <Dropdown erApen={erApen}>
+      <NotifikasjonPanel
+        notifikasjoner={notifikasjonerResultat ?? {
+          notifikasjoner: [],
+          feilAltinn: false,
+          feilDigiSyfo: false
+        }}
+        erApen={erApen}
+        onLukkPanel={() => {
+          lukkÅpentPanelMedLogging()
+          bjelleRef.current?.focus()
+        }}
+      />
+    </Dropdown>
   </div>
 }
 
