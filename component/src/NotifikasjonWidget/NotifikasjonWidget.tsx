@@ -108,7 +108,10 @@ const NotifikasjonWidget = () => {
         }
       }}
     />
-    <Dropdown erApen={erApen}>
+    <Dropdown
+      erApen={erApen}
+      ariaLabelledby='notifikasjon_panel-header'
+    >
       <NotifikasjonPanel
         notifikasjoner={notifikasjonerResultat ?? {
           notifikasjoner: [],

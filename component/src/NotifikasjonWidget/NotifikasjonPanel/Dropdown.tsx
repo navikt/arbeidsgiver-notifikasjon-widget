@@ -2,16 +2,16 @@ import React from "react";
 import "./Dropdown.css"
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode,
+  ariaLabelledby: string,
   erApen: boolean,
 }
 
-const Dropdown = ({erApen, children}: Props) => {
-  console.log(erApen)
+const Dropdown = ({erApen, ariaLabelledby, children}: Props) => {
   return erApen ? <div
     role='dialog'
     aria-modal='true'
-    aria-labelledby='notifikasjon_panel-header'
+    aria-labelledby={ariaLabelledby}
     className="Dropdown-panel"
   >
     {children}
