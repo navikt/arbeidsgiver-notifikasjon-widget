@@ -112,7 +112,7 @@ const Notifikasjon = (navn) => {
     }
         : {}
     ),
-    sorteringTidspunkt: paaminnelseTidspunkt ?? opprettetTidspunkt,
+    sorteringTidspunkt: paaminnelseTidspunkt !== null ? paaminnelseTidspunkt : opprettetTidspunkt,
     ...tilstand,
     virksomhet: {
       navn: casual.random_element([
