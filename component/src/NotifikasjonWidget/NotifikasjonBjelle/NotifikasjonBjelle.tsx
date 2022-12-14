@@ -1,6 +1,6 @@
 import React, { Ref } from 'react'
 import './NotifikasjonBjelle.css'
-import {Label} from "@navikt/ds-react";
+import {BodyShort, Label} from "@navikt/ds-react";
 import {Bell} from "@navikt/ds-icons";
 
 interface Props {
@@ -30,7 +30,7 @@ export const NotifikasjonBjelle = ({
         aria-pressed={erApen}
       >
         <div className='notifikasjon_bjelle-ikon'>
-          <Bell title="bjelleikon" width="45px" height="45px" aria-hidden="true" />
+          <Bell title="bjelleikon" width="32px" height="32px" aria-hidden="true" />
 
           <div
             className={`notifikasjon_bjelle-ikon__ulest-sirkel ${
@@ -44,6 +44,8 @@ export const NotifikasjonBjelle = ({
             </Label>
           </div>
         </div>
+        <BodyShort size="small">Varsler</BodyShort>
+
       </button>
       <div
         className={`notifikasjon_bjelle-understrek ${

@@ -3,20 +3,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0.1rem 0.1rem 0 0;
+  align-self: center;
   background-color: transparent;
   border: none;
 }
 .notifikasjon_bjelle-knapp {
   display: flex;
+  flex-direction: column;
+  color: var(--a-text-default);
   align-items: center;
   justify-content: center;
   cursor: pointer;
   background-color: transparent;
-  border-radius: 50%;
+  border-radius: .25rem;
   border: none;
-  width: 56px;
-  height: 56px;
+  width: 54px;
+  height: 60px;
 
 }
 .notifikasjon_bjelle-knapp svg path {
@@ -32,6 +34,7 @@
   .notifikasjon_bjelle-knapp:hover,
   .notifikasjon_bjelle-knapp:focus-visible {
     border: none;
+    color: var(--a-text-on-inverted);
     background-color: var(--a-deepblue-500);
   }
 
@@ -52,8 +55,8 @@
   fill: var(--a-gray-900);
 }
 .notifikasjon_bjelle-ikon {
-  --width: 45px;
-  --height: 45px;
+  --width: 32px;
+  --height: 32px;
   --ulest-diameter: 22px;
   --ulest-top: calc(var(--height) * 0.2);
   --ulest-left: calc(var(--width) * 0.05);

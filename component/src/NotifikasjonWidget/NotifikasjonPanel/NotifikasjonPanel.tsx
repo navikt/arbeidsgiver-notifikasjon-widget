@@ -70,7 +70,7 @@ const NotifikasjonPanel = (
     <div
       role='presentation'
       id='notifikasjon_panel'
-      className='notifikasjon_panel--apen notifikasjon_panel'
+      className='notifikasjon_panel'
       onKeyDown={({key}) => {
         if (key === 'Escape' || key === 'Esc') {
           lukkPanel()
