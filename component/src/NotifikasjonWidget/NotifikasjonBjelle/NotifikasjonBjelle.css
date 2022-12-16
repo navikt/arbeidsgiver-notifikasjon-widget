@@ -19,7 +19,6 @@
   border: none;
   width: 54px;
   height: 60px;
-
 }
 .notifikasjon_bjelle-knapp svg path {
   fill: var(--a-gray-900);
@@ -43,11 +42,11 @@
     fill: var(--a-white);
   }
 }
-.notifikasjon_bjelle-knapp--open {
-  background-color: var(--a-white);
-}
+.notifikasjon_bjelle-knapp--open,
 .notifikasjon_bjelle-knapp--open:focus,
-.notifikasjon_bjelle-knapp--open:hover {
+.notifikasjon_bjelle-knapp--open:hover,
+.notifikasjon_bjelle-knapp--open:focus-visible {
+  color: var(--a-text-default);
   background-color: var(--a-white);
 }
 .notifikasjon_bjelle-knapp--open:focus svg path,
