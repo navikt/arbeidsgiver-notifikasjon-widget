@@ -1,27 +1,24 @@
 import Bedriftsmeny from '@navikt/bedriftsmeny'
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css'
 import {  NotifikasjonWidget } from '@navikt/arbeidsgiver-notifikasjon-widget'
-import { Router } from 'react-router-dom'
+import {BrowserRouter} from 'react-router-dom'
 import './App.css'
-import { createBrowserHistory, History } from 'history'
 import { MOCK_ORGANISASJONER } from './MockOrganisasjoner'
 import {useState} from "react";
-
-const history: History = createBrowserHistory()
+import '@navikt/ds-css';
 
 const App = () => {
   const [orgname, setOrgname] = useState("")
   return <div className={'bakgrunnsside'}>
     {/*<NotifikasjonWidgetProvider miljo="local" apiUrl="/api/graphql">*/}
-      <Router history={history}>
+      <BrowserRouter>
         <Bedriftsmeny
           sidetittel={orgname}
           organisasjoner={MOCK_ORGANISASJONER}
-          onOrganisasjonChange={(org) => setOrgname(org.Name)}
-          history={history}>
+          onOrganisasjonChange={(org) => setOrgname(org.Name)}>
           <NotifikasjonWidget miljo="local" apiUrl="/api/graphql"/>
         </Bedriftsmeny>
-      </Router>
+      </BrowserRouter>
     {/*</NotifikasjonWidgetProvider>*/}
   </div>
 }

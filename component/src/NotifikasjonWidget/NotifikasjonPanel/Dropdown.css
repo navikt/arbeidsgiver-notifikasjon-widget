@@ -18,7 +18,7 @@
     max-height: unset;
     position: fixed;
     top: calc(var(--decorator-sticky-offset, 0px) + 0rem);
-    height:  calc(100vh - env(-safe-area-inset-bottom)  -  var(--decorator-sticky-offset, 0px));
+    height: calc(100vh - env(safe-area-inset-bottom) - var(--decorator-sticky-offset, 0px));
   }
 }
 
