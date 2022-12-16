@@ -7,6 +7,7 @@
   background-color: transparent;
   border: none;
 }
+
 .notifikasjon_bjelle-knapp {
   display: flex;
   flex-direction: column;
@@ -20,6 +21,7 @@
   width: 54px;
   height: 60px;
 }
+
 .notifikasjon_bjelle-knapp svg path {
   fill: var(--a-gray-900);
 }
@@ -42,17 +44,7 @@
     fill: var(--a-white);
   }
 }
-.notifikasjon_bjelle-knapp--open,
-.notifikasjon_bjelle-knapp--open:focus,
-.notifikasjon_bjelle-knapp--open:hover,
-.notifikasjon_bjelle-knapp--open:focus-visible {
-  color: var(--a-text-default);
-  background-color: var(--a-white);
-}
-.notifikasjon_bjelle-knapp--open:focus svg path,
-.notifikasjon_bjelle-knapp--open:hover svg path {
-  fill: var(--a-gray-900);
-}
+
 .notifikasjon_bjelle-ikon {
   --width: 32px;
   --height: 32px;
@@ -78,21 +70,25 @@
   transform: translate(var(--ulest-left), var(--ulest-top));
   transition: all 0.35s ease-in;
 }
+
 .notifikasjon_bjelle-ikon__ulest-sirkel--hide {
   visibility: hidden;
   transition: 0.2s all linear;
 }
+
 .notifikasjon_bjelle-ikon__ulest-antall {
   color: white;
   font-weight: bold;
   font-size: 14px;
 }
+
 .notifikasjon_bjelle-understrek {
   width: 4.5rem;
   height: 0.25rem;
   margin-top: 0.25rem;
   background-color: var(--a-deepblue-500);
 }
+
 .notifikasjon_bjelle-understrek--closed {
   visibility: hidden;
 }
