@@ -69,6 +69,13 @@ export type Oppgave = {
   virksomhet: Virksomhet;
 };
 
+export type OppgaveMetadata = {
+  __typename?: 'OppgaveMetadata';
+  frist?: Maybe<Scalars['ISO8601Date']>;
+  paminnelseTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
+  tilstand: OppgaveTilstand;
+};
+
 export enum OppgaveTilstand {
   Ny = 'NY',
   Utfoert = 'UTFOERT',
@@ -98,6 +105,7 @@ export type Sak = {
   id: Scalars['ID'];
   lenke: Scalars['String'];
   merkelapp: Scalars['String'];
+  oppgaver: Array<OppgaveMetadata>;
   sisteStatus: SakStatus;
   tittel: Scalars['String'];
   virksomhet: Virksomhet;
