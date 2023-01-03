@@ -72,7 +72,7 @@ export type Oppgave = {
 export type OppgaveMetadata = {
   __typename?: 'OppgaveMetadata';
   frist?: Maybe<Scalars['ISO8601Date']>;
-  paminnelseTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
+  paaminnelseTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
   tilstand: OppgaveTilstand;
 };
 
