@@ -24,10 +24,12 @@ export const NotifikasjonBjelle = ({
         className={`notifikasjon_bjelle-knapp notifikasjon_bjelle-knapp${
           erApen ? '--open' : ''
         }`}
-        aria-label={`Dine notifikasjoner, ${antallUleste} nye.`}
+        aria-label={`Dine varsler, ${antallUleste} nye.`}
         aria-owns='notifikasjon_panel'
         aria-haspopup='dialog'
         aria-pressed={erApen}
+        aria-live="polite"
+        aria-atomic="true"
       >
         <div className='notifikasjon_bjelle-ikon'>
           <Bell title="bjelleikon" width="32px" height="32px" aria-hidden="true" />
