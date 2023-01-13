@@ -10,7 +10,6 @@ interface Props {
 const Dropdown = ({erApen, ariaLabelledby, children}: Props) => {
   return erApen ? <div
     role='dialog'
-    aria-modal='true'
     aria-labelledby={ariaLabelledby}
     className="Dropdown-panel"
   >

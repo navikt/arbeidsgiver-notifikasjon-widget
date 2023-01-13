@@ -68,7 +68,6 @@ const NotifikasjonPanel = (
 
   return (
     <div
-      role='presentation'
       id='notifikasjon_panel'
       className='notifikasjon_panel'
       onKeyDown={({key}) => {
