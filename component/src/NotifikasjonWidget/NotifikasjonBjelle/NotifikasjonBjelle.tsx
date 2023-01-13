@@ -31,10 +31,10 @@ export const NotifikasjonBjelle = ({
         aria-live="polite"
         aria-atomic="true"
       >
-        <div className='notifikasjon_bjelle-ikon'>
+        <span className='notifikasjon_bjelle-ikon'>
           <Bell title="bjelleikon" width="32px" height="32px" aria-hidden="true" />
 
-          <div
+          <span
             className={`notifikasjon_bjelle-ikon__ulest-sirkel ${
               antallUleste === 0
                 ? 'notifikasjon_bjelle-ikon__ulest-sirkel--hide'
@@ -44,8 +44,8 @@ export const NotifikasjonBjelle = ({
             <Label className='notifikasjon_bjelle-ikon__ulest-antall'>
               {antallUleste < 10 ? antallUleste : '9+'}
             </Label>
-          </div>
-        </div>
+          </span>
+        </span>
         <BodyShort size="small">Varsler</BodyShort>
 
       </button>
