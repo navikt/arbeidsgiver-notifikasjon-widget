@@ -173,9 +173,9 @@ const createApolloServer = (apolloServerOptions) => {
   const data = fs.readFileSync(path.join(__dirname, 'bruker.graphql'));
 
   return new ApolloServer({
-    ...apolloServerOptions,
     typeDefs: gql(data.toString()),
     mocks: mocks(),
+    ...apolloServerOptions,
   });
 }
 
