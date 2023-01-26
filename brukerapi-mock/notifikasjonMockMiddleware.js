@@ -154,7 +154,8 @@ const mocks = () => ({
             casual.random_element([null, new Date().toISOString().replace(/T.*/, "")])
           ] : []
         })),
-      totaltAntallSaker: 314
+      totaltAntallSaker: 314,
+      sakstyper: Object.keys(eksempler).map(navn => ({ navn })),
     })
   }),
   Int: () => casual.integer(0, 1000),
