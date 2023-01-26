@@ -166,15 +166,14 @@ const mocks = () => ({
   }),
 });
 
-const createApolloServer = (apolloServerOptions) => {
+const createApolloServer = ({mocks: apolloServerOptionsMocks, ...apolloServerOptions} = {}) => {
   const {ApolloServer, gql} = require("apollo-server-express");
   casual = require("casual");
 
   const data = fs.readFileSync(path.join(__dirname, 'bruker.graphql'));
-
   return new ApolloServer({
     typeDefs: gql(data.toString()),
-    mocks: mocks(),
+    mocks: {...mocks(), ...apolloServerOptionsMocks },
     ...apolloServerOptions,
   });
 }
