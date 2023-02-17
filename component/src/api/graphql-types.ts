@@ -86,6 +86,8 @@ export type Query = {
   __typename?: 'Query';
   notifikasjoner: NotifikasjonerResultat;
   saker: SakerResultat;
+  /** Alle sakstyper som finnes for brukeren. */
+  sakstyper: Array<SakstypeOverordnet>;
   whoami?: Maybe<Scalars['String']>;
 };
 
@@ -93,9 +95,11 @@ export type Query = {
 export type QuerySakerArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  sakstyper?: InputMaybe<Array<Scalars['String']>>;
   sortering?: SakSortering;
   tekstsoek?: InputMaybe<Scalars['String']>;
-  virksomhetsnummer: Scalars['String'];
+  virksomhetsnummer?: InputMaybe<Scalars['String']>;
+  virksomhetsnumre?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type Sak = {
@@ -134,8 +138,21 @@ export type SakerResultat = {
   __typename?: 'SakerResultat';
   feilAltinn: Scalars['Boolean'];
   saker: Array<Sak>;
+  /** Hvilke sakstyper (med antall) som finnes for valgte virksomheter. */
+  sakstyper: Array<Sakstype>;
   /** Antall saker for gitt filter, men uavhengig av offset/limit. */
   totaltAntallSaker: Scalars['Int'];
+};
+
+export type Sakstype = {
+  __typename?: 'Sakstype';
+  antall: Scalars['Int'];
+  navn: Scalars['String'];
+};
+
+export type SakstypeOverordnet = {
+  __typename?: 'SakstypeOverordnet';
+  navn: Scalars['String'];
 };
 
 export type UgyldigId = {
