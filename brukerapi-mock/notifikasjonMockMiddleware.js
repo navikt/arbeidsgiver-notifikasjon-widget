@@ -155,8 +155,9 @@ const mocks = () => ({
           ] : []
         })),
       totaltAntallSaker: 314,
-      sakstyper: Object.keys(eksempler).map(navn => ({ navn })),
-    })
+      sakstyper: Object.keys(eksempler).map(navn => ({ navn, antall: casual.integer(0, 10) })),
+    }),
+    sakstyper: Object.keys(eksempler).map(navn => ({ navn })),
   }),
   Int: () => casual.integer(0, 1000),
   String: () => casual.string,

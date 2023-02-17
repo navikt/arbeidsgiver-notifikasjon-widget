@@ -1,10 +1,16 @@
 type Query {
     notifikasjoner: NotifikasjonerResultat!
+    """
+    Alle sakstyper som finnes for brukeren.
+    """
+    sakstyper: [SakstypeOverordnet!]!
     saker(
-        virksomhetsnummer: String!
+        virksomhetsnumre: [String!]
+        virksomhetsnummer: String
         offset: Int
         limit: Int
         tekstsoek: String
+        sakstyper: [String!]
         sortering: SakSortering! = OPPDATERT
     ): SakerResultat!
     whoami: String
@@ -16,6 +22,14 @@ enum SakSortering {
     FRIST
 }
 
+type SakstypeOverordnet {
+    navn: String!
+}
+
+type Sakstype {
+    navn: String!
+    antall: Int!
+}
 
 type SakerResultat {
     saker: [Sak!]!
@@ -24,6 +38,11 @@ type SakerResultat {
     Antall saker for gitt filter, men uavhengig av offset/limit.
     """
     totaltAntallSaker: Int!
+
+    """
+    Hvilke sakstyper (med antall) som finnes for valgte virksomheter.
+    """
+    sakstyper: [Sakstype!]!
 
     feilAltinn: Boolean!
 }
