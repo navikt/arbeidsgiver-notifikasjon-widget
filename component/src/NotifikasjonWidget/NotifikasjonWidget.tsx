@@ -5,7 +5,7 @@ import './NotifikasjonWidget.css'
 import {ServerError, useQuery} from '@apollo/client'
 import {HENT_NOTIFIKASJONER} from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
-import {Notifikasjon} from '../api/graphql-types'
+import {Notifikasjon, OppgaveTilstand} from '../api/graphql-types'
 import {useAmplitude} from '../utils/amplitude'
 import Dropdown from "./NotifikasjonPanel/Dropdown";
 
@@ -16,10 +16,12 @@ const uleste = (
   if (sistLest === undefined) {
     return notifikasjoner
   } else {
-    return notifikasjoner.filter(
-      ({sorteringTidspunkt}) =>
-        new Date(sorteringTidspunkt).getTime() > new Date(sistLest).getTime()
-    )
+    return notifikasjoner.filter((notifikasjon) => {
+        if (notifikasjon.__typename === "Oppgave" && notifikasjon.tilstand !== OppgaveTilstand.Ny) {
+          return false;
+        }
+        return new Date(notifikasjon.sorteringTidspunkt).getTime() > new Date(sistLest).getTime()
+    })
   }
 }
 
