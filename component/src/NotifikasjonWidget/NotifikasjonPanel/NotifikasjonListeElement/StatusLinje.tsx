@@ -1,33 +1,34 @@
-import React, {FC, ReactNode} from 'react';
-import {BodyShort} from '@navikt/ds-react';
-import './StatusLinje.less';
-import {Notifikasjon, OppgaveTilstand} from "../../../api/graphql-types";
-import {StopWatch, SuccessStroke} from "@navikt/ds-icons";
-import {formatterDato, fristDatotekst} from "../dato-funksjoner";
-
+import React, { FC, ReactNode } from 'react'
+import { BodyShort, Tag } from '@navikt/ds-react'
+import './StatusLinje.less'
+import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
+import { StopWatch } from '@navikt/ds-icons'
+import { formatterDato, fristDatotekst } from '../dato-funksjoner'
 
 export interface StatusLinjeProps {
   notifikasjon: Notifikasjon
 }
 
-export const StatusLinje: FC<StatusLinjeProps> = ({notifikasjon}) => {
+export const StatusLinje: FC<StatusLinjeProps> = ({ notifikasjon }) => {
   if (notifikasjon.__typename !== 'Oppgave') {
-    return null;
+    return null
   }
 
   switch (notifikasjon.tilstand) {
     case OppgaveTilstand.Utfoert:
       return (
-        <StatusIkonMedTekst icon={<SuccessStroke aria-hidden={true}/>}>
-          Oppgaven er utført
-        </StatusIkonMedTekst>
+        <Tag variant='success' style={{ width: 'fit-content', borderColor: 'transparent' }}>
+          Fullført
+        </Tag>
       )
 
     case OppgaveTilstand.Utgaatt:
       return (
-        <StatusIkonMedTekst icon={<StopWatch aria-hidden={true}/>}>
-          Fristen gikk ut {fristDatotekst(new Date(notifikasjon.utgaattTidspunkt))}
-        </StatusIkonMedTekst>
+        <Tag variant='neutral' style={{ width: 'fit-content', borderColor: 'transparent' }}>
+          <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
+            Fristen gikk ut {fristDatotekst(new Date(notifikasjon.utgaattTidspunkt))}
+          </StatusIkonMedTekst>
+        </Tag>
       )
 
     case OppgaveTilstand.Ny:
@@ -35,27 +36,27 @@ export const StatusLinje: FC<StatusLinjeProps> = ({notifikasjon}) => {
       if (!notifikasjon.frist && !notifikasjon.paaminnelseTidspunkt) {
         return null
       } else if (!notifikasjon.frist && notifikasjon.paaminnelseTidspunkt) {
-        return <StatusIkonMedTekst
-          className="oppgave_status_paminnelse"
-          icon={<StopWatch aria-hidden={true}/>}
-        >
-          Påminnelse
-        </StatusIkonMedTekst>
+        return <Tag variant='warning' style={{ width: 'fit-content', borderColor: 'transparent' }}>
+          <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
+            Påminnelse
+          </StatusIkonMedTekst>
+        </Tag>
       } else if (notifikasjon.frist && !notifikasjon.paaminnelseTidspunkt) {
-        return <StatusIkonMedTekst icon={<StopWatch aria-hidden={true}/>}>
-          Frist {formatterDato(new Date(notifikasjon.frist))}
-        </StatusIkonMedTekst>
+        return <Tag variant='warning' style={{ width: 'fit-content', borderColor: 'transparent' }}>
+          <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
+            Frist {formatterDato(new Date(notifikasjon.frist))}
+          </StatusIkonMedTekst>
+        </Tag>
       } else {
-        return <StatusIkonMedTekst
-          className="oppgave_status_paminnelse"
-          icon={<StopWatch aria-hidden={true}/>}
-        >
-          Påminnelse &ndash; Frist {formatterDato(new Date(notifikasjon.frist))}
-        </StatusIkonMedTekst>
+        return <Tag variant='warning' style={{ width: 'fit-content', borderColor: 'transparent' }}>
+          <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
+            Påminnelse &ndash; Frist {formatterDato(new Date(notifikasjon.frist))}
+          </StatusIkonMedTekst>
+        </Tag>
       }
 
     default:
-      return null;
+      return null
   }
 }
 
@@ -66,7 +67,7 @@ type StatusIkonMedTekstProps = {
   children: ReactNode;
 }
 
-const StatusIkonMedTekst: FC<StatusIkonMedTekstProps> = ({icon, className, children}) =>
+const StatusIkonMedTekst: FC<StatusIkonMedTekstProps> = ({ icon, className, children }) =>
   <BodyShort className={`oppgave_status_text ${className}`} size='small'>
     {icon} {children}
-  </BodyShort>;
+  </BodyShort>
