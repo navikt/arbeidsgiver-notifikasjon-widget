@@ -30,9 +30,9 @@ const klokkeslett = (dato: Date) => {
 
 export const sendtDatotekst = (dato: Date) => {
   if (isToday(dato)) {
-    return 'i dag ' + klokkeslett(dato);
+    return 'I dag ' + klokkeslett(dato);
   } else if (isYesterday(dato)) {
-    return 'i går ' + klokkeslett(dato);
+    return 'I går ' + klokkeslett(dato);
   } else {
     return formatterDato(dato);
   }

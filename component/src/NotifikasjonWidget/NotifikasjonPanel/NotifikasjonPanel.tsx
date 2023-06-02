@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import {Close} from '@navikt/ds-icons'
 import {Alert, Heading, HelpText} from '@navikt/ds-react'
 import {NotifikasjonListeElement} from './NotifikasjonListeElement/NotifikasjonListeElement'
 import './NotifikasjonPanel.css'
@@ -7,6 +6,7 @@ import {Notifikasjon, NotifikasjonerResultat} from '../../api/graphql-types'
 import {useMutation} from '@apollo/client'
 import {NOTIFIKASJONER_KLIKKET_PAA} from '../../api/graphql'
 import {useAmplitude} from '../../utils/amplitude'
+import { LukkIkon } from './NotifikasjonListeElement/Ikoner'
 
 
 interface Props {
@@ -77,11 +77,11 @@ const NotifikasjonPanel = (
       }}
     >
       <div
-        id='notifikasjon_panel-header'
+        id='notifikasjon_panel-header∂'
         className='notifikasjon_panel-header'
       >
         <div className="notifikasjon_panel-header-title-help">
-          <Heading level='2' size='small'>Beskjeder og oppgaver</Heading>
+          <Heading level='2' size='small'>Varsler</Heading>
           <HelpText
             id="notifikasjon-informasjon-knapp"
             title="Hva vises her?"
@@ -120,7 +120,7 @@ const NotifikasjonPanel = (
             lukkPanel()
           }}
         >
-          <Close titleId="notifikasjon_panel-header-xbtn-ikon" title="lukk"/>
+          <LukkIkon/>
         </button>
       </div>
 

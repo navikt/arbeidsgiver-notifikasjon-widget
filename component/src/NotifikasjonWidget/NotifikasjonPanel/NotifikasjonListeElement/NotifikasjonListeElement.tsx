@@ -1,12 +1,12 @@
 import React from 'react'
-import {Next as HoyreChevron} from '@navikt/ds-icons'
-import {BodyShort, Detail} from "@navikt/ds-react";
-import {sendtDatotekst} from '../dato-funksjoner'
-import {Notifikasjon, OppgaveTilstand} from '../../../api/graphql-types'
-import {useAmplitude} from '../../../utils/amplitude'
-import {StatusLinje} from './StatusLinje';
+import { Next as HoyreChevron } from '@navikt/ds-icons'
+import { BodyShort, Detail } from '@navikt/ds-react'
+import { sendtDatotekst } from '../dato-funksjoner'
+import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
+import { useAmplitude } from '../../../utils/amplitude'
+import { StatusLinje } from './StatusLinje'
 import './NotifikasjonListeElement.css'
-import {BeskjedIkon, OppgaveIkon, OppgaveUtfoertIkon, OppgaveUtgaattIkon} from "./Ikoner";
+import { BeskjedIkon, OppgaveIkkeNyIkon, OppgaveIkon } from './Ikoner'
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const NotifikasjonListeElement = (props: Props) => {
-  const {loggPilTastNavigasjon} = useAmplitude()
+  const { loggPilTastNavigasjon } = useAmplitude()
   const notifikasjon = props.notifikasjon
 
   const date = new Date(notifikasjon.opprettetTidspunkt)
@@ -27,19 +27,16 @@ export const NotifikasjonListeElement = (props: Props) => {
   let ikon
   switch (props.notifikasjon.__typename) {
     case 'Beskjed':
-      ikon = <BeskjedIkon/>
+      ikon = <BeskjedIkon />
       break
     case 'Oppgave':
       ikon =
-        props.notifikasjon.tilstand === OppgaveTilstand.Utfoert ? (
-          <OppgaveUtfoertIkon/>
+        props.notifikasjon.tilstand === OppgaveTilstand.Ny ? (
+          <OppgaveIkon/>
         ) : (
-          props.notifikasjon.tilstand === OppgaveTilstand.Utgaatt ? (
-            <OppgaveUtgaattIkon/>
-          ) : (
-            <OppgaveIkon/>
-          )
+          <OppgaveIkkeNyIkon />
         )
+
       break
     default:
       console.error(
@@ -74,39 +71,36 @@ export const NotifikasjonListeElement = (props: Props) => {
     >
       <div className='notifikasjon_liste_element-lenkepanel'>
         <div className='notifikasjon_liste_element-lenkepanel-ikon'>{ikon}</div>
-        <div className='notifikasjon_liste_element-lenkepanel-tekst'>
-          {notifikasjon.brukerKlikk?.klikketPaa ? (
-            notifikasjon.tekst
-          ) : (
-            <strong>{notifikasjon.tekst}</strong>
-          )}
+        <div className='notifikasjon_liste_element-lenkepanel-innhold'>
+          <div className='notifikasjon_liste_element-lenkepanel-tekst'>
+            {notifikasjon.brukerKlikk?.klikketPaa ? (
+              notifikasjon.tekst
+            ) : (
+              <strong>{notifikasjon.tekst}</strong>
+            )}
+          </div>
+          <StatusLinje notifikasjon={notifikasjon} />
         </div>
+        <div className='notifikasjon_liste_element-lenkepanel-chevron'>
+          <HoyreChevron aria-hidden={true} />
+        </div>
+
         <div
           aria-label={notifikasjon.brukerKlikk?.klikketPaa ? '' : 'ikke besøkt'}
         />
-        <div className='notifikasjon_liste_element-lenkepanel-chevron'>
-          <HoyreChevron aria-hidden={true}/>
-        </div>
-        <StatusLinje notifikasjon={notifikasjon}/>
       </div>
-
-      <Detail className='notifikasjon_liste_element-virksomhetsnavn' size="small">
-        {notifikasjon.virksomhet.navn.toUpperCase()}
-      </Detail>
 
       <div className='notifikasjon_liste_element-metadata'>
-        <BodyShort className='notifikasjon_liste_element-metadata-dato' size='small'>
-          {notifikasjon.__typename} sendt {sendtDatotekst(date)}
-        </BodyShort>
-
-        <Detail
-          size='small'
-          aria-label={'merkelapp ' + notifikasjon.merkelapp}
-          className='notifikasjon_liste_element-metadata-merkelapp'
-        >
-          {notifikasjon.merkelapp.toUpperCase()}
+        <Detail className='notifikasjon_liste_element-metadata-dato' size='small'>
+          {sendtDatotekst(date)}
         </Detail>
       </div>
+
+      <BodyShort className='notifikasjon_liste_element-virksomhetsnavn' size='small'>
+        {notifikasjon.virksomhet.navn.toUpperCase()}
+      </BodyShort>
+
+
     </a>
   )
 }
