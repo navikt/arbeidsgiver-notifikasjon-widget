@@ -11,7 +11,7 @@ const Dropdown = ({erApen, ariaLabelledby, children}: Props) => {
   return erApen ? <div
     role='dialog'
     aria-labelledby={ariaLabelledby}
-    className="Dropdown-panel"
+    className="notifikasjon-Dropdown-panel"
   >
     {children}
   </div> : null

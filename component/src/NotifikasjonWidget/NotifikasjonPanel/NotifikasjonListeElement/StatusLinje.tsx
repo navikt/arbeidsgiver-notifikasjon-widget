@@ -69,6 +69,6 @@ type StatusIkonMedTekstProps = {
 }
 
 const StatusIkonMedTekst: FC<StatusIkonMedTekstProps> = ({ icon, className, children }) =>
-  <BodyShort className={`oppgave_status_text ${className}`} size='small'>
+  <BodyShort className={`notifikasjon_oppgave_status_text ${className}`} size='small'>
     {icon} {children}
   </BodyShort>

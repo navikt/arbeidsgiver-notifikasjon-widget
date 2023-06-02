@@ -1,4 +1,4 @@
-.Dropdown-panel {
+.notifikasjon-Dropdown-panel {
   display: flex;
   z-index: 999;
   position: absolute;
@@ -14,7 +14,7 @@
 }
 
 @media (max-width: 768px) {
-  .Dropdown-panel {
+  .notifikasjon-Dropdown-panel {
     max-height: unset;
     position: fixed;
     top: calc(var(--decorator-sticky-offset, 0px) + 0rem);
