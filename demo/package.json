@@ -21,9 +21,9 @@
     "react-dom": "file:../component/node_modules/react-dom",
     "react-router-dom": "^6.4.5",
     "react-scripts": "^5.0.0",
-    "@navikt/ds-css": "3.4.2",
-    "@navikt/ds-icons": "3.4.2",
-    "@navikt/ds-react": "3.4.2"
+    "@navikt/ds-css": "2.0.5",
+    "@navikt/ds-icons": "2.0.5",
+    "@navikt/ds-react": "2.0.5"
   },
   "eslintConfig": {
     "extends": "react-app"

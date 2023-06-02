@@ -17,14 +17,14 @@ export const StatusLinje: FC<StatusLinjeProps> = ({ notifikasjon }) => {
   switch (notifikasjon.tilstand) {
     case OppgaveTilstand.Utfoert:
       return (
-        <Tag variant='success' style={{ width: 'fit-content', borderColor: 'transparent' }}>
+        <Tag className="notifikasjon_StatusLinje" variant='success'>
           Fullført
         </Tag>
       )
 
     case OppgaveTilstand.Utgaatt:
       return (
-        <Tag variant='neutral' style={{ width: 'fit-content', borderColor: 'transparent' }}>
+        <Tag className="notifikasjon_StatusLinje" variant='neutral'>
           <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
             Fristen gikk ut {fristDatotekst(new Date(notifikasjon.utgaattTidspunkt))}
           </StatusIkonMedTekst>
@@ -55,7 +55,7 @@ type StatusMedFristPaminnelseProps = {
 }
 
 const StatusMedFristPaminnelse = ({ children }: StatusMedFristPaminnelseProps) => {
-  return <Tag variant='warning' style={{ width: 'fit-content', borderColor: 'transparent' }}>
+  return <Tag className="notifikasjon_StatusLinje" variant='warning'>
     <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
       {children}
     </StatusIkonMedTekst>
