@@ -36,10 +36,9 @@
 .notifikasjon_liste_element-lenkepanel {
   display: grid;
   grid-template-columns: 38px 1fr auto;
-  row-gap: 0.2rem;
   column-gap: 8px;
   align-items: center;
-  margin-top: 0.3rem;
+  margin-top: 5px;
 }
 
 .notifikasjon_liste_element-lenkepanel-ikon {

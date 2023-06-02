@@ -26,15 +26,15 @@
 }
 
 .notifikasjon_panel-feilmelding {
-  margin: 1rem 1rem 0 1rem;
+  margin: 16px 16px 0 16px;
   border-bottom: var(--a-gray-400) 1px solid;
 }
 .notifikasjon_panel-feilmelding > div {
-  margin: 1rem 0;
+  margin: 16px 0;
 }
 .notifikasjon_panel-header {
-  margin: 1rem 1rem 0 1rem;
-  padding-bottom: 1rem;
+  margin: 16px 16px 0 16px;
+  padding-bottom: 16px;
   border-bottom: var(--a-gray-600) 1px solid;
   display: flex;
   justify-content: space-between;
@@ -43,7 +43,7 @@
 
 .notifikasjon_panel-header-title-help {
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
   align-items: center;
 }
 

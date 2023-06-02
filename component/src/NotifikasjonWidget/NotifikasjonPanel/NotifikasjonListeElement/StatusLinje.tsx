@@ -32,34 +32,35 @@ export const StatusLinje: FC<StatusLinjeProps> = ({ notifikasjon }) => {
       )
 
     case OppgaveTilstand.Ny:
-
       if (!notifikasjon.frist && !notifikasjon.paaminnelseTidspunkt) {
         return null
-      } else if (!notifikasjon.frist && notifikasjon.paaminnelseTidspunkt) {
-        return <Tag variant='warning' style={{ width: 'fit-content', borderColor: 'transparent' }}>
-          <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
-            Påminnelse
-          </StatusIkonMedTekst>
-        </Tag>
-      } else if (notifikasjon.frist && !notifikasjon.paaminnelseTidspunkt) {
-        return <Tag variant='warning' style={{ width: 'fit-content', borderColor: 'transparent' }}>
-          <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
-            Frist {formatterDato(new Date(notifikasjon.frist))}
-          </StatusIkonMedTekst>
-        </Tag>
       } else {
-        return <Tag variant='warning' style={{ width: 'fit-content', borderColor: 'transparent' }}>
-          <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
-            Påminnelse &ndash; Frist {formatterDato(new Date(notifikasjon.frist))}
-          </StatusIkonMedTekst>
-        </Tag>
+        let innhold
+        if (!notifikasjon.frist && notifikasjon.paaminnelseTidspunkt) {
+          innhold = <>Påminnelse</>
+        } else if (notifikasjon.frist && !notifikasjon.paaminnelseTidspunkt) {
+          innhold = <>Frist {formatterDato(new Date(notifikasjon.frist))}</>
+        } else {
+          innhold = <>Påminnelse &ndash; Frist {formatterDato(new Date(notifikasjon.frist))}</>
+        }
+        return <StatusMedFristPaminnelse> {innhold} </StatusMedFristPaminnelse>
       }
-
     default:
       return null
   }
 }
 
+type StatusMedFristPaminnelseProps = {
+  children: ReactNode
+}
+
+const StatusMedFristPaminnelse = ({ children }: StatusMedFristPaminnelseProps) => {
+  return <Tag variant='warning' style={{ width: 'fit-content', borderColor: 'transparent' }}>
+    <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
+      {children}
+    </StatusIkonMedTekst>
+  </Tag>
+}
 
 type StatusIkonMedTekstProps = {
   icon: ReactNode;

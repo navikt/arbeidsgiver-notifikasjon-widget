@@ -32,7 +32,7 @@ export const NotifikasjonListeElement = (props: Props) => {
     case 'Oppgave':
       ikon =
         props.notifikasjon.tilstand === OppgaveTilstand.Ny ? (
-          <OppgaveIkon />
+          <OppgaveIkon/>
         ) : (
           <OppgaveIkkeNyIkon />
         )
