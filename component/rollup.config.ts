@@ -3,7 +3,6 @@ import postcss from "rollup-plugin-postcss";
 import resolve from "@rollup/plugin-node-resolve";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import commonjs from "@rollup/plugin-commonjs"
-import NpmImport from "less-plugin-npm-import";
 import url from "@rollup/plugin-url";
 import postcssPrefixSelector from "postcss-prefix-selector"
 
@@ -15,12 +14,12 @@ export default {
     {
       file: packageJson.main,
       format: "cjs",
-      sourcemap: true
+      sourcemap: true,
     },
     {
       file: packageJson.module,
       format: "esm",
-      sourcemap: true
+      sourcemap: true,
     }
   ],
   external: Object.keys(packageJson.dependencies),
@@ -41,16 +40,7 @@ export default {
             return prefixedSelector;
           },
         })
-      ],
-      use: {
-        less: {
-          plugins: [
-            new NpmImport({prefix: "~"})
-          ],
-        },
-        sass: {},
-        stylus: {}
-      }
+      ]
     }),
     url({
       include: ["**/*.ttf"],

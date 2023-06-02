@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react'
 import { BodyShort, Tag } from '@navikt/ds-react'
-import './StatusLinje.less'
+import './StatusLinje.css'
 import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
 import { StopWatch } from '@navikt/ds-icons'
 import { formatterDato, fristDatotekst } from '../dato-funksjoner'
