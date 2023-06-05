@@ -3,9 +3,7 @@ import postcss from "rollup-plugin-postcss";
 import resolve from "@rollup/plugin-node-resolve";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import commonjs from "@rollup/plugin-commonjs"
-import NpmImport from "less-plugin-npm-import";
 import url from "@rollup/plugin-url";
-import postcssPrefixSelector from "postcss-prefix-selector"
 
 const packageJson = require("./package.json");
 
@@ -15,12 +13,12 @@ export default {
     {
       file: packageJson.main,
       format: "cjs",
-      sourcemap: true
+      sourcemap: true,
     },
     {
       file: packageJson.module,
       format: "esm",
-      sourcemap: true
+      sourcemap: true,
     }
   ],
   external: Object.keys(packageJson.dependencies),
@@ -29,28 +27,6 @@ export default {
     commonjs(),
     resolve(),
     postcss({
-      plugins: [
-        postcssPrefixSelector({
-          prefix: '.notifikasjoner_widget',
-          exclude: ['.notifikasjoner_widget'],
-          transform(prefix, selector, prefixedSelector) {
-            // tvinger css fra nav biblioteker til å være scopet til widget
-            if (selector.match(/^(html|body|:root|:export)/)) {
-              return selector.replace(/^([^\s]*)/, `$1 ${prefix}`);
-            }
-            return prefixedSelector;
-          },
-        })
-      ],
-      use: {
-        less: {
-          plugins: [
-            new NpmImport({prefix: "~"})
-          ],
-        },
-        sass: {},
-        stylus: {}
-      }
     }),
     url({
       include: ["**/*.ttf"],

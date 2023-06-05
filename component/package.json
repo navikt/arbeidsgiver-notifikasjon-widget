@@ -2,7 +2,7 @@
   "name": "@navikt/arbeidsgiver-notifikasjon-widget",
   "description": "React component for notifikasjoner for arbeidsgivere",
   "repository": "github:navikt/arbeidsgiver-notifikasjon-widget",
-  "version": "5.4.10",
+  "version": "6.0.0-rc1",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/lib/esm/index.d.ts",
@@ -18,11 +18,6 @@
     "graphql": "^16.6.0"
   },
   "devDependencies": {
-    "amplitude-js": "^8.21.1",
-    "prop-types": "15.8.1",
-    "@navikt/ds-css": "3.4.2",
-    "@navikt/ds-react": "3.4.2",
-    "@navikt/ds-icons": "^3.4.2",
     "@graphql-codegen/cli": "^2.13.1",
     "@graphql-codegen/typescript": "^2.7.3",
     "@graphql-codegen/typescript-operations": "^2.5.3",
@@ -35,10 +30,8 @@
     "@types/node": "16",
     "@types/react": "^17.0.17",
     "@types/react-dom": "^17.0.9",
-    "less": "4",
-    "less-plugin-npm-import": "2",
-    "postcss-omit-import-tilde": "1",
-    "postcss-prefix-selector": "^1.16.0",
+    "amplitude-js": "^8.21.1",
+    "prop-types": "15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rollup": "2",
@@ -48,6 +41,9 @@
   },
   "peerDependencies": {
     "react": "17",
-    "react-dom": "17"
+    "react-dom": "17",
+    "@navikt/ds-css": "2 || 3",
+    "@navikt/ds-icons": "2 || 3",
+    "@navikt/ds-react": "2 || 3"
   }
 }

@@ -2,7 +2,6 @@ import React, { createContext, PropsWithChildren, useContext } from 'react'
 import { ApolloProvider } from '@apollo/client'
 import NotifikasjonWidgetComponent from './NotifikasjonWidget/NotifikasjonWidget'
 import { createClient } from './api/graphql'
-import '@navikt/ds-css'
 import { AmplitudeProvider } from './utils/amplitude';
 
 export type Miljø = 'local' | 'labs' | 'dev' | 'prod'
