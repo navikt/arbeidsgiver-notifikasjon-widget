@@ -1,7 +1,6 @@
 import React, {CSSProperties, useCallback, useEffect, useRef, useState} from 'react'
 import {NotifikasjonBjelle} from './NotifikasjonBjelle/NotifikasjonBjelle'
 import NotifikasjonPanel from './NotifikasjonPanel/NotifikasjonPanel'
-import './NotifikasjonWidget.css'
 import {ServerError, useQuery} from '@apollo/client'
 import {HENT_NOTIFIKASJONER} from '../api/graphql'
 import useLocalStorage from '../hooks/useLocalStorage'
@@ -99,7 +98,7 @@ const NotifikasjonWidget = () => {
 
   const style: CSSProperties = notifikasjoner === undefined || notifikasjoner.length === 0 ? {visibility: 'hidden'} : {};
 
-  return <div ref={widgetRef} className='notifikasjoner_widget' style={style}>
+  return <div ref={widgetRef} style={style}>
     <NotifikasjonBjelle
       antallUleste={antallUleste}
       erApen={erApen}

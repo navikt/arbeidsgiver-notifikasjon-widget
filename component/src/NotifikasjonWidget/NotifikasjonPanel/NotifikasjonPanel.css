@@ -1,6 +1,7 @@
 .notifikasjon_panel {
   display: flex;
   flex-direction: column;
+  width: 100%;
   color: var(--a-gray-900);
   margin: 0;
   padding: 0;
