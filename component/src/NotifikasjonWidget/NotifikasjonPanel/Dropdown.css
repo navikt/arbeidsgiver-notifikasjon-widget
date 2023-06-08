@@ -6,16 +6,11 @@
   right: 0;
   margin: 0;
   padding: 0;
-  max-width: 30rem;
+  width: 100vw;
+  max-width: 26.25rem;
   border: solid 2px var(--a-deepblue-700);
   border-radius: 4px;
-  max-height: calc(100vh - 21rem);
-}
-
-@media (max-width: 979px){
-  .notifikasjon-Dropdown-panel {
-    max-height: calc(100vh - 28rem);
-  }
+  max-height: 65vh;
 }
 
 @media (max-width: 768px), (max-height: 600px) and (orientation: landscape){
