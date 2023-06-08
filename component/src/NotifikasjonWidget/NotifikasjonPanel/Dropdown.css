@@ -9,7 +9,13 @@
   max-width: 30rem;
   border: solid 2px var(--a-deepblue-700);
   border-radius: 4px;
-  max-height: 65vh;
+  max-height: calc(100vh - 21rem);
+}
+
+@media (max-width: 979px){
+  .Dropdown-panel {
+    max-height: calc(100vh - 28rem);
+  }
 }
 
 @media (max-width: 768px), (max-height: 600px) and (orientation: landscape){
