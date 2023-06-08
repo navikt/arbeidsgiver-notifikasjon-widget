@@ -13,7 +13,7 @@
 }
 
 @media (max-width: 979px){
-  .Dropdown-panel {
+  .notifikasjon-Dropdown-panel {
     max-height: calc(100vh - 28rem);
   }
 }
