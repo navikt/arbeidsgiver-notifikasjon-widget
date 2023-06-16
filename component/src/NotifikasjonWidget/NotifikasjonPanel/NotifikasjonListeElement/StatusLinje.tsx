@@ -3,7 +3,7 @@ import { BodyShort, Tag } from '@navikt/ds-react'
 import './StatusLinje.css'
 import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
 import { StopWatch } from '@navikt/ds-icons'
-import { formatterDato, fristDatotekst } from '../dato-funksjoner'
+import { formatterDato, uformellDatotekst } from '../dato-funksjoner'
 
 export interface StatusLinjeProps {
   notifikasjon: Notifikasjon
@@ -18,7 +18,7 @@ export const StatusLinje: FC<StatusLinjeProps> = ({ notifikasjon }) => {
     case OppgaveTilstand.Utfoert:
       return (
         <Tag className="notifikasjon_StatusLinje" variant='success'>
-          Fullført {notifikasjon.utfoertTidspunkt ? formatterDato(notifikasjon.utfoertTidspunkt) : null}
+          Fullført {notifikasjon.utfoertTidspunkt ? uformellDatotekst(new Date(notifikasjon.utfoertTidspunkt)) : null}
         </Tag>
       )
 
@@ -26,7 +26,7 @@ export const StatusLinje: FC<StatusLinjeProps> = ({ notifikasjon }) => {
       return (
         <Tag className="notifikasjon_StatusLinje" variant='neutral'>
           <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
-            Fristen gikk ut {fristDatotekst(new Date(notifikasjon.utgaattTidspunkt))}
+            Fristen gikk ut {uformellDatotekst(new Date(notifikasjon.utgaattTidspunkt))}
           </StatusIkonMedTekst>
         </Tag>
       )

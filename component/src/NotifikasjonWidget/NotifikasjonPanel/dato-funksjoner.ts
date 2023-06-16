@@ -38,7 +38,7 @@ export const sendtDatotekst = (dato: Date) => {
   }
 };
 
-export const fristDatotekst = (dato: Date) => {
+export const uformellDatotekst = (dato: Date) => {
     if (isToday(dato)) {
         return 'i dag';
     } else if (isYesterday(dato)) {
