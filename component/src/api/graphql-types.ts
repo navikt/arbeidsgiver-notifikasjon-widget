@@ -65,6 +65,7 @@ export type Oppgave = {
   sorteringTidspunkt: Scalars['ISO8601DateTime'];
   tekst: Scalars['String'];
   tilstand?: Maybe<OppgaveTilstand>;
+  utfoertTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
   utgaattTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
   virksomhet: Virksomhet;
 };
@@ -82,6 +83,12 @@ export enum OppgaveTilstand {
   Utgaatt = 'UTGAATT'
 }
 
+export type OppgaveTilstandInfo = {
+  __typename?: 'OppgaveTilstandInfo';
+  antall: Scalars['Int'];
+  tilstand: OppgaveTilstand;
+};
+
 export type Query = {
   __typename?: 'Query';
   notifikasjoner: NotifikasjonerResultat;
@@ -95,6 +102,7 @@ export type Query = {
 export type QuerySakerArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  oppgaveTilstand?: InputMaybe<Array<OppgaveTilstand>>;
   sakstyper?: InputMaybe<Array<Scalars['String']>>;
   sortering?: SakSortering;
   tekstsoek?: InputMaybe<Scalars['String']>;
@@ -137,6 +145,7 @@ export enum SakStatusType {
 export type SakerResultat = {
   __typename?: 'SakerResultat';
   feilAltinn: Scalars['Boolean'];
+  oppgaveTilstandInfo: Array<OppgaveTilstandInfo>;
   saker: Array<Sak>;
   /** Hvilke sakstyper (med antall) som finnes for valgte virksomheter. */
   sakstyper: Array<Sakstype>;
