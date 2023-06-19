@@ -50,6 +50,7 @@ export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner"
                 sorteringTidspunkt
                 paaminnelseTidspunkt
                 utgaattTidspunkt
+                utfoertTidspunkt
                 tilstand
                 id
                 frist
