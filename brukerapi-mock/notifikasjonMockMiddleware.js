@@ -122,7 +122,8 @@ const Notifikasjon = (navn) => {
         "Gravdal og Solli Revisjon",
         "Storfonsa og Fredrikstad Regnskap"
       ])
-    }
+    },
+    sak: casual.boolean ? { tittel: casual.random_element(saker) } : null
   };
 };
 
@@ -166,9 +167,6 @@ const mocks = () => ({
   Virksomhet: () => ({
     navn: casual.catch_phrase,
   }),
-  SakMetadata: () => ({
-    tittel: casual.random_element(saker)
-  })
 });
 
 const createApolloServer = ({mocks: apolloServerOptionsMocks, ...apolloServerOptions} = {}) => {
