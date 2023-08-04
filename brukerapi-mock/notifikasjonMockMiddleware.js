@@ -166,6 +166,9 @@ const mocks = () => ({
   Virksomhet: () => ({
     navn: casual.catch_phrase,
   }),
+  SakMetadata: () => ({
+    tittel: casual.random_element(saker)
+  })
 });
 
 const createApolloServer = ({mocks: apolloServerOptionsMocks, ...apolloServerOptions} = {}) => {
