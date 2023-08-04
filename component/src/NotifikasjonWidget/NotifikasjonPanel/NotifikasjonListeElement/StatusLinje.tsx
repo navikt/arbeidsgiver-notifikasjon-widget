@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react'
-import { BodyShort, Tag } from '@navikt/ds-react'
+import { Tag } from '@navikt/ds-react'
 import './StatusLinje.css'
 import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
 import { StopWatch } from '@navikt/ds-icons'
@@ -17,16 +17,14 @@ export const StatusLinje: FC<StatusLinjeProps> = ({ notifikasjon }) => {
   switch (notifikasjon.tilstand) {
     case OppgaveTilstand.Utfoert:
       return (
-        <Tag className="notifikasjon_StatusLinje" variant='success'>
-          <BodyShort size="small">
+        <Tag size="small" className="notifikasjon_StatusLinje" variant='success'>
             Fullført {notifikasjon.utfoertTidspunkt ? uformellDatotekst(new Date(notifikasjon.utfoertTidspunkt)) : null}
-          </BodyShort>
         </Tag>
       )
 
     case OppgaveTilstand.Utgaatt:
       return (
-        <Tag className="notifikasjon_StatusLinje" variant='neutral'>
+        <Tag size="small" className="notifikasjon_StatusLinje" variant='neutral'>
           <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
             Fristen gikk ut {uformellDatotekst(new Date(notifikasjon.utgaattTidspunkt))}
           </StatusIkonMedTekst>
@@ -57,7 +55,7 @@ type StatusMedFristPaminnelseProps = {
 }
 
 const StatusMedFristPaminnelse = ({ children }: StatusMedFristPaminnelseProps) => {
-  return <Tag className="notifikasjon_StatusLinje" variant='warning'>
+  return <Tag size="small" className="notifikasjon_StatusLinje" variant='warning'>
     <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
       {children}
     </StatusIkonMedTekst>
@@ -71,6 +69,6 @@ type StatusIkonMedTekstProps = {
 }
 
 const StatusIkonMedTekst: FC<StatusIkonMedTekstProps> = ({ icon, className, children }) =>
-  <BodyShort className={`notifikasjon_oppgave_status_text ${className}`} size='small'>
+  <span className={`notifikasjon_oppgave_status_text ${className}`}>
     {icon} {children}
-  </BodyShort>
+  </span>
