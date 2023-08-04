@@ -23,6 +23,7 @@ export const NotifikasjonListeElement = (props: Props) => {
   const notifikasjon = props.notifikasjon
 
   const date = new Date(notifikasjon.opprettetTidspunkt)
+  console.log("Sakstittel: ", notifikasjon.sak?.tittel)
 
   let ikon
   switch (props.notifikasjon.__typename) {
