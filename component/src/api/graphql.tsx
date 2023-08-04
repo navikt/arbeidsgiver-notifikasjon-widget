@@ -33,6 +33,9 @@ export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner"
                 opprettetTidspunkt
                 sorteringTidspunkt
                 id
+                sak {
+                  tittel
+                }
             }
             ... on Oppgave {
                 brukerKlikk {
@@ -54,6 +57,9 @@ export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner"
                 tilstand
                 id
                 frist
+                sak {
+                  tittel
+                }
             }
         }
     }

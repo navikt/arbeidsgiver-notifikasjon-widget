@@ -18,7 +18,9 @@ export const StatusLinje: FC<StatusLinjeProps> = ({ notifikasjon }) => {
     case OppgaveTilstand.Utfoert:
       return (
         <Tag className="notifikasjon_StatusLinje" variant='success'>
-          Fullført {notifikasjon.utfoertTidspunkt ? uformellDatotekst(new Date(notifikasjon.utfoertTidspunkt)) : null}
+          <BodyShort size="small">
+            Fullført {notifikasjon.utfoertTidspunkt ? uformellDatotekst(new Date(notifikasjon.utfoertTidspunkt)) : null}
+          </BodyShort>
         </Tag>
       )
 

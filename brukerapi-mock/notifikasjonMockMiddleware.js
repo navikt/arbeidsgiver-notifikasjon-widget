@@ -122,7 +122,8 @@ const Notifikasjon = (navn) => {
         "Gravdal og Solli Revisjon",
         "Storfonsa og Fredrikstad Regnskap"
       ])
-    }
+    },
+    sak: casual.boolean ? { tittel: casual.random_element(saker) } : null
   };
 };
 

@@ -23,6 +23,7 @@ export const NotifikasjonListeElement = (props: Props) => {
   const notifikasjon = props.notifikasjon
 
   const date = new Date(notifikasjon.opprettetTidspunkt)
+  console.log("Sakstittel: ", notifikasjon.sak?.tittel)
 
   let ikon
   switch (props.notifikasjon.__typename) {
@@ -72,13 +73,13 @@ export const NotifikasjonListeElement = (props: Props) => {
       <div className='notifikasjon_liste_element-lenkepanel'>
         <div className='notifikasjon_liste_element-lenkepanel-ikon'>{ikon}</div>
         <div className='notifikasjon_liste_element-lenkepanel-innhold'>
-          <div className='notifikasjon_liste_element-lenkepanel-tekst'>
+          <BodyShort size="small">
             {notifikasjon.brukerKlikk?.klikketPaa ? (
               notifikasjon.tekst
             ) : (
               <strong>{notifikasjon.tekst}</strong>
             )}
-          </div>
+          </BodyShort>
           <StatusLinje notifikasjon={notifikasjon} />
         </div>
         <div className='notifikasjon_liste_element-lenkepanel-chevron'>
@@ -91,12 +92,18 @@ export const NotifikasjonListeElement = (props: Props) => {
       </div>
 
       <div className='notifikasjon_liste_element-metadata'>
-        <Detail className='notifikasjon_liste_element-metadata-dato' size='small'>
+        <Detail spacing={false} className='notifikasjon_liste_element-metadata-dato' size='small'>
           {sendtDatotekst(date)}
         </Detail>
       </div>
-
-      <BodyShort className='notifikasjon_liste_element-virksomhetsnavn' size='small'>
+      {notifikasjon.sak?.tittel ? <BodyShort spacing={false}>
+        {notifikasjon.brukerKlikk?.klikketPaa ? (
+          notifikasjon.sak?.tittel
+        ) : (
+          <strong>{notifikasjon.sak?.tittel}</strong>
+        )}
+      </BodyShort> : null}
+      <BodyShort spacing={false} className='notifikasjon_liste_element-virksomhetsnavn' size='small'>
         {notifikasjon.virksomhet.navn.toUpperCase()}
       </BodyShort>
 
