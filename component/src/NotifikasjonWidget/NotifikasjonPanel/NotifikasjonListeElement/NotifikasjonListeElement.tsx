@@ -92,18 +92,18 @@ export const NotifikasjonListeElement = (props: Props) => {
       </div>
 
       <div className='notifikasjon_liste_element-metadata'>
-        <Detail spacing={false} className='notifikasjon_liste_element-metadata-dato' size='small'>
+        <Detail className='notifikasjon_liste_element-metadata-dato' size='small'>
           {sendtDatotekst(date)}
         </Detail>
       </div>
-      {notifikasjon.sak?.tittel ? <BodyShort spacing={false}>
+      {notifikasjon.sak?.tittel ? <BodyShort>
         {notifikasjon.brukerKlikk?.klikketPaa ? (
           notifikasjon.sak?.tittel
         ) : (
           <strong>{notifikasjon.sak?.tittel}</strong>
         )}
       </BodyShort> : null}
-      <BodyShort spacing={false} className='notifikasjon_liste_element-virksomhetsnavn' size='small'>
+      <BodyShort className='notifikasjon_liste_element-virksomhetsnavn' size='small'>
         {notifikasjon.virksomhet.navn.toUpperCase()}
       </BodyShort>
 
