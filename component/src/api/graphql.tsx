@@ -13,6 +13,24 @@ export const createClient = (uri: string) =>
 
 export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner">> = gql`
   query hentNotifikasjoner {
+    saker {
+      saker {
+        tittel
+        tidslinje {
+          __typename
+          ... on BeskjedTidslinjeElement {
+            tittel
+          }
+          ... on OppgaveTidslinjeElement {
+            tittel
+            status
+            frist
+            utgaattTidspunkt
+            utfoertTidspunkt
+          }
+        }
+      }
+    }
     notifikasjoner {
         feilAltinn
         feilDigiSyfo
