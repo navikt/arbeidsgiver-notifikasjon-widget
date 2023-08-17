@@ -20,6 +20,7 @@ export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner"
           __typename
           ... on BeskjedTidslinjeElement {
             tittel
+            opprettetTidspunkt
           }
           ... on OppgaveTidslinjeElement {
             tittel
@@ -27,6 +28,7 @@ export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner"
             frist
             utgaattTidspunkt
             utfoertTidspunkt
+            opprettetTidspunkt
           }
         }
       }

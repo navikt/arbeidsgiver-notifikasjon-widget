@@ -105,9 +105,11 @@ const TidslinjeElement = (navn) => {
   const erUtgåttOppgave = navn === 'Oppgave' && casual.boolean
   const tilstand = erUtgåttOppgave ? 'UTGAATT' : casual.random_element(['NY', 'UTFOERT'])
   const paaminnelseTidspunkt = casual.boolean ? casualDate().toISOString() : null
+  const opprettetTidspunkt = casualDate().toISOString()
   return {
     __typename: navn,
     tittel: tekst,
+    opprettetTidspunkt: opprettetTidspunkt,
 
     ...(navn === 'OppgaveTidslinjeElement'
         ? {
