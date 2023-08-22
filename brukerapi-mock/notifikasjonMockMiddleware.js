@@ -108,12 +108,12 @@ const TidslinjeElement = (navn) => {
   const opprettetTidspunkt = casualDate().toISOString()
   return {
     __typename: navn,
-    tittel: tekst,
+    tekst: tekst,
     opprettetTidspunkt: opprettetTidspunkt,
 
     ...(navn === 'OppgaveTidslinjeElement'
         ? {
-          status: tilstand,
+          tilstand: tilstand,
           paaminnelseTidspunkt: paaminnelseTidspunkt,
           utgaattTidspunkt: erUtgåttOppgave ? utgåttDate().toISOString() : null,
           utfoertTidspunkt: tilstand === 'UTFOERT' ? utgåttDate().toISOString() : null,
