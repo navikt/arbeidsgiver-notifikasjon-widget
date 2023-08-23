@@ -108,6 +108,7 @@ const TidslinjeElement = (navn) => {
   const opprettetTidspunkt = casualDate().toISOString()
   return {
     __typename: navn,
+    id: Math.random().toString(36),
     tekst: tekst,
     opprettetTidspunkt: opprettetTidspunkt,
 
