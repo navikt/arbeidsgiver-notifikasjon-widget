@@ -17,18 +17,16 @@ export const StatusLinje: FC<StatusLinjeProps> = ({ notifikasjon }) => {
   switch (notifikasjon.tilstand) {
     case OppgaveTilstand.Utfoert:
       return (
-        <Tag size="small" className="notifikasjon_StatusLinje" variant='success'>
-            Fullført {notifikasjon.utfoertTidspunkt ? uformellDatotekst(new Date(notifikasjon.utfoertTidspunkt)) : null}
-        </Tag>
+        <StatusIkonMedTekst variant='success'>
+          Utført {notifikasjon.utfoertTidspunkt ? uformellDatotekst(new Date(notifikasjon.utfoertTidspunkt)) : null}
+        </StatusIkonMedTekst>
       )
 
     case OppgaveTilstand.Utgaatt:
       return (
-        <Tag size="small" className="notifikasjon_StatusLinje" variant='neutral'>
-          <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
-            Fristen gikk ut {uformellDatotekst(new Date(notifikasjon.utgaattTidspunkt))}
-          </StatusIkonMedTekst>
-        </Tag>
+        <StatusIkonMedTekst variant='neutral'>
+          Fristen gikk ut {uformellDatotekst(new Date(notifikasjon.utgaattTidspunkt))}
+        </StatusIkonMedTekst>
       )
 
     case OppgaveTilstand.Ny:
@@ -43,32 +41,22 @@ export const StatusLinje: FC<StatusLinjeProps> = ({ notifikasjon }) => {
         } else {
           innhold = <>Påminnelse &ndash; Frist {formatterDato(new Date(notifikasjon.frist))}</>
         }
-        return <StatusMedFristPaminnelse> {innhold} </StatusMedFristPaminnelse>
+        return <StatusIkonMedTekst variant='warning'> {innhold} </StatusIkonMedTekst>
       }
     default:
       return null
   }
 }
 
-type StatusMedFristPaminnelseProps = {
-  children: ReactNode
-}
-
-const StatusMedFristPaminnelse = ({ children }: StatusMedFristPaminnelseProps) => {
-  return <Tag size="small" className="notifikasjon_StatusLinje" variant='warning'>
-    <StatusIkonMedTekst icon={<StopWatch aria-hidden={true} />}>
-      {children}
-    </StatusIkonMedTekst>
-  </Tag>
-}
-
 type StatusIkonMedTekstProps = {
-  icon: ReactNode;
-  className?: string;
   children: ReactNode;
+  variant: 'success' | 'neutral' | 'warning';
 }
 
-const StatusIkonMedTekst: FC<StatusIkonMedTekstProps> = ({ icon, className, children }) =>
-  <span className={`notifikasjon_oppgave_status_text ${className}`}>
-    {icon} {children}
-  </span>
+const StatusIkonMedTekst: FC<StatusIkonMedTekstProps> = ({ variant, children }) => (
+  <Tag size='small' className='notifikasjon_StatusLinje' variant={variant}>
+    <span className='notifikasjon_oppgave_status_text'>
+      <StopWatch aria-hidden={true} /> {children}
+    </span>
+  </Tag>
+)
