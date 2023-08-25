@@ -1,7 +1,6 @@
 
 .notifikasjon_StatusLinje.notifikasjon_StatusLinje {
   width: fit-content;
-  border-color: transparent;
   --ac-tag-warning-bg: rgba(255, 236, 204, 1);
   --ac-tag-neutral-bg: rgba(0, 0, 0, 0.05);
   --ac-tag-success-bg: rgba(204, 241, 214, 1);
