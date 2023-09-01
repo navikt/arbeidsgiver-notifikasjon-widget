@@ -15,11 +15,16 @@ const createAmpltiudeInstance = (apiKey: string) => {
   return instance
 }
 
+const getLimitedUrl = () => {
+  const {origin, pathname } = window.location;
+  return `${origin}/${pathname.split('/')[1]}`;
+}
+
 const createAmplitudeLogger = (amplitudeClient: AmplitudeClient) => ({
   loggLasting: (antallNotifikasjoner: number, ulesteNotifikasjoner: number) => {
     amplitudeClient.logEvent('last-komponent', {
       tittel: 'notifikasjons-widget',
-      url: window.location.toString(),
+      url: getLimitedUrl(),
       'antall-notifikasjoner': antallNotifikasjoner,
       'antall-ulestenotifikasjoner': ulesteNotifikasjoner,
       'antall-lestenotifikasjoner': antallNotifikasjoner - ulesteNotifikasjoner
@@ -29,7 +34,7 @@ const createAmplitudeLogger = (amplitudeClient: AmplitudeClient) => ({
   loggÅpning: (antallNotifikasjoner: number, ulesteNotifikasjoner: number) => {
     amplitudeClient.logEvent('panel-ekspander', {
       tittel: 'arbeidsgiver notifikasjon panel',
-      url: window.location.toString(),
+      url: getLimitedUrl(),
       'antall-notifikasjoner': antallNotifikasjoner,
       'antall-ulestenotifikasjoner': ulesteNotifikasjoner,
       'antall-lestenotifikasjoner': antallNotifikasjoner - ulesteNotifikasjoner
@@ -39,20 +44,20 @@ const createAmplitudeLogger = (amplitudeClient: AmplitudeClient) => ({
   loggLukking: () => {
     amplitudeClient.logEvent('panel-kollaps', {
       tittel: 'arbeidsgiver notifikasjon panel',
-      url: window.location.toString()
+      url: getLimitedUrl(),
     })
   },
 
   loggPilTastNavigasjon: () => {
     amplitudeClient.logEvent('piltast-navigasjon', {
-      url: window.location.toString()
+      url: getLimitedUrl(),
     })
   },
 
   loggNotifikasjonKlikk: (notifikasjon: Notifikasjon, index: number) => {
     const klikketPaaTidligere = notifikasjon.brukerKlikk.klikketPaa
     amplitudeClient.logEvent('notifikasjon-klikk', {
-      url: window.location.toString(),
+      url: getLimitedUrl(),
       index: index,
       'merkelapp': notifikasjon.merkelapp,
       'klikket-paa-tidligere': klikketPaaTidligere,
