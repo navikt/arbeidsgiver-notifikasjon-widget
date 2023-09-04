@@ -1,6 +1,6 @@
 import amplitude, {AmplitudeClient} from 'amplitude-js'
 import {Notifikasjon} from '../api/graphql-types'
-import React, {createContext, FC, useContext, useMemo} from "react";
+import React, {createContext, ReactNode, useContext, useMemo} from "react";
 import {Miljø} from "../index";
 
 const createAmpltiudeInstance = (apiKey: string) => {
@@ -79,9 +79,10 @@ const AmplitudeContext = createContext(createAmplitudeLogger(stubbedAmplitudeCli
 
 type Props = {
   miljo: Miljø,
+  children: ReactNode,
 }
 
-export const AmplitudeProvider: FC<Props> = ({miljo, children}) => {
+export const AmplitudeProvider = ({miljo, children}: Props) => {
   const client = useAmplitudeClient(miljo)
   const logger = createAmplitudeLogger(client)
   return <AmplitudeContext.Provider value={logger}>
