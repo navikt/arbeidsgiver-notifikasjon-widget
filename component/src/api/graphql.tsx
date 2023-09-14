@@ -4,11 +4,13 @@ import {
   gql, TypedDocumentNode,
 } from '@apollo/client'
 import {Query} from "./graphql-types";
+import {RetryLink} from "@apollo/client/link/retry";
 
 export const createClient = (uri: string) =>
   new ApolloClient({
     uri,
     cache: new InMemoryCache(),
+    link: new RetryLink(),
   })
 
 export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner">> = gql`
