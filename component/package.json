@@ -2,7 +2,7 @@
   "name": "@navikt/arbeidsgiver-notifikasjon-widget",
   "description": "React component for notifikasjoner for arbeidsgivere",
   "repository": "github:navikt/arbeidsgiver-notifikasjon-widget",
-  "version": "6.4.0",
+  "version": "6.4.1",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/lib/esm/index.d.ts",
@@ -14,7 +14,7 @@
     "test": "echo tests not implemented"
   },
   "dependencies": {
-    "@apollo/client": "3.6.9",
+    "@apollo/client": "3.8.5",
     "graphql": "^16.8.1"
   },
   "devDependencies": {

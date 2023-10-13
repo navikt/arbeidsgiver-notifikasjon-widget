@@ -5,7 +5,21 @@ import {RetryLink} from "@apollo/client/link/retry";
 export const createClient = (uri: string) =>
   new ApolloClient({
     cache: new InMemoryCache(),
-    link: from([new RetryLink(), new HttpLink({uri})]),
+    link: from([
+      new RetryLink({
+        attempts: {
+          max: 25,
+          retryIf: (error, _operation) => {
+            if (error.statusCode === 401) {
+              // do not retry 401
+              return false;
+            }
+            return !!error;
+          }
+        }
+      }),
+      new HttpLink({uri}),
+    ]),
   })
 
 export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner">> = gql`
