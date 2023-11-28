@@ -120,7 +120,7 @@ const NotifikasjonPanel = (
             lukkPanel()
           }}
         >
-          <LukkIkon/>
+          <LukkIkon titleId="notifikasjon_panel-header-xbtn-ikon" />
         </button>
       </div>
 
