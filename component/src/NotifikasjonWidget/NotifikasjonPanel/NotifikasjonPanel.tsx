@@ -77,7 +77,7 @@ const NotifikasjonPanel = (
       }}
     >
       <div
-        id='notifikasjon_panel-header∂'
+        id='notifikasjon_panel-header'
         className='notifikasjon_panel-header'
       >
         <div className="notifikasjon_panel-header-title-help">
@@ -120,7 +120,7 @@ const NotifikasjonPanel = (
             lukkPanel()
           }}
         >
-          <LukkIkon/>
+          <LukkIkon titleId="notifikasjon_panel-header-xbtn-ikon" />
         </button>
       </div>
 
