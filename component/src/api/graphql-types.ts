@@ -40,6 +40,57 @@ export type BrukerKlikk = {
   klikketPaa: Scalars['Boolean'];
 };
 
+export type Kalenderavtale = {
+  __typename?: 'Kalenderavtale';
+  avtaletilstand: KalenderavtaleTilstand;
+  brukerKlikk: BrukerKlikk;
+  digitalt?: Maybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+  lenke: Scalars['String'];
+  lokasjon?: Maybe<Lokasjon>;
+  merkelapp: Scalars['String'];
+  opprettetTidspunkt: Scalars['ISO8601DateTime'];
+  sak?: Maybe<SakMetadata>;
+  sluttTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
+  sorteringTidspunkt: Scalars['ISO8601DateTime'];
+  startTidspunkt: Scalars['ISO8601DateTime'];
+  tekst: Scalars['String'];
+  virksomhet: Virksomhet;
+};
+
+export type KalenderavtaleTidslinjeElement = {
+  __typename?: 'KalenderavtaleTidslinjeElement';
+  avtaletilstand: KalenderavtaleTilstand;
+  digitalt?: Maybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+  lokasjon?: Maybe<Lokasjon>;
+  sluttTidspunkt?: Maybe<Scalars['ISO8601DateTime']>;
+  startTidspunkt: Scalars['ISO8601DateTime'];
+  tekst: Scalars['String'];
+};
+
+export enum KalenderavtaleTilstand {
+  ArbeidsgiverHarGodtatt = 'ARBEIDSGIVER_HAR_GODTATT',
+  ArbeidsgiverVilAvlyse = 'ARBEIDSGIVER_VIL_AVLYSE',
+  ArbeidsgiverVilEndreTidEllerSted = 'ARBEIDSGIVER_VIL_ENDRE_TID_ELLER_STED',
+  Avlyst = 'AVLYST',
+  VenterSvarFraArbeidsgiver = 'VENTER_SVAR_FRA_ARBEIDSGIVER'
+}
+
+export type KalenderavtalerResultat = {
+  __typename?: 'KalenderavtalerResultat';
+  avtaler: Array<Kalenderavtale>;
+  feilAltinn: Scalars['Boolean'];
+  feilDigiSyfo: Scalars['Boolean'];
+};
+
+export type Lokasjon = {
+  __typename?: 'Lokasjon';
+  adresse: Scalars['String'];
+  postnummer: Scalars['String'];
+  poststed: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   notifikasjonKlikketPaa: NotifikasjonKlikketPaaResultat;
@@ -50,7 +101,7 @@ export type MutationNotifikasjonKlikketPaaArgs = {
   id: Scalars['ID'];
 };
 
-export type Notifikasjon = Beskjed | Oppgave;
+export type Notifikasjon = Beskjed | Kalenderavtale | Oppgave;
 
 export type NotifikasjonKlikketPaaResultat = BrukerKlikk | UgyldigId;
 
@@ -112,11 +163,30 @@ export type OppgaveTilstandInfo = {
 
 export type Query = {
   __typename?: 'Query';
+  kommendeKalenderavtaler: KalenderavtalerResultat;
   notifikasjoner: NotifikasjonerResultat;
+  sakByGrupperingsid: SakResultat;
+  sakById: SakResultat;
   saker: SakerResultat;
   /** Alle sakstyper som finnes for brukeren. */
   sakstyper: Array<SakstypeOverordnet>;
   whoami?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryKommendeKalenderavtalerArgs = {
+  virksomhetsnumre: Array<Scalars['String']>;
+};
+
+
+export type QuerySakByGrupperingsidArgs = {
+  grupperingsid: Scalars['String'];
+  merkelapp: Scalars['String'];
+};
+
+
+export type QuerySakByIdArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -136,7 +206,7 @@ export type Sak = {
   /** frist fra oppgaver med status ny. null i array betyr oppgave uten frist */
   frister: Array<Maybe<Scalars['ISO8601Date']>>;
   id: Scalars['ID'];
-  lenke: Scalars['String'];
+  lenke?: Maybe<Scalars['String']>;
   merkelapp: Scalars['String'];
   oppgaver: Array<OppgaveMetadata>;
   sisteStatus: SakStatus;
@@ -148,6 +218,12 @@ export type Sak = {
 export type SakMetadata = {
   __typename?: 'SakMetadata';
   tittel: Scalars['String'];
+};
+
+export type SakResultat = {
+  __typename?: 'SakResultat';
+  feilAltinn: Scalars['Boolean'];
+  sak?: Maybe<Sak>;
 };
 
 export enum SakSortering {
@@ -191,7 +267,7 @@ export type SakstypeOverordnet = {
   navn: Scalars['String'];
 };
 
-export type TidslinjeElement = BeskjedTidslinjeElement | OppgaveTidslinjeElement;
+export type TidslinjeElement = BeskjedTidslinjeElement | KalenderavtaleTidslinjeElement | OppgaveTidslinjeElement;
 
 export type UgyldigId = {
   __typename?: 'UgyldigId';
