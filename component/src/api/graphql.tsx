@@ -72,6 +72,34 @@ export const HENT_NOTIFIKASJONER: TypedDocumentNode<Pick<Query, "notifikasjoner"
                   tittel
                 }
             }
+            ... on Kalenderavtale {
+              brukerKlikk {
+                id
+                klikketPaa
+              }
+              virksomhet {
+                navn
+                virksomhetsnummer
+              }
+              lenke
+              tekst
+              merkelapp
+              opprettetTidspunkt
+              sorteringTidspunkt
+              startTidspunkt
+              sluttTidspunkt
+              lokasjon {
+                adresse
+                postnummer
+                poststed
+              }
+              digitalt
+              avtaletilstand
+              id
+              sak {
+                tittel
+              }
+            }
         }
     }
   }

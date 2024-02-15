@@ -2,11 +2,12 @@ import React from 'react'
 import { Next as HoyreChevron } from '@navikt/ds-icons'
 import { BodyShort, Detail } from '@navikt/ds-react'
 import { sendtDatotekst } from '../dato-funksjoner'
-import { Notifikasjon, OppgaveTilstand } from '../../../api/graphql-types'
+import {Kalenderavtale, Notifikasjon, OppgaveTilstand} from '../../../api/graphql-types'
 import { useAmplitude } from '../../../utils/amplitude'
 import { StatusLinje } from './StatusLinje'
 import './NotifikasjonListeElement.css'
-import { BeskjedIkon, OppgaveIkkeNyIkon, OppgaveIkon } from './Ikoner'
+import {BeskjedIkon, KalenderavtaleIkon, OppgaveIkkeNyIkon, OppgaveIkon} from './Ikoner'
+import {AvtaletilstandLinje} from "./AvtaletilstandLinje";
 
 interface Props {
   notifikasjon: Notifikasjon
@@ -36,6 +37,58 @@ export const NotifikasjonListeElement = (props: Props) => {
         ) : (
           <OppgaveIkkeNyIkon />
         )
+
+      break
+    case 'Kalenderavtale':
+      ikon = <KalenderavtaleIkon/>
+
+      break
+    default:
+      console.error(
+        // @ts-ignore
+        `ukjent notifikasjonstype ${props.notifikasjon.__typename}: ignorerer`
+      )
+      return null
+  }
+
+  let innhold
+  switch (props.notifikasjon.__typename) {
+    case 'Beskjed':
+      innhold = <>
+        <BodyShort size="small">
+          {notifikasjon.brukerKlikk?.klikketPaa ? (
+            notifikasjon.tekst
+          ) : (
+            <strong>{notifikasjon.tekst}</strong>
+          )}
+        </BodyShort>
+      </>
+      break
+    case 'Oppgave':
+      innhold = <>
+        <BodyShort size="small">
+          {notifikasjon.brukerKlikk?.klikketPaa ? (
+            notifikasjon.tekst
+          ) : (
+            <strong>{notifikasjon.tekst}</strong>
+          )}
+        </BodyShort>
+        <StatusLinje notifikasjon={notifikasjon} />
+      </>
+
+      break
+    case 'Kalenderavtale':
+      let kalenderavtaletekst = kalenderavtaleTekst(notifikasjon as Kalenderavtale)
+      innhold = <>
+        <BodyShort size="small">
+          {notifikasjon.brukerKlikk?.klikketPaa ? (
+            kalenderavtaletekst
+          ) : (
+            <strong>{kalenderavtaletekst}</strong>
+          )}
+        </BodyShort>
+        <AvtaletilstandLinje notifikasjon={notifikasjon} />
+      </>
 
       break
     default:
@@ -71,16 +124,7 @@ export const NotifikasjonListeElement = (props: Props) => {
     >
       <div className='notifikasjon_liste_element-lenkepanel'>
         <div className='notifikasjon_liste_element-lenkepanel-ikon'>{ikon}</div>
-        <div className='notifikasjon_liste_element-lenkepanel-innhold'>
-          <BodyShort size="small">
-            {notifikasjon.brukerKlikk?.klikketPaa ? (
-              notifikasjon.tekst
-            ) : (
-              <strong>{notifikasjon.tekst}</strong>
-            )}
-          </BodyShort>
-          <StatusLinje notifikasjon={notifikasjon} />
-        </div>
+        <div className='notifikasjon_liste_element-lenkepanel-innhold'>{innhold}</div>
         <div className='notifikasjon_liste_element-lenkepanel-chevron'>
           <HoyreChevron aria-hidden={true} />
         </div>
@@ -109,4 +153,25 @@ export const NotifikasjonListeElement = (props: Props) => {
 
     </a>
   )
+}
+
+const startTidspunktFormat = new Intl.DateTimeFormat('no', {
+  month: 'long',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+});
+
+const sluttTidsunktFormat = new Intl.DateTimeFormat('no', {
+  hour: 'numeric',
+  minute: 'numeric',
+});
+
+const kalenderavtaleTekst = (kalenderavtale: Kalenderavtale) => {
+  const startTidspunkt = new Date(kalenderavtale.startTidspunkt)
+  const sluttTidspunkt = kalenderavtale.sluttTidspunkt === undefined || kalenderavtale.sluttTidspunkt === null ? undefined : new Date(kalenderavtale.sluttTidspunkt)
+  const tidspunkt = `${startTidspunktFormat.format(startTidspunkt)} ${
+    sluttTidspunkt !== undefined ? `– ${sluttTidsunktFormat.format(sluttTidspunkt)}` : ''
+  }`
+  return `${kalenderavtale.tekst} ${tidspunkt}`
 }
