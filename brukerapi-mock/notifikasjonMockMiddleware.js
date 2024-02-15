@@ -120,8 +120,22 @@ const TidslinjeElement = (navn) => {
           utfoertTidspunkt: tilstand === 'UTFOERT' ? utgåttDate().toISOString() : null,
           frist: casual.boolean ? casualDate().toISOString() : null,
         }
-        :
-        {}
+        : {}
+    ),
+    ...(navn === 'KalenderavtaleTidslinjeElement'
+        ? {
+          tekst: 'Dialogmøte ' + casual.random_element(['Mikke', 'Minni', 'Dolly', 'Donald', 'Langbein']),
+          startTidspunkt: '2021-02-04T15:15:00',
+          sluttTidspunkt: casual.boolean ? '2021-02-04T16:15:00' : null,
+          lokasjon: casual.boolean ? null : {
+            adresse: 'Thorvald Meyers gate 2B',
+            postnummer: '0473',
+            poststed: 'Oslo',
+          },
+          digitalt: casual.boolean,
+          avtaletilstand: casual.random_element(['VENTER_SVAR_FRA_ARBEIDSGIVER', 'ARBEIDSGIVER_HAR_GODTATT', 'ARBEIDSGIVER_VIL_AVLYSE', 'ARBEIDSGIVER_VIL_ENDRE_TID_ELLER_STED', 'AVLYST']),
+        }
+        : {}
     ),
   };
 };
@@ -199,7 +213,7 @@ const mocks = () => ({
           lenke: '#',
           virksomhet: { navn: 'Gamle Fredikstad og Riksdalen regnskap' },
           tidslinje: [...new Array(casual.integer(0, 3))]
-            .map(_ => TidslinjeElement(casual.random_element(['OppgaveTidslinjeElement', 'BeskjedTidslinjeElement']))), // TODO: legg til kalenderavtale
+            .map(_ => TidslinjeElement(casual.random_element(['OppgaveTidslinjeElement', 'BeskjedTidslinjeElement', 'KalenderavtaleTidslinjeElement']))),
           sisteStatus: {
             tekst: casual.random_element(['Mottatt', 'Under behandling', 'Utbetalt']),
             tidspunkt: casualDate().toISOString(),
