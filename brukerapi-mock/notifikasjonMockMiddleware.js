@@ -16,6 +16,10 @@ const utgåttDate = () => {
   return date;
 };
 
+const datePlusTimer = (date, hours) => {
+  return new Date(date.getTime() + hours * 60 * 60 * 1000);
+}
+
 const casualDate = () => {
   const date = new Date();
 
@@ -37,6 +41,31 @@ const casualDate = () => {
 
   if (casual.integer(0, 49) === 0) {
     date.setFullYear(date.getFullYear() - casual.integer(0, 1));
+  }
+  return date;
+};
+
+const casualFutureDate = () => {
+  const date = new Date();
+
+  if (casual.integer(0, 1)) {
+    date.setHours(date.getHours() + casual.integer(0, 60));
+  }
+
+  if (casual.integer(0, 1)) {
+    date.setMinutes(date.getMinutes() + casual.integer(0, 60));
+  }
+
+  if (casual.integer(0, 5)) {
+    date.setDate(date.getDate() + casual.integer(0, 31));
+  }
+
+  if (casual.integer(0, 10) === 0) {
+    date.setMonth(date.getMonth() + casual.integer(0, 12));
+  }
+
+  if (casual.integer(0, 49) === 0) {
+    date.setFullYear(date.getFullYear() + casual.integer(0, 1));
   }
   return date;
 };
@@ -106,6 +135,8 @@ const TidslinjeElement = (navn) => {
   const tilstand = erUtgåttOppgave ? 'UTGAATT' : casual.random_element(['NY', 'UTFOERT']);
   const paaminnelseTidspunkt = casual.boolean ? casualDate().toISOString() : null;
   const opprettetTidspunkt = casualDate().toISOString();
+  const startTidspunkt = casual.boolean ? utgåttDate().toISOString() : casualFutureDate().toISOString();
+  const sluttTidspunkt = casual.boolean ? datePlusTimer(new Date(startTidspunkt), 1).toISOString() : null;
   return {
     __typename: navn,
     id: Math.random().toString(36),
@@ -125,8 +156,8 @@ const TidslinjeElement = (navn) => {
     ...(navn === 'KalenderavtaleTidslinjeElement'
         ? {
           tekst: 'Dialogmøte ' + casual.random_element(['Mikke', 'Minni', 'Dolly', 'Donald', 'Langbein']),
-          startTidspunkt: '2021-02-04T15:15:00',
-          sluttTidspunkt: casual.boolean ? '2021-02-04T16:15:00' : null,
+          startTidspunkt: startTidspunkt,
+          sluttTidspunkt: sluttTidspunkt,
           lokasjon: casual.boolean ? null : {
             adresse: 'Thorvald Meyers gate 2B',
             postnummer: '0473',
@@ -147,6 +178,8 @@ const Notifikasjon = (navn) => {
   const tilstand = navn === 'Oppgave' ? { tilstand: erUtgåttOppgave ? 'UTGAATT' : casual.random_element(['NY', 'UTFOERT']) } : {};
   const opprettetTidspunkt = casualDate().toISOString();
   const paaminnelseTidspunkt = casual.boolean ? casualDate().toISOString() : null;
+  const startTidspunkt = casual.boolean ? utgåttDate().toISOString() : casualFutureDate().toISOString();
+  const sluttTidspunkt = casual.boolean ? datePlusTimer(new Date(startTidspunkt), 1).toISOString() : null;
   return {
     __typename: navn,
     id: Math.random().toString(36),
@@ -165,8 +198,8 @@ const Notifikasjon = (navn) => {
     ),
     ...(navn === 'Kalenderavtale' ? {
           tekst: 'Dialogmøte Dolly',
-          startTidspunkt: '2021-02-04T15:15:00',
-          sluttTidspunkt: casual.boolean ? '2021-02-04T16:15:00' : null,
+          startTidspunkt: startTidspunkt,
+          sluttTidspunkt: sluttTidspunkt,
           lokasjon: {
             adresse: 'Thorvald Meyers gate 2B',
             postnummer: '0473',

@@ -1,10 +1,10 @@
 import React from 'react'
-import { Next as HoyreChevron } from '@navikt/ds-icons'
-import { BodyShort, Detail } from '@navikt/ds-react'
-import { sendtDatotekst } from '../dato-funksjoner'
-import {Kalenderavtale, Notifikasjon, OppgaveTilstand} from '../../../api/graphql-types'
-import { useAmplitude } from '../../../utils/amplitude'
-import { StatusLinje } from './StatusLinje'
+import {Next as HoyreChevron} from '@navikt/ds-icons'
+import {BodyShort, Detail} from '@navikt/ds-react'
+import {sendtDatotekst} from '../dato-funksjoner'
+import {Kalenderavtale, KalenderavtaleTilstand, Notifikasjon, OppgaveTilstand} from '../../../api/graphql-types'
+import {useAmplitude} from '../../../utils/amplitude'
+import {StatusLinje} from './StatusLinje'
 import './NotifikasjonListeElement.css'
 import {BeskjedIkon, KalenderavtaleIkon, OppgaveIkkeNyIkon, OppgaveIkon} from './Ikoner'
 import {AvtaletilstandLinje} from "./AvtaletilstandLinje";
@@ -41,6 +41,9 @@ export const NotifikasjonListeElement = (props: Props) => {
       break
     case 'Kalenderavtale':
       ikon = <KalenderavtaleIkon/>
+      if (props.notifikasjon.avtaletilstand === KalenderavtaleTilstand.Avlyst || new Date(props.notifikasjon.startTidspunkt) < new Date()) {
+        ikon = <KalenderavtaleIkon variant='neutral'/>
+      }
 
       break
     default:
