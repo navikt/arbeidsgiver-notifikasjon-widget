@@ -27,6 +27,7 @@ export default {
     commonjs(),
     resolve(),
     postcss({
+      extract: true
     }),
     url({
       include: ["**/*.ttf"],
