@@ -33,6 +33,18 @@ const Banner: FunctionComponent<RouteComponentProps & OwnProps> = ({history, sid
 };
 ```
 
+## CSS som egen fil
+
+Fra og med versjon 6.5.2 er css lagt ut i egen fil.
+Denne må importeres i prosjektet som bruker widgeten.
+
+F.eks:
+```tsx
+import '@navikt/arbeidsgiver-notifikasjon-widget/lib/esm/index.css';
+// eller
+import '@navikt/arbeidsgiver-notifikasjon-widget/lib/cjs/index.css';
+```
+
 ## Running Demo App for Widget-development
 To run the demo app locally you need to run the three following scripts.
 
