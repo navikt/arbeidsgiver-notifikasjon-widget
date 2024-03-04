@@ -141,8 +141,13 @@ const TidslinjeElement = (navn) => {
     __typename: navn,
     id: Math.random().toString(36),
     tekst: tekst,
-    opprettetTidspunkt: opprettetTidspunkt,
 
+    ...(navn === 'BeskjedTidslinjeElement'
+        ? {
+          opprettetTidspunkt: opprettetTidspunkt,
+        }
+        : {}
+    ),
     ...(navn === 'OppgaveTidslinjeElement'
         ? {
           tilstand: tilstand,
@@ -150,6 +155,7 @@ const TidslinjeElement = (navn) => {
           utgaattTidspunkt: erUtgåttOppgave ? utgåttDate().toISOString() : null,
           utfoertTidspunkt: tilstand === 'UTFOERT' ? utgåttDate().toISOString() : null,
           frist: casual.boolean ? casualDate().toISOString() : null,
+          opprettetTidspunkt: opprettetTidspunkt,
         }
         : {}
     ),
