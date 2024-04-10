@@ -32,7 +32,7 @@ export const NotifikasjonBjelle = ({
         aria-atomic="true"
       >
         <div className='notifikasjon_bjelle-ikon'>
-          <Bell title="bjelleikon" width="32px" height="32px" aria-hidden="true" />
+          <Bell width="32px" height="32px" aria-hidden="true" />
 
           <div
             className={`notifikasjon_bjelle-ikon__ulest-sirkel ${
