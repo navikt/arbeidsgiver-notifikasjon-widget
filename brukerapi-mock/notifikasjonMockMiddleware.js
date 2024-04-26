@@ -117,15 +117,15 @@ const eksempler = {
 };
 
 const saker = [
-  'Varsel om permittering 24 ansatte',
-  'Søknad om fritak fra arbeidsgiverperioden – gravid ansatt Lena Nilsson',
-  'Søknad om fritak fra arbeidsgiverperioden – kronisk sykdom Bo Johnstrøm',
-  'Permitteringsmelding 14 ansatte',
-  'Lønnskompensasjon ved permittering',
-  'Varsel om permittering 12 ansatte',
-  'Søknad om fritak fra arbeidsgiverperioden – kronisk sykdom Bo Johnstrøm\n',
-  'Refusjon - fritak fra arbeidsgiverperioden - Lena Ek',
-  'Søknad om fritak fra arbeidsgiverperioden – gravid ansatt Marie Svensson',
+  'Varsel om permittering 24 ansatte TEST',
+  'Søknad om fritak fra arbeidsgiverperioden – gravid ansatt Glovarm Bagasje',
+  'Søknad om fritak fra arbeidsgiverperioden – kronisk sykdom Akrobatisk Admiral',
+  'Permitteringsmelding 14 ansatte TEST',
+  'Lønnskompensasjon ved permittering TEST',
+  'Varsel om permittering 12 ansatte TEST',
+  'Søknad om fritak fra arbeidsgiverperioden – kronisk sykdom Gylden Karneval\n',
+  'Refusjon - fritak fra arbeidsgiverperioden - Hensiktsfull Hare ',
+  'Søknad om fritak fra arbeidsgiverperioden – gravid ansatt Konkurransedyktig Fisk',
 ];
 
 const TidslinjeElement = (navn) => {
