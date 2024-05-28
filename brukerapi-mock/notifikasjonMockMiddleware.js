@@ -279,6 +279,7 @@ const mocks = () => ({
               tekst: casual.random_element(['Mottatt', 'Under behandling', 'Utbetalt']),
               tidspunkt: casualDate().toISOString()
             },
+            nesteSteg: ["Saksbehandlingstiden er lang. Du kan forvente refusjon utbetalt i januar 2025.", "Denne saken vil bli behandlet innen 1. juli.", "Denne saken blir nok ikke behandlet.", ...new Array(7).fill(null)],
             frister: casual.boolean ? [
               casual.random_element([null, casualDate().toISOString().slice(0, 10)]),
               casual.random_element([null, new Date().toISOString().replace(/T.*/, '')])
